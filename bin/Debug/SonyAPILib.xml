@@ -182,25 +182,27 @@
             <param name="device">A string from the list obtained with sonyDiscover(device) method.</param>
             <returns>Does not return any information</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(System.String,System.String,System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Manually Initialize a device with out using sonyDiscover(device).
             </summary>
-            <param name="name">Sets the Device Name to this value.</param>
-            <param name="ip">Sets the Device IP Address to this value.</param>
-            <param name="port">Sets the Device Port to this value.</param>
-            <param name="mac">Sets the Client MAC address to this value.</param>
+            <param name="dname">Sets the Device Name to this value.</param>
+            <param name="dip">Sets the Device IP Address to this value.</param>
+            <param name="dport">Sets the Device Port to this value.</param>
+            <param name="smac">Sets the Client MAC address to this value.</param>
+            <param name="sname">Change the default Server Name to this.</param>
             <remarks>None of these params can be EMPTY or null !</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String,System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             This method overrides the Default information found using sonyDiscover(device).
             </summary>
             <param name="device">A device from the list returned from Discovery</param>
-            <param name="name">Changes the default name to this.</param>
-            <param name="ip">Changes the default Host/IP to this.</param>
-            <param name="port">Change the default Port to this.</param>
-            <param name="mac">Change the default Server Mac to this.</param>
+            <param name="dname">Changes the default name to this.</param>
+            <param name="dip">Changes the default Host/IP to this.</param>
+            <param name="dport">Change the default Port to this.</param>
+            <param name="sname">Change the default Server Name to this.</param>
+            <param name="smac">Change the default Server Mac to this.</param>
             <remarks>Must set param to null if not changing the default value.
             For Example: initialize(selDev, null, null, null, null) is the same as initialize(selDev)
             However, initialize(selDev, null, "192.168.0.101", null, null) will use this IP address instead.</remarks>
@@ -295,7 +297,7 @@
             <summary>
             This method sends an IRCC command value via an HTTP POST command using SOAP encoding
             </summary>
-            <param name="ircc">A string containing a valid IRCC command value retrieved from get_remote_commnd_list(), or getIRCCCommandString(command name)</param>
+            <param name="irccCode">A string containing a valid IRCC command value retrieved from get_remote_commnd_list(), or getIRCCCommandString(command name)</param>
             <returns>Returns the device response as a string</returns>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.send_text(System.String)">
