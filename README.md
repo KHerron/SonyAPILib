@@ -9,6 +9,7 @@ The SmartRemote_CS project is a sample program that shows how to use the Sony AP
 This library also requires two 3rd party Libraries.
 ----------------------------------------------------------------------
 1) ManagedUPnP developed by Aaron Lee Murgatrod.
+
 2) Newtonsoft.JSON developed by James Newton-King
 
 These can be downloaded from several locations on the internet,
