@@ -1,6 +1,8 @@
 Sony API Library Example Program SmartRemote_CS
 ===============
-SonyAPILib.dll v5.0 written by: Kirk Herron 
+SonyAPILib.dll v5.0 written by: Kirk Herron
+
+Works with All 3 Generations of Sony Devices!
 
 SonyAPILib.dll is an API written in C# to help developers create applications that can locate, register and control Sony Smart devices that are equiped with a LAN or WiFi connection.
 
