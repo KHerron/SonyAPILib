@@ -59,16 +59,6 @@
             Contains the a Dataset of the Device's Command List
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.Sony_API.current_Channel">
-            <summary>
-            This variable contains the current Channel the tuner is tuned to.
-            </summary>
-        </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.Sony_API.current_Volume">
-            <summary>
-            This variable contains the current Volume level.
-            </summary>
-        </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.sonyDiscover(System.String)">
             <summary>
             sonyDiscover is used to scan and locate all compatiable devices

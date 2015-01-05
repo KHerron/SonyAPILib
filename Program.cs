@@ -333,7 +333,7 @@ namespace SmartRemote_CS
                 if (checkChannel != "")
                 {
                     Console.WriteLine("Sent Command: Channel_Set");
-                    Console.WriteLine("Command Value: " + mySonyLib.API.current_Channel);
+                    Console.WriteLine("Command Value: " + selDev.current_Channel);
                 }
                 else
                 {
