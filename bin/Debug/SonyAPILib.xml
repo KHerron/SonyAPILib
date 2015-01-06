@@ -111,7 +111,7 @@
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.Sony_API.actionListUrl">
             <summary>
-            Variable for storing the devices Action List URL used in Discovery.
+            Variable for storing the devices Action List URL used in API Class and Discovery.
             </summary>
         </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.SonyDevice">
