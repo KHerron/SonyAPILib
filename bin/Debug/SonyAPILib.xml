@@ -51,7 +51,7 @@
         </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.Sony_API">
             <summary>
-            Class used to Locate, Register and control Sony CER devices via a LAN connection
+            Class used to Locate, Register and control Sony devices with the IRCC service via a LAN connection
             </summary>
         </member>
         <member name="F:SonyAPILib.SonyAPI_Lib.Sony_API.dataSet">
@@ -89,10 +89,9 @@
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getActionlist_URL(System.String)">
             <summary>
-            This method retrieves the DLNA Device Action List XML.
+            This method sets the Action List URL found in the DLNA Device Action List XML.
             </summary>
             <param name="devName">This is the Name of the Device to get the infromation for</param>
-            <returns></returns>
             
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getControlMac">
@@ -241,15 +240,15 @@
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getActionlist_URL(System.String)">
             <summary>
-            This method retrieves the DLNA Device Action List XML.
+            This method sets the Action List URL found in the DLNA Device Action List XML.
             </summary>
             <param name="devName">This is the Name of the Device to get the infromation for</param>
-            <returns></returns>
             
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getRegistrationMode">
             <summary>
-            Gets the Registration Mode from the ActionList
+            Gets the Registration Mode from the ActionList.
+            Or uses Gen 3 if no action list is found.
             </summary>
             <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
         </member>
