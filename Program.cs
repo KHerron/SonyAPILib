@@ -98,6 +98,7 @@ namespace SmartRemote_CS
                 // To use the information found by discovery, but need to override one of the elements, use the following method:
                 // mySonyDevice.initialize(selDev, Name, IP, Port, Server Mac);
                 // Set param to null to use the default information.
+                Console.WriteLine("");
                 selDev.initialize(fDev[Convert.ToInt32(cki)]);
 
                 #endregion
