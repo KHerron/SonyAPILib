@@ -51,7 +51,7 @@
         </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.Sony_API">
             <summary>
-            Class used to Locate, Register and control Sony devices with the IRCC service via a LAN connection
+            Class used to Discover Sony devices with the IRCC service via a LAN connection
             </summary>
         </member>
         <member name="F:SonyAPILib.SonyAPI_Lib.Sony_API.dataSet">
@@ -115,7 +115,7 @@
         </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.SonyDevice">
             <summary>
-            Sony Device Object
+            Sony Device Object used to Register and Control via Lan connection
             </summary>
         </member>
         <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.actionList_URL">
@@ -168,7 +168,7 @@
             <summary>
             Initializes the device with settings retrieved from sonyDiscover(device).
             </summary>
-            <param name="device">A string from the list obtained with sonyDiscover(device) method.</param>
+            <param name="device">A Sony Device object selected from the list obtained with sonyDiscover(device) method.</param>
             <returns>Does not return any information</returns>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(System.String,System.String,System.String,System.String,System.String)">
@@ -419,8 +419,7 @@
             <summary>
             This method is used to Clear the current log and start a new.
             </summary>
-            <param name="newName">Default is Null</param>
-            If NOT Null, Old file is copied to newName before log is Cleared!
+            <param name="newName">Default is Null. If NOT Null, Log file is copied to newName before it is Cleared!</param>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.enableLogging">
             <summary>
