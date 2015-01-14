@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ManagedUPnP">
-      <HintPath>..\..\..\UPnP\Managed UPnP Library and Demo Source (2.0)\ManagedUPnP\bin\Debug\ManagedUPnP.dll</HintPath>
-    </Reference>
     <Reference Include="SonyAPILib">
       <HintPath>..\..\C#-cers-tv\device\device\bin\Debug\SonyAPILib.dll</HintPath>
     </Reference>

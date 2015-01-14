@@ -164,37 +164,17 @@
             </summary>
             <returns>All Services found</returns>
         </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize">
+            <summary>
+            Initializes a NEW Sony Device object with settings manually entered in to each Property.
+            </summary>
+            <remarks>Must set Device Name and IP Address!</remarks>
+        </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(SonyAPILib.SonyAPI_Lib.SonyDevice)">
             <summary>
-            Initializes the device with settings retrieved from sonyDiscover(device).
+            Initializes a NEW Sony Device object with settings from a device retrieved from sonyDiscover(device).
             </summary>
             <param name="device">A Sony Device object selected from the list obtained with sonyDiscover(device) method.</param>
-            <returns>Does not return any information</returns>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Manually Initialize a device with out using sonyDiscover(device).
-            </summary>
-            <param name="dname">Sets the Device Name to this value.</param>
-            <param name="dip">Sets the Device IP Address to this value.</param>
-            <param name="dport">Sets the Device Port to this value.</param>
-            <param name="smac">Sets the Client MAC address to this value.</param>
-            <param name="sname">Change the default Server Name to this.</param>
-            <remarks>None of these params can be EMPTY or null !</remarks>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            This method overrides the Default information found using sonyDiscover(device).
-            </summary>
-            <param name="device">A device from the list returned from Discovery</param>
-            <param name="dname">Changes the default name to this.</param>
-            <param name="dip">Changes the default Host/IP to this.</param>
-            <param name="dport">Change the default Port to this.</param>
-            <param name="sname">Change the default Server Name to this.</param>
-            <param name="smac">Change the default Server Mac to this.</param>
-            <remarks>Must set param to null if not changing the default value.
-            For Example: initialize(selDev, null, null, null, null) is the same as initialize(selDev)
-            However, initialize(selDev, null, "192.168.0.101", null, null) will use this IP address instead.</remarks>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.register">
             <summary>
@@ -211,10 +191,16 @@
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.get_remote_command_list">
             <summary>
-            This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3 JSON response.
+            This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3 JSON Command List.
             </summary>
             <returns>Returns a string containing the contents of the returned XML Command List for your Use</returns>
             <remarks>This method will also populate the SonyDevice.Commands object list with the retrieved command list</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkReg">
+            <summary>
+            This method Checks the current Status of the device Registration
+            </summary>
+            <returns>Returns a Bool True or False</returns>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkStatus">
             <summary>
@@ -350,52 +336,52 @@
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Name">
             <summary>
-            Contains the Sony Device Object Name
+            Gets or Sets the Sony Device Object Name
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Generation">
             <summary>
-            Contains the Sony Device Object Generation 1, 2 or 3
+            Gets or Sets the Sony Device Object Generation 1, 2 or 3
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_IP_Address">
             <summary>
-            Contains the Sony Device Object's IP Address
+            Gets or Sets the Sony Device Object's IP Address
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Macaddress">
             <summary>
-            Contains the Sony Device Object's MAC Address
+            Gets or Sets the Sony Device Object's MAC Address
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Port">
             <summary>
-            Contains the Sony Device Object's Port number
+            Gets or Sets the Sony Device Object's Port number
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Commands">
             <summary>
-            Contains the Sony Device Object's List of Commands
+            Gets or Sets the Sony Device Object's List of Commands
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Macaddress">
             <summary>
-            Contains the Mac Address of he controlling device
+            Gets or Sets the Mac Address of he controlling device
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Name">
             <summary>
-            Contains the Name of he controlling device
+            Gets or Sets the Name of he controlling device
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Cookie">
             <summary>
-            Contains the Sony Device Gen 3 Object's Authintication Cookie
+            Gets or Sets the Sony Device Gen 3 Object's Authintication Cookie
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Registered">
             <summary>
-            Shows current status of registration
+            Gets or Sets the status of registration
             </summary>
         </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ircc">

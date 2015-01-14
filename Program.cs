@@ -143,7 +143,7 @@ namespace SmartRemote_CS
 
                 //If Status above returned any value, then skip registration
                 bool mySonyReg;
-                if (status == "" | status == null)
+                if (selDev.Registered == false)
                 {
                     // The next method is very IMPORTANT.
 
