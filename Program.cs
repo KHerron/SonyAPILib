@@ -109,6 +109,7 @@ namespace SmartRemote_CS
                 // mySonyDevice.initialize(selDev, Name, IP, Port, Server Mac);
                 // Set param to null to use the default information.
                 Console.WriteLine("");
+                Console.WriteLine(fDev[Convert.ToInt32(cki)].Name + ": Performing Initilization....");
                 selDev.initialize(fDev[Convert.ToInt32(cki)]);
 
                 #endregion
@@ -121,6 +122,7 @@ namespace SmartRemote_CS
                 //An example would be: viewing:TV
                 //An emplty string "" will be returned if there is no response from the device. This could also mean the device is off.
                 //Also, this method requires the device to be registered, so if this returns any values, then Registration = True.
+                Console.WriteLine(selDev.Name + ": Checking Device Status....");
                 string status = selDev.checkStatus(); 
                 if (status == "" | status == null)
                 {
@@ -145,6 +147,13 @@ namespace SmartRemote_CS
                 bool mySonyReg;
                 if (selDev.Registered == false)
                 {
+                    Console.WriteLine(selDev.Name + ": Performing Registration....");
+                    Console.WriteLine("Before continuing, you may need to set the device to Registration Mode,");
+                    Console.WriteLine("Confirm Registration or enter the Registration PIN code.");
+                    Console.WriteLine("Go to the device and perfrom any step, or be ready to before ehitting enter below!");
+                    Console.WriteLine("=====================================");
+                    Console.WriteLine("Hit any key to continue");
+                    Console.ReadKey();
                     // The next method is very IMPORTANT.
 
                     // YOU MUST RUN THE FOLLOWING METHOD AND RECEIVE A SUCCESSFUL RETURN at least ONCE!
@@ -168,10 +177,11 @@ namespace SmartRemote_CS
                         //Check if Generaton 3. If yes, prompt for pin code
                         if (selDev.Generation == 3)
                         {
-                            Console.WriteLine("Enter the Device PIN Code");
+                            Console.WriteLine("Before continuing, you may need to set the device to Registration Mode");
                             string ckii;
                             ckii = Console.ReadLine();
                             // Send PIN code to TV to create Autorization cookie
+                            Console.WriteLine("Sending Authitication PIN Code.");
                             mySonyReg = selDev.sendAuth(ckii);
                         }
                     }
@@ -206,6 +216,7 @@ namespace SmartRemote_CS
                     Console.WriteLine("Registration: " + selDev.Registered.ToString());
                     Console.WriteLine("Server Name: " + selDev.Server_Name);
                     Console.WriteLine("Server Mac: " + selDev.Server_Macaddress);
+                    Console.WriteLine("Action List URL: " + selDev.actionList_URL);
                     Console.WriteLine("---------------------------------");
                     Console.WriteLine("");
                 }
@@ -224,6 +235,7 @@ namespace SmartRemote_CS
                 // ### You must register before this method will return any data ###
                 // This method will populate the Commands list in the SonyDevice object when executed.
                 // This Methed also returnes a string that contains the contents of the Devices Command List XML file for your own use.
+                Console.WriteLine(selDev.Name + ": Retrieving Remote Command List");
                 string CmdList = selDev.get_remote_command_list();
 
                 // TODO: Parse this information as your application requires.
@@ -255,6 +267,7 @@ namespace SmartRemote_CS
                 // Returna a Null if the search command is not found in the devices IRCC command list
 
                 // This example will search for the command "ChannelUp"
+                Console.WriteLine(selDev.Name + ": Retrieving Command Value for: VolumeUp");
                 string irccCmd = selDev.getIRCCcommandString("VolumeUp");
 
                 //Check if command was found
@@ -269,7 +282,7 @@ namespace SmartRemote_CS
                 // Displays the IRCC command value retrieved
                 #region Console Output
                     // Show the IRCC_Command value found information
-                    Console.WriteLine("Search Command: VolumeUp");
+                    Console.WriteLine("Found Command: VolumeUp");
                     Console.WriteLine("Command Value: " + irccCmd);
                     Console.WriteLine("---------------------------------");
                     Console.WriteLine("");
@@ -284,12 +297,13 @@ namespace SmartRemote_CS
                 // This first example will send a "VolumeUp" command value to the device
                 // it asumes we already know the value to send to the device.
                 // We will use the irccCmd we retrieved above in the getIRCCCommandString method.
+                Console.WriteLine(selDev.Name + ": Sending Command Value " + irccCmd + " to device");
                 string results = selDev.send_ircc(irccCmd);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
                 // Show the IRCC_Command value found information
-                Console.WriteLine("Sent Command: VolumeUp");
+                Console.WriteLine("Sent Command: VolumeUp:" + irccCmd);
                 Console.WriteLine("Hit any key to continue");
                 Console.WriteLine("---------------------------------");
                 Console.ReadKey();
@@ -299,14 +313,14 @@ namespace SmartRemote_CS
                 #region Example 2
                 // The next example will use the getIRCCcommandString("CommandName") method to get the command value for "VolumeDown".
                 // Then send it to the device
+                Console.WriteLine(selDev.Name + ": Sending Command VolumeDown to device");
                 String mycommand = selDev.getIRCCcommandString("VolumeDown");
                 selDev.send_ircc(mycommand);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
                 // Show the IRCC_Command value found information
-                Console.WriteLine("Sent Command: VolumeDown");
-                Console.WriteLine("Command Value: " + mycommand);
+                Console.WriteLine("Sent Command: VolumeDown:" + mycommand);
                 Console.WriteLine("Hit any key to continue");
                 Console.WriteLine("---------------------------------");
                 Console.ReadKey();
@@ -315,12 +329,12 @@ namespace SmartRemote_CS
 
                 #region Example 3
                 // The next example will use a combination of both examples above for the command "VolumeUp".
+                Console.WriteLine(selDev.Name + ": Sending Command VolumeUp to device again");
                 selDev.send_ircc(selDev.getIRCCcommandString("VolumeUp"));
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
                 #region Console Output
                 // Show the IRCC_Command value found information
-                Console.WriteLine("Sent Command: VolumeUp");
-                Console.WriteLine("Command Value: " + mycommand);
+                Console.WriteLine("Sent Command: VolumeUp:" + mycommand);
                 Console.WriteLine("Hit any key to continue");
                 Console.WriteLine("---------------------------------");
                 Console.ReadKey();
@@ -331,6 +345,7 @@ namespace SmartRemote_CS
                 // The next example will use the "channel_set" method to send a complete channel number.
                 // This example will use channel 47.1 since it is a valid station in my area. You can change this to what ever you need to.
                 // This example should only be used on TV's, as Home theater systems and DVD players will not respond to this!
+                Console.WriteLine(selDev.Name + ": Sending a Set Channel command to device, if device is a TV");
                 string checkChannel = selDev.getIRCCcommandString("ChannelUp");
                 if (checkChannel != "")
                 {
