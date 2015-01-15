@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using SonyAPILib;
 
 // SonyAPILib.dll library written by Kirk Herron.
-// This Example explains how to use the SonyAPILib in your own applications.
+// This Example Console application shows how to use the SonyAPILib in your own applications.
 // This API connects to Sony Smart Devices(TV, Blue Ray, Tuners) via LAN or Wifi connection.
 // Provides a method to send IRCC Remote control commands throught the LAN connection and remotely control the device.
 // Retrives the devices Remote Command list for your own use or needs.
-// Uses UPnP Protocols for device discovery and future advanced features.
+// Uses UPnP Protocols for device discovery, sending commands and future advanced features.
 
 namespace SmartRemote_CS
 {
@@ -29,17 +29,17 @@ namespace SmartRemote_CS
            
             // Next Set the API logging information.
             // Enable Logging: default is set to FALSE.
-            // This Library will report to a logging file even when EnableLogging is set to False.
             mySonyLib.LOG.enableLogging = true;
 
             // Set Logging Level. 
-            // Set to "Basic" to Log Minimum information
+            // Set to "Basic" to only Log Minimum information
             // Set to "All" for all Logging information
             // Default is set to "Basic"
             mySonyLib.LOG.enableLogginglev = "All";
 
             // Set where the logging file will be saved.
             // Folder will be created if it does not exist!
+            // Set to Null to use Default
             // Default is set to C:\ProgramData\Sony
             mySonyLib.LOG.loggingPath = null;
 
@@ -48,15 +48,18 @@ namespace SmartRemote_CS
             mySonyLib.LOG.loggingName = "SonyAPILib_LOG.txt";
 
             // Clears the existing log file and starts a new one
-            // enter a new name as the Param, and log file will be copied to new name before it is cleared.
-            // Example: mySonyLib.LOG.clearlog("Old_Sony_Log_File.txt");
+            // Send Null as the param to just clear the file and start a new one
+            // Enter a new File name as the param, and log file will be copied to new name before it is cleared.
+            // Example: mySonyLib.LOG.clearlog(datestamp + "_Old_Sony_Log_File.txt");
             mySonyLib.LOG.clearLog(null);
             
             // Perform a Discovery to find all/any compatiable devices on the LAN.
             // Returns a list of all Sony Devices that matches service criteria.
-            // Send null as default to locate Sony devices that support the IRCC service.
+            // Send null as default service to locate Sony devices that support the IRCC service.
             // If a different service is used, the SonyAPILib may NOT function properly. (To be Used in Future projects)
             // Return value is a list with each item containg a SonyDevice object.
+            // Each returned object will contain only the Name of the Device along with it's IP Address
+            // All other properties will be filled in when the device is Initialized.
             Console.WriteLine("Searching for Devices...");
             List<SonyAPI_Lib.SonyDevice> fDev = mySonyLib.API.sonyDiscover(null);
 
@@ -73,41 +76,48 @@ namespace SmartRemote_CS
             Console.WriteLine("---------------------------------");
             #endregion
             // TODO: Here you can perform task or other code as to which device to select or use.
-                // You could also do a For Next loop and go through each one
-            
-            // This example checks if there are any devices in the list
+            // You could also do a For Next loop and go through each one
+            // This example checks if there are any devices in the list, if not then Exit
             if (fDev.Count > 0)
             {
-                // Allow User to select the device to test
+                // Allow User to select from the devices found which one to test
                 Console.WriteLine("Enter the Device # to Test");
                 string cki;
                 cki = Console.ReadLine();
                 SonyAPI_Lib.SonyDevice selDev = new SonyAPI_Lib.SonyDevice();
 
                 // Here you can save the device information to a database or text file.
-                // This will allow you to Initialize a device WITHOUT having to run the sonyDiscover() method.
+                // This will allow you to Initialize a device WITHOUT having to run the sonyDiscover() method every time.
                 // Once you have discovered the devices, saving their information will speed up your application the next time you run it!
-                // You can Initialize a device with as minimimal of information as: 
-                //     1) The Name - MUST Match what the device returns as it's name with the property:  selDev.Name
-                //     2) The IP address of the device:  selDev.Device_IP_Address
-                //     3) The Port the device uses to communicate (Not always required) :  selDev.Device_Macaddress
-                // 
-                //
+
+                // You can Initialize a device with only the following minimimal information: 
+                //     1) The Device Name - MUST Match what the device returns as it's name. (selDev.Name)
+                //     2) The IP address of the device. (selDev.Device_IP_Address)
 
                 // Now we initialize a new sonyDevice object with the selected device above.
-                #region initialize(SonyDevice device)
-                // selDev or each item in the list fDev[] is a SonyDevice object.
+                #region initialize
+                // The Initialize method is used to fill in all the other required properties for the device.
+                // For example, during the Initiliation process, the device port, mac, command list and UPnP services are
+                // discovered and set to the device object.
+                // Also the Registered porperty is checked during this process.
+                // However, on Generation 1 devices, this will return a false value if the device is not powered ON.
+                // See Wiki page on GitHub for more information about the Initialize method.
+
+                // You MUST perform an Initialize on the device before doing anything else!
+
+                // From above, selDev or each item in the list fDev[] is a SonyDevice object.
 
                 // To initialize with the default information retrieved from sonyDiscovery, use the following method:
-                // mySonyDevice.initialize(selDev) or mySonyDevice.initialize(fDev[1]) by setting the index of the list.
+                // selDev.initialize(fDev[1]) or by setting the index to the device you wish.
 
-                // You can manually initialize the sonyDevice by setting the device information yourself.
+                // You can also manually initialize the sonyDevice by setting the device information yourself.
                 // To manually initialize without using sonyDiscovery, use the following method:
-                // mySonyDevice.initialize("Name","IP Address","Port","Server Mac")
+                        // selDev.Name = "NameOfMySonyDevice";
+                        // selDev.Device_IP_Address = "192.168.0.66";
+                        // selDev.initialize();
+                // This information could be retrieved from a database or other file as your desire.
 
-                // To use the information found by discovery, but need to override one of the elements, use the following method:
-                // mySonyDevice.initialize(selDev, Name, IP, Port, Server Mac);
-                // Set param to null to use the default information.
+                // This example will use the first method to initialize the device chosen by the user.
                 Console.WriteLine("");
                 Console.WriteLine(fDev[Convert.ToInt32(cki)].Name + ": Performing Initilization....");
                 selDev.initialize(fDev[Convert.ToInt32(cki)]);
@@ -121,7 +131,7 @@ namespace SmartRemote_CS
                 //The value returned is: status_name:value
                 //An example would be: viewing:TV
                 //An emplty string "" will be returned if there is no response from the device. This could also mean the device is off.
-                //Also, this method requires the device to be registered, so if this returns any values, then Registration = True.
+                //Also, this method requires the device to be registered on Generation 1 and 2 devices.
                 Console.WriteLine(selDev.Name + ": Checking Device Status....");
                 string status = selDev.checkStatus(); 
                 if (status == "" | status == null)
@@ -141,7 +151,7 @@ namespace SmartRemote_CS
                 #endregion
 
                 // Now we must register with the device
-                #region register()
+                #region register
 
                 //If Status above returned any value, then skip registration
                 bool mySonyReg;
@@ -177,7 +187,6 @@ namespace SmartRemote_CS
                         //Check if Generaton 3. If yes, prompt for pin code
                         if (selDev.Generation == 3)
                         {
-                            Console.WriteLine("Before continuing, you may need to set the device to Registration Mode");
                             string ckii;
                             ckii = Console.ReadLine();
                             // Send PIN code to TV to create Autorization cookie
@@ -194,8 +203,6 @@ namespace SmartRemote_CS
                 #endregion
 
                 //TODO: Add more code in case of false, or true
-
-
                 #region Console Output
                 Console.WriteLine("Registration returned: " + mySonyReg.ToString());
                 Console.WriteLine("---------------------------------");
@@ -230,7 +237,7 @@ namespace SmartRemote_CS
                 #endregion
 
                 // Get the IRCC command list from the device so we know it's capabilities.
-                #region get_remote_command_list()
+                #region get_remote_command_list
                 // The next command is used to retrieve the IRCC command list from the device.
                 // ### You must register before this method will return any data ###
                 // This method will populate the Commands list in the SonyDevice object when executed.
@@ -259,7 +266,7 @@ namespace SmartRemote_CS
                 #endregion
 
                 // Get the IRCC command value by searching the command name
-                #region getIRCCcommandString(command name)
+                #region getIRCCcommandString
                 // The next method is used to search for an IRCC_Command that matches the param.
 
                 // param is a string containing the command name to search for.
@@ -332,6 +339,7 @@ namespace SmartRemote_CS
                 Console.WriteLine(selDev.Name + ": Sending Command VolumeUp to device again");
                 selDev.send_ircc(selDev.getIRCCcommandString("VolumeUp"));
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
+
                 #region Console Output
                 // Show the IRCC_Command value found information
                 Console.WriteLine("Sent Command: VolumeUp:" + mycommand);
