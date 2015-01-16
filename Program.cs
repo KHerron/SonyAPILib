@@ -188,6 +188,7 @@ namespace SmartRemote_CS
                         if (selDev.Generation == 3)
                         {
                             string ckii;
+                            Console.WriteLine("Enter PIN Code.");
                             ckii = Console.ReadLine();
                             // Send PIN code to TV to create Autorization cookie
                             Console.WriteLine("Sending Authitication PIN Code.");
