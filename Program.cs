@@ -153,8 +153,7 @@ namespace SmartRemote_CS
                 // Now we must register with the device
                 #region register
 
-                //If Status above returned any value, then skip registration
-                bool mySonyReg;
+                bool mySonyReg = false;
                 if (selDev.Registered == false)
                 {
                     Console.WriteLine(selDev.Name + ": Performing Registration....");
@@ -182,7 +181,7 @@ namespace SmartRemote_CS
                     mySonyReg = selDev.register();
 
                     // Check if register returned false
-                    if (mySonyReg == false)
+                    if (selDev.Registered == false)
                     {
                         //Check if Generaton 3. If yes, prompt for pin code
                         if (selDev.Generation == 3)
