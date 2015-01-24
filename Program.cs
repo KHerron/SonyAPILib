@@ -384,8 +384,26 @@ namespace ConsoleExample
                 #endregion
 
                 Console.WriteLine("");
-                Console.WriteLine("That's It. Hit any key to quit.");
+                Console.WriteLine("Now You Try.");
+                Console.WriteLine("Here are the Commands: Hit any key to Continue.");
                 Console.WriteLine("---------------------------------");                
+                Console.ReadKey();
+                foreach (SonyAPI_Lib.SonyCommands cmd in mySonyDevice.Commands)
+                {
+                    Console.WriteLine(cmd.name);
+                }
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine("Enter a command from the list above.");
+                cki = Console.ReadLine();
+                results = mySonyDevice.send_ircc(mySonyDevice.getIRCCcommandString(cki));
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine("Now, using your TV remote control, navigate to a search screen.");
+                Console.WriteLine("This can be Pandora, Youtube or any search.");
+                Console.WriteLine("Now, enter the text here to send.");
+                cki = Console.ReadLine();
+                results = mySonyDevice.send_text(cki);
+                Console.WriteLine("---------------------------------");
+                Console.WriteLine("That's about it for now. Hit enter to Quit.");
                 Console.ReadKey();
             }
             else
