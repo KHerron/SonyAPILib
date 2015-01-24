@@ -1,0 +1,13 @@
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\ConsoleExample.exe.config
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\ConsoleExample.exe
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\ConsoleExample.pdb
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\SonyAPILib.dll
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\ManagedUPnP.dll
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\Newtonsoft.Json.dll
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\SonyAPILib.pdb
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\SonyAPILib.xml
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\ManagedUPnP.pdb
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\bin\Debug\ManagedUPnP.xml
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\obj\Debug\ConsoleExample.csprojResolveAssemblyReference.cache
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\obj\Debug\ConsoleExample.exe
+F:\OSA Files\SonySmartTv\SmartRemote_CS\SmartRemote_CS\obj\Debug\ConsoleExample.pdb

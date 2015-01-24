@@ -12,7 +12,7 @@ using SonyAPILib;
 // Retrives the devices Remote Command list for your own use or needs.
 // Uses UPnP Protocols for device discovery, sending commands and future advanced features.
 
-namespace SmartRemote_CS
+namespace ConsoleExample
 {
     class Program
     {   
@@ -26,7 +26,8 @@ namespace SmartRemote_CS
             // 1st create new instance of the SonyAPILib
             // This Class will be used to Discover Sony Devices on the LAN.
             SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
-           
+
+            #region Set Logging
             // Next Set the API logging information.
             // Enable Logging: default is set to FALSE.
             mySonyLib.LOG.enableLogging = true;
@@ -52,7 +53,9 @@ namespace SmartRemote_CS
             // Enter a new File name as the param, and log file will be copied to new name before it is cleared.
             // Example: mySonyLib.LOG.clearlog(datestamp + "_Old_Sony_Log_File.txt");
             mySonyLib.LOG.clearLog(null);
-            
+            #endregion
+
+            #region Discovery
             // Perform a Discovery to find all/any compatiable devices on the LAN.
             // Returns a list of all Sony Devices that matches service criteria.
             // Send null as default service to locate Sony devices that support the IRCC service.
@@ -62,6 +65,7 @@ namespace SmartRemote_CS
             // All other properties will be filled in when the device is Initialized.
             Console.WriteLine("Searching for Devices...");
             List<SonyAPI_Lib.SonyDevice> fDev = mySonyLib.API.sonyDiscover(null);
+            #endregion
 
             // fDev.Count will return the number of devices found
             #region Console Output 
@@ -75,8 +79,10 @@ namespace SmartRemote_CS
             }
             Console.WriteLine("---------------------------------");
             #endregion
+
             // TODO: Here you can perform task or other code as to which device to select or use.
-            // You could also do a For Next loop and go through each one
+            // You could also do a For Next loop and go through each one.
+
             // This example checks if there are any devices in the list, if not then Exit
             if (fDev.Count > 0)
             {
@@ -84,7 +90,7 @@ namespace SmartRemote_CS
                 Console.WriteLine("Enter the Device # to Test");
                 string cki;
                 cki = Console.ReadLine();
-                SonyAPI_Lib.SonyDevice selDev = new SonyAPI_Lib.SonyDevice();
+                SonyAPI_Lib.SonyDevice mySonyDevice = new SonyAPI_Lib.SonyDevice();
 
                 // Here you can save the device information to a database or text file.
                 // This will allow you to Initialize a device WITHOUT having to run the sonyDiscover() method every time.
@@ -120,7 +126,7 @@ namespace SmartRemote_CS
                 // This example will use the first method to initialize the device chosen by the user.
                 Console.WriteLine("");
                 Console.WriteLine(fDev[Convert.ToInt32(cki)].Name + ": Performing Initilization....");
-                selDev.initialize(fDev[Convert.ToInt32(cki)]);
+                mySonyDevice.initialize(fDev[Convert.ToInt32(cki)]);
 
                 #endregion
 
@@ -132,8 +138,8 @@ namespace SmartRemote_CS
                 //An example would be: viewing:TV
                 //An emplty string "" will be returned if there is no response from the device. This could also mean the device is off.
                 //Also, this method requires the device to be registered on Generation 1 and 2 devices.
-                Console.WriteLine(selDev.Name + ": Checking Device Status....");
-                string status = selDev.checkStatus(); 
+                Console.WriteLine(mySonyDevice.Name + ": Checking Device Status....");
+                string status = mySonyDevice.checkStatus(); 
                 if (status == "" | status == null)
                 {
                     // NO Response!!
@@ -154,9 +160,11 @@ namespace SmartRemote_CS
                 #region register
 
                 bool mySonyReg = false;
-                if (selDev.Registered == false)
+
+                // first check to see if the initize process determined the registration value.
+                if (mySonyDevice.Registered == false)
                 {
-                    Console.WriteLine(selDev.Name + ": Performing Registration....");
+                    Console.WriteLine(mySonyDevice.Name + ": Performing Registration....");
                     Console.WriteLine("Before continuing, you may need to set the device to Registration Mode,");
                     Console.WriteLine("Confirm Registration or enter the Registration PIN code.");
                     Console.WriteLine("Go to the device and perfrom any step, or be ready to before ehitting enter below!");
@@ -178,27 +186,26 @@ namespace SmartRemote_CS
                     // Returns true if successful
                     // Returns false if not successful 
 
-                    mySonyReg = selDev.register();
+                    mySonyReg = mySonyDevice.register();
 
                     // Check if register returned false
-                    if (selDev.Registered == false)
+                    if (mySonyDevice.Registered == false)
                     {
                         //Check if Generaton 3. If yes, prompt for pin code
-                        if (selDev.Generation == 3)
+                        if (mySonyDevice.Generation == 3)
                         {
                             string ckii;
                             Console.WriteLine("Enter PIN Code.");
                             ckii = Console.ReadLine();
                             // Send PIN code to TV to create Autorization cookie
                             Console.WriteLine("Sending Authitication PIN Code.");
-                            mySonyReg = selDev.sendAuth(ckii);
+                            mySonyReg = mySonyDevice.sendAuth(ckii);
                         }
                     }
                 }
                 else
                 {
                     mySonyReg = true;
-                    selDev.Registered = true;
                 }
                 #endregion
 
@@ -215,15 +222,16 @@ namespace SmartRemote_CS
                 {
 
                     Console.WriteLine("Device Information");
-                    Console.WriteLine("Mame: " + selDev.Name);
-                    Console.WriteLine("Mac Address: " + selDev.Device_Macaddress);
-                    Console.WriteLine("IP Address: " + selDev.Device_IP_Address);
-                    Console.WriteLine("Port: " + selDev.Device_Port);
-                    Console.WriteLine("Generation: " + selDev.Generation);
-                    Console.WriteLine("Registration: " + selDev.Registered.ToString());
-                    Console.WriteLine("Server Name: " + selDev.Server_Name);
-                    Console.WriteLine("Server Mac: " + selDev.Server_Macaddress);
-                    Console.WriteLine("Action List URL: " + selDev.actionList_URL);
+                    Console.WriteLine("Mame: " + mySonyDevice.Name);
+                    Console.WriteLine("Mac Address: " + mySonyDevice.Device_Macaddress);
+                    Console.WriteLine("IP Address: " + mySonyDevice.Device_IP_Address);
+                    Console.WriteLine("Port: " + mySonyDevice.Device_Port);
+                    Console.WriteLine("Generation: " + mySonyDevice.Generation);
+                    Console.WriteLine("Registration: " + mySonyDevice.Registered.ToString());
+                    Console.WriteLine("Server Name: " + mySonyDevice.Server_Name);
+                    Console.WriteLine("Server Mac: " + mySonyDevice.Server_Macaddress);
+                    Console.WriteLine("Action List URL: " + mySonyDevice.actionList_URL);
+                    Console.WriteLine("IRCC Control URL: " + mySonyDevice.control_URL);
                     Console.WriteLine("---------------------------------");
                     Console.WriteLine("");
                 }
@@ -242,8 +250,8 @@ namespace SmartRemote_CS
                 // ### You must register before this method will return any data ###
                 // This method will populate the Commands list in the SonyDevice object when executed.
                 // This Methed also returnes a string that contains the contents of the Devices Command List XML file for your own use.
-                Console.WriteLine(selDev.Name + ": Retrieving Remote Command List");
-                string CmdList = selDev.get_remote_command_list();
+                Console.WriteLine(mySonyDevice.Name + ": Retrieving Remote Command List");
+                string CmdList = mySonyDevice.get_remote_command_list();
 
                 // TODO: Parse this information as your application requires.
                 // convert to an XMLDocument or dataset for your own use
@@ -274,8 +282,8 @@ namespace SmartRemote_CS
                 // Returna a Null if the search command is not found in the devices IRCC command list
 
                 // This example will search for the command "ChannelUp"
-                Console.WriteLine(selDev.Name + ": Retrieving Command Value for: VolumeUp");
-                string irccCmd = selDev.getIRCCcommandString("VolumeUp");
+                Console.WriteLine(mySonyDevice.Name + ": Retrieving Command Value for: VolumeUp");
+                string irccCmd = mySonyDevice.getIRCCcommandString("VolumeUp");
 
                 //Check if command was found
                 if (irccCmd == "")
@@ -304,8 +312,8 @@ namespace SmartRemote_CS
                 // This first example will send a "VolumeUp" command value to the device
                 // it asumes we already know the value to send to the device.
                 // We will use the irccCmd we retrieved above in the getIRCCCommandString method.
-                Console.WriteLine(selDev.Name + ": Sending Command Value " + irccCmd + " to device");
-                string results = selDev.send_ircc(irccCmd);
+                Console.WriteLine(mySonyDevice.Name + ": Sending Command Value " + irccCmd + " to device");
+                string results = mySonyDevice.send_ircc(irccCmd);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -320,9 +328,9 @@ namespace SmartRemote_CS
                 #region Example 2
                 // The next example will use the getIRCCcommandString("CommandName") method to get the command value for "VolumeDown".
                 // Then send it to the device
-                Console.WriteLine(selDev.Name + ": Sending Command VolumeDown to device");
-                String mycommand = selDev.getIRCCcommandString("VolumeDown");
-                selDev.send_ircc(mycommand);
+                Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeDown to device");
+                String mycommand = mySonyDevice.getIRCCcommandString("VolumeDown");
+                mySonyDevice.send_ircc(mycommand);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -336,8 +344,8 @@ namespace SmartRemote_CS
 
                 #region Example 3
                 // The next example will use a combination of both examples above for the command "VolumeUp".
-                Console.WriteLine(selDev.Name + ": Sending Command VolumeUp to device again");
-                selDev.send_ircc(selDev.getIRCCcommandString("VolumeUp"));
+                Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeUp to device again");
+                mySonyDevice.send_ircc(mySonyDevice.getIRCCcommandString("VolumeUp"));
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -353,11 +361,11 @@ namespace SmartRemote_CS
                 // The next example will use the "channel_set" method to send a complete channel number.
                 // This example will use channel 47.1 since it is a valid station in my area. You can change this to what ever you need to.
                 // This example should only be used on TV's, as Home theater systems and DVD players will not respond to this!
-                Console.WriteLine(selDev.Name + ": Sending a Set Channel command to device, if device is a TV");
-                string checkChannel = selDev.getIRCCcommandString("ChannelUp");
+                Console.WriteLine(mySonyDevice.Name + ": Sending a Set Channel command to device, if device is a TV");
+                string checkChannel = mySonyDevice.getIRCCcommandString("ChannelUp");
                 if (checkChannel != "")
                 {
-                    selDev.channel_set("47.1");
+                    mySonyDevice.channel_set("47.1");
                     System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
                 }
 
@@ -366,20 +374,19 @@ namespace SmartRemote_CS
                 if (checkChannel != "")
                 {
                     Console.WriteLine("Sent Command: Channel_Set");
-                    Console.WriteLine("Command Value: " + selDev.current_Channel);
+                    Console.WriteLine("Command Value: " + mySonyDevice.current_Channel);
                 }
                 else
                 {
                     Console.WriteLine("Set Channel Not sent, Device is NOT a TV!");
                 }
-                Console.WriteLine("");
-                Console.WriteLine("That's It. Hit any key to quit.");
-                Console.WriteLine("---------------------------------");
-                
-                Console.ReadKey();
+                #endregion
                 #endregion
 
-                #endregion
+                Console.WriteLine("");
+                Console.WriteLine("That's It. Hit any key to quit.");
+                Console.WriteLine("---------------------------------");                
+                Console.ReadKey();
             }
             else
             {

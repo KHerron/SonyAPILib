@@ -72,42 +72,6 @@
             </summary>
             <returns>All Services found</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getRegistrationMode">
-            <summary>
-            Gets the Registration Mode from the ActionList
-            </summary>
-            <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getActionlist(System.String,System.String)">
-            <summary>
-            This method retrieves the DLNA Device Action List XML.
-            </summary>
-            <param name="lAction">This is a string containing the Action name to retrieve</param>
-            <param name="actionList_URL">URL For this devices Action List</param>
-            <returns></returns>
-            
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getActionlist_URL(System.String)">
-            <summary>
-            This method sets the Action List URL found in the DLNA Device Action List XML.
-            </summary>
-            <param name="devName">This is the Name of the Device to get the infromation for</param>
-            
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getControlMac">
-            <summary>
-            getControlMac retrieves the MAC address from the static method GetMacAddress().
-            </summary>
-            <returns>A string containing a processed MAC address. 
-            For example: Actual Mac 01:02:03:04:05:06 returns 01-02-03-04-05-06</returns>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.GetMacAddress">
-            <summary>
-            Static method used to obtain your NIC MAC address.
-            </summary>
-            <returns>A string containing the MAC address of the fastest NIC found in your system.</returns>
-            <remarks>Should not be used publically. Use the getControlMac() method instead.</remarks>
-        </member>
         <member name="P:SonyAPILib.SonyAPI_Lib.Sony_API.actionListUrl">
             <summary>
             Variable for storing the devices Action List URL used in API Class and Discovery.
@@ -212,7 +176,7 @@
             <summary>
             This method gets the IRCC Service Control URL from the description file.
             </summary>
-            /// <param name="devname">A string containing the name of the device to retreive the URL from</param>
+            <param name="devname">A string containing the name of the device to retreive the URL from</param>
             <returns>Returns the URL used to send IRCC commands to device</returns>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getActionlist(System.String,System.String)">
@@ -480,77 +444,77 @@
             Gets or Sets the Devices Option Value
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.Cookie">
+        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCookie">
             <summary>
             Gets or Sets the Sony Device Cookie Container Object
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Comment">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Comment">
             <summary>
             Gets or Sets the Cookie Comment
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.CommentUri">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.CommentUri">
             <summary>
             Gets or Sets the Cookie Comment URI
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.HttpOnly">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.HttpOnly">
             <summary>
             Gets or Sets Cookie for HTTP Only
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Discard">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Discard">
             <summary>
             gets or Sets the Cookie Discard
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Domain">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Domain">
             <summary>
             gets or Sets the Cookie Domain
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Expired">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Expired">
             <summary>
             Gets or Sets the Cookie Expired
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Expires">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Expires">
             <summary>
             Gets or Sets the Cookies Expiration
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Name">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Name">
             <summary>
             Gets or Sets the Cookie Name
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Path">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Path">
             <summary>
             Gets or Sets the Cookie Path
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Port">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Port">
             <summary>
             Gets or Sets the Cookie Port
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Secure">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Secure">
             <summary>
             Gets or Sets the Is Cookie Secure
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.TimeStamp">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.TimeStamp">
             <summary>
             Gets or Sets the Cookie Time Stamp
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Value">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Value">
             <summary>
             Gets or Sets the Cookie Value
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Cookie.Version">
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Version">
             <summary>
             Gets or Sets the Cookie Version
             </summary>
