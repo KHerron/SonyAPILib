@@ -1,4 +1,4 @@
-Sony API Library Example Program SmartRemote_CS
+Sony API Library Example Program: ConsoleExample.EXE
 ===============
 SonyAPILib.dll v5.0 written by: Kirk Herron
 
