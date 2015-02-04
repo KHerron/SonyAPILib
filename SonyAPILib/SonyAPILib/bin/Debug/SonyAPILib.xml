@@ -64,7 +64,7 @@
             sonyDiscover is used to scan and locate all compatiable devices
             </summary>
             <param name="service">Sends null as default. Use urn:schemas to find other service</param>
-            <returns>A list of devices found</returns>
+            <returns>A list of SonyDevices found</returns>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getAllServices">
             <summary>
@@ -132,7 +132,7 @@
             <summary>
             Initializes a NEW Sony Device object with settings manually entered in to each Property.
             </summary>
-            <remarks>Must set Device Name and IP Address!</remarks>
+            <remarks>Must set at least the Device Name and IP Address befotre executing initialize()</remarks>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(SonyAPILib.SonyAPI_Lib.SonyDevice)">
             <summary>
@@ -356,6 +356,7 @@
         <member name="T:SonyAPILib.SonyAPI_Lib.APILogging">
             <summary>
             Sony Device Logging Class
+            Very Basic Logging System to txt file.
             </summary>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.writetolog(System.String,System.Boolean)">

@@ -383,6 +383,7 @@ namespace ConsoleExample
                 #endregion
                 #endregion
 
+                #region Example 5
                 Console.WriteLine("");
                 Console.WriteLine("Now You Try.");
                 Console.WriteLine("Here are the Commands: Hit any key to Continue.");
@@ -396,13 +397,18 @@ namespace ConsoleExample
                 Console.WriteLine("Enter a command from the list above.");
                 cki = Console.ReadLine();
                 results = mySonyDevice.send_ircc(mySonyDevice.getIRCCcommandString(cki));
+                #endregion
+
+                #region Example 6
                 Console.WriteLine("---------------------------------");
                 Console.WriteLine("Now, using your TV remote control, navigate to a search screen.");
-                Console.WriteLine("This can be Pandora, Youtube or any search.");
+                Console.WriteLine("This can be Pandora, Youtube or any search where you enter TEXT.");
                 Console.WriteLine("Now, enter the text here to send.");
                 cki = Console.ReadLine();
                 results = mySonyDevice.send_text(cki);
                 Console.WriteLine("---------------------------------");
+                #endregion
+
                 Console.WriteLine("That's about it for now. Hit enter to Quit.");
                 Console.ReadKey();
             }

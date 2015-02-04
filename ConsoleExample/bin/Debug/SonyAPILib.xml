@@ -1,0 +1,523 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SonyAPILib</name>
+    </assembly>
+    <members>
+        <member name="T:SonyAPILib.SonyAPI_Lib">
+            <summary>
+            Sony API Library
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib._Log">
+            <summary>
+            API Logging Object
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib._API">
+            <summary>
+            API Object
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib._Device">
+            <summary>
+            Device Object
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib._mySony">
+            <summary>
+            UPnP Discovered Services
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.LOG">
+            <summary>
+            Gets or Sets the API Logging Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.API">
+            <summary>
+            Gets or Sets the Sony_API Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.Device">
+            <summary>
+            Gets or Sets the Device Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.mySony">
+            <summary>
+            Gets or Sets the UPnP Services discovered
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.Sony_API">
+            <summary>
+            Class used to Discover Sony devices with the IRCC service via a LAN connection
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.Sony_API.dataSet">
+            <summary>
+            Contains the a Dataset of the Device's Command List
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.sonyDiscover(System.String)">
+            <summary>
+            sonyDiscover is used to scan and locate all compatiable devices
+            </summary>
+            <param name="service">Sends null as default. Use urn:schemas to find other service</param>
+            <returns>A list of SonyDevices found</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.Sony_API.getAllServices">
+            <summary>
+            This method discovers all UPnP services on the LAN.
+            </summary>
+            <returns>All Services found</returns>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.Sony_API.actionListUrl">
+            <summary>
+            Variable for storing the devices Action List URL used in API Class and Discovery.
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.SonyDevice">
+            <summary>
+            Sony Device Object used to Register and Control via Lan connection
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.actionList_URL">
+            <summary>
+            This vairable will contain the retrieved X_XERS_ActionList_URL used in registration and IRCC commands.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.control_URL">
+            <summary>
+            This vairable will contain the IRCC controlURL
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.current_Channel">
+            <summary>
+            This vairable will contain the TV's Current Channel set with the setChannel method.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.current_Volume">
+            <summary>
+            This vairable will contain the TV's Current Volume set with the setVolume method.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.dataSet">
+            <summary>
+            List of Device Commands
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice._socket">
+            <summary>
+            Socket object used with Gen3 devices
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.pincode">
+            <summary>
+            Default PIN code used with Gen3 devices
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.allcookies">
+            <summary>
+            Cookie container for Gen3 Devices
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getAllServices">
+            <summary>
+            This method discovers all UPnP services on the LAN.
+            </summary>
+            <returns>All Services found</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize">
+            <summary>
+            Initializes a NEW Sony Device object with settings manually entered in to each Property.
+            </summary>
+            <remarks>Must set at least the Device Name and IP Address befotre executing initialize()</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.initialize(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Initializes a NEW Sony Device object with settings from a device retrieved from sonyDiscover(device).
+            </summary>
+            <param name="device">A Sony Device object selected from the list obtained with sonyDiscover(device) method.</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.register">
+            <summary>
+            Sends the Registration command to the selected device
+            </summary>
+            <returns>Returns a bool True or False</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.sendAuth(System.String)">
+            <summary>
+            Sends the Authorization PIN code to the Gen3 Device
+            </summary>
+            <param name="pincode"></param>
+            <returns>True or False</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.get_remote_command_list">
+            <summary>
+            This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3 JSON Command List.
+            </summary>
+            <returns>Returns a string containing the contents of the returned XML Command List for your Use</returns>
+            <remarks>This method will also populate the SonyDevice.Commands object list with the retrieved command list</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkReg">
+            <summary>
+            This method Checks the current Status of the device Registration
+            </summary>
+            <returns>Returns a Bool True or False</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkStatus">
+            <summary>
+            This method Gets the current Status of the device
+            </summary>
+            <returns>Returns the device response as a string</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getControlURL(System.String)">
+            <summary>
+            This method gets the IRCC Service Control URL from the description file.
+            </summary>
+            <param name="devname">A string containing the name of the device to retreive the URL from</param>
+            <returns>Returns the URL used to send IRCC commands to device</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getActionlist(System.String,System.String)">
+            <summary>
+            This method retrieves the DLNA Device Action List XML.
+            </summary>
+            <param name="lAction">This is a string containing the Action name to retrieve</param>
+            <param name="actionList_URL">URL For this devices Action List</param>
+            <returns></returns>
+            
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getActionlist_URL(System.String)">
+            <summary>
+            This method sets the Action List URL found in the DLNA Device Action List XML.
+            </summary>
+            <param name="devName">This is the Name of the Device to get the infromation for</param>
+            
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getRegistrationMode">
+            <summary>
+            Gets the Registration Mode from the ActionList.
+            Or uses Gen 3 if no action list is found.
+            </summary>
+            <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.findDevMac">
+            <summary>
+            Method used to retrieve Gen3 Devices Mac Address
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getControlMac">
+            <summary>
+            getControlMac retrieves the MAC address from the static method GetMacAddress().
+            </summary>
+            <returns>A string containing a processed MAC address. 
+            For example: Actual Mac 01:02:03:04:05:06 returns 01-02-03-04-05-06</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.GetMacAddress">
+            <summary>
+            Static method used to obtain your NIC MAC address.
+            </summary>
+            <returns>A string containing the MAC address of the fastest NIC found in your system.</returns>
+            <remarks>Should not be used publically. Use the getControlMac() method instead.</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getIRCCcommandString(System.String)">
+            <summary>
+            This method is used to find the Device Command Value based on the Command Name from the SonyDevice.Commands object list.
+            </summary>
+            <param name="cmdname">A valid command name found in the SonyDevice.Commands object list. (ie: "ChannelUp")</param>
+            <returns>Returns the command value for the matched command name. ie: "AAAAAQAAAAEAAAAQAw==". or returns an empty string if no match is found</returns>
+            <remarks>This can be used with send_ircc("AAAAAQAAAAEAAAAQAw==")
+             like this: send_ircc(getIRCCcommandString("ChannelUp")
+            </remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.send_ircc(System.String)">
+            <summary>
+            This method sends an IRCC command value via an HTTP POST command using SOAP encoding
+            </summary>
+            <param name="irccCode">A string containing a valid IRCC command value retrieved from get_remote_commnd_list(), or getIRCCCommandString(command name)</param>
+            <returns>Returns the device response as a string</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.send_text(System.String)">
+            <summary>
+            This method send Inputed Text via an HTTP GET command
+            </summary>
+            <param name="sendtext">A string containing the text to send to the device</param>
+            <returns>Returns the device response as a string</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.get_text">
+            <summary>
+            This method Gets Text
+            </summary>
+            <returns>Returns the device response as a string</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_1">
+            <summary>
+            Sends a mdf command for input HDMI 1
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_2">
+            <summary>
+            Sends a mdf command for input HDMI 2
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_3">
+            <summary>
+            Sends a mdf command for input HDMI 3
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_4">
+            <summary>
+            Sends a mdf command for input HDMI 4
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.volume_up">
+            <summary>
+            Sends IRCC value for Volume Up
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.volume_down">
+            <summary>
+            Sends IRCC value for Volume Down
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.channel_up">
+            <summary>
+            Sends IRCC value for Channel Up
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.channel_down">
+            <summary>
+            Sends IRCC value for Channel Down
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.channel_set(System.String)">
+            <summary>
+            This public method can be used to tune to a complete channel.
+            </summary>
+            <param name="channel">A string containing a valid complete channel. (ie. 47.1)</param>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Name">
+            <summary>
+            Gets or Sets the Sony Device Object Name
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Generation">
+            <summary>
+            Gets or Sets the Sony Device Object Generation 1, 2 or 3
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_IP_Address">
+            <summary>
+            Gets or Sets the Sony Device Object's IP Address
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Macaddress">
+            <summary>
+            Gets or Sets the Sony Device Object's MAC Address
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Port">
+            <summary>
+            Gets or Sets the Sony Device Object's Port number
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Commands">
+            <summary>
+            Gets or Sets the Sony Device Object's List of Commands
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Macaddress">
+            <summary>
+            Gets or Sets the Mac Address of he controlling device
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Name">
+            <summary>
+            Gets or Sets the Name of he controlling device
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Cookie">
+            <summary>
+            Gets or Sets the Sony Device Gen 3 Object's Authintication Cookie
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Registered">
+            <summary>
+            Gets or Sets the status of registration
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ircc">
+            <summary>
+            Gets or Sets the IRCC UPnP service to send Commands to device
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.APILogging">
+            <summary>
+            Sony Device Logging Class
+            </summary>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.writetolog(System.String,System.Boolean)">
+            <summary>
+            This method writes the log entries to the specified file location.
+            </summary>
+            <param name="message">This is the Text message to be added to the log file</param>
+            <param name="oride">Set to true to ALWAYS log this message. Otherwise set to false</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.clearLog(System.String)">
+            <summary>
+            This method is used to Clear the current log and start a new.
+            </summary>
+            <param name="newName">Default is Null. If NOT Null, Log file is copied to newName before it is Cleared!</param>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.enableLogging">
+            <summary>
+            Gets or Sets Enabling cerDevice API Logging
+            True - Turns Loggin On
+            False - Turns Loggin Off
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.enableLogginglev">
+            <summary>
+            Gets or Sets Enabling cerDevice API Logging Level
+            Basic - for only basic entries
+            All - for all entries
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.loggingPath">
+            <summary>
+            Gets or Sets the cerDevice API logging path
+            Destination Folder MUST exist.
+            Must be Full Path. ex: c:\programdata\sony\
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.loggingName">
+            <summary>
+            Gets or Sets the cerDevice API logging file name
+            Must be a .txt file
+            default is cerDevice_LOG.txt
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCommandList">
+            <summary>
+            Gets or Sets the Sony Command List Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommandList.id">
+            <summary>
+            Gets or Sets the Devices Command List ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommandList.result">
+            <summary>
+            Gets or Sets the Devices Command List Results
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCommands">
+            <summary>
+            Gets or Sets the Sony Device Command
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommands.name">
+            <summary>
+            Gets or Sets the Devices Command Name
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommands.value">
+            <summary>
+            Gets or Sets the Devices Command Value
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.SonyOption">
+            <summary>
+            Gets or Sets the Sony Option object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyOption.option">
+            <summary>
+            Gets or Sets the Devices Option Name
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyOption.value">
+            <summary>
+            Gets or Sets the Devices Option Value
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCookie">
+            <summary>
+            Gets or Sets the Sony Device Cookie Container Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Comment">
+            <summary>
+            Gets or Sets the Cookie Comment
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.CommentUri">
+            <summary>
+            Gets or Sets the Cookie Comment URI
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.HttpOnly">
+            <summary>
+            Gets or Sets Cookie for HTTP Only
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Discard">
+            <summary>
+            gets or Sets the Cookie Discard
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Domain">
+            <summary>
+            gets or Sets the Cookie Domain
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Expired">
+            <summary>
+            Gets or Sets the Cookie Expired
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Expires">
+            <summary>
+            Gets or Sets the Cookies Expiration
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Name">
+            <summary>
+            Gets or Sets the Cookie Name
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Path">
+            <summary>
+            Gets or Sets the Cookie Path
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Port">
+            <summary>
+            Gets or Sets the Cookie Port
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Secure">
+            <summary>
+            Gets or Sets the Is Cookie Secure
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.TimeStamp">
+            <summary>
+            Gets or Sets the Cookie Time Stamp
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Value">
+            <summary>
+            Gets or Sets the Cookie Value
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Version">
+            <summary>
+            Gets or Sets the Cookie Version
+            </summary>
+        </member>
+    </members>
+</doc>

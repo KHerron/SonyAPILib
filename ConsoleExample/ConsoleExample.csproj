@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SonyAPILib">
-      <HintPath>..\..\C#-cers-tv\device\device\bin\Debug\SonyAPILib.dll</HintPath>
+      <HintPath>..\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
