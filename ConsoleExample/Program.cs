@@ -114,13 +114,14 @@ namespace ConsoleExample
                 // From above, selDev or each item in the list fDev[] is a SonyDevice object.
 
                 // To initialize with the default information retrieved from sonyDiscovery, use the following method:
-                // selDev.initialize(fDev[1]) or by setting the index to the device you wish.
+                // mySonyDevice.initialize(fDev[1]) or by setting the index to the device you wish.
 
                 // You can also manually initialize the sonyDevice by setting the device information yourself.
                 // To manually initialize without using sonyDiscovery, use the following method:
-                        // selDev.Name = "NameOfMySonyDevice";
-                        // selDev.Device_IP_Address = "192.168.0.66";
-                        // selDev.initialize();
+                        // mySonyDevice.Name = "NameOfMySonyDevice";
+                        // mySonyDevice.Device_IP_Address = "192.168.0.66";
+                        // mySonyDevice.Server_Name = "TheNameOfMyApplication";
+                        // mySonyDevice.initialize();
                 // This information could be retrieved from a database or other file as your desire.
 
                 // This example will use the first method to initialize the device chosen by the user.

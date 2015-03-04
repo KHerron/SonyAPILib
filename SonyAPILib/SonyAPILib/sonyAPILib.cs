@@ -758,11 +758,64 @@ namespace SonyAPILib
                         string myString = myFile.ReadToEnd();
                         myFile.Close();
                         List<SonyCookie> bal = JsonConvert.DeserializeObject<List<SonyCookie>>(myString);
-                        allcookies.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path),new Cookie(bal[0].Name, bal[0].Value));
-                        this.Cookie = myString;
-                        this.Registered = true;
-                        results = true;
-                        _Log.writetolog(this.Name + ": Cookie Found: auth=" + this.Cookie, false);
+                        
+                        // Check if cookie has expired
+                        _Log.writetolog(this.Name + ": Checking if Cookie is Expired: " + bal[0].Expires, false);
+                        DateTime CT = DateTime.Now;
+                        if (CT > Convert.ToDateTime(bal[0].Expires))
+                        {
+                            _Log.writetolog(this.Name + ": Cookie is Expired!", true);
+                            _Log.writetolog(this.Name + ": Retriving NEW Cookie!", true);
+                            string hostname = this.Server_Name;
+                            string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
+                            try
+                            {
+                                var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.Device_IP_Address + @"/sony/accessControl");
+                                httpWebRequest2.ContentType = "application/json";
+                                httpWebRequest2.Method = "POST";
+                                httpWebRequest2.AllowAutoRedirect = true;
+                                httpWebRequest2.CookieContainer = allcookies;
+                                httpWebRequest2.Timeout = 500;
+                                using (var streamWriter = new StreamWriter(httpWebRequest2.GetRequestStream()))
+                                {
+                                    streamWriter.Write(jsontosend);
+                                }
+                                //string authInfo = "" + ":" + pincode;
+                                //authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                                //httpWebRequest2.Headers["Authorization"] = "Basic " + authInfo;
+                                var httpResponse = (HttpWebResponse)httpWebRequest2.GetResponse();
+                                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                                {
+                                    var responseText = streamReader.ReadToEnd();
+                                    _Log.writetolog("Registration response: " + responseText, false);
+                                }
+                                string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.Device_IP_Address + "/sony/appControl")));
+                                System.IO.StreamWriter file = new System.IO.StreamWriter("cookie.json");
+                                file.WriteLine(answerCookie);
+                                file.Close();
+                                this.Cookie = answerCookie;
+                                bal = JsonConvert.DeserializeObject<List<SonyCookie>>(answerCookie);
+                                allcookies.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
+                                this.Registered = true;
+                                results = true;
+                                _Log.writetolog(this.Name + ": New Cookie auth=" + this.Cookie, false);
+                            }
+                            catch
+                            {
+                                _Log.writetolog(this.Name + ": Failed to retrieve new Cookie", false);
+                                this.Registered = false;
+                                results = false;
+                            }
+
+                        }
+                        else
+                        {
+                            allcookies.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
+                            this.Cookie = myString;
+                            this.Registered = true;
+                            results = true;
+                            _Log.writetolog(this.Name + ": Cookie Found: auth=" + this.Cookie, false);
+                        }
                     }
                     catch 
                     {
