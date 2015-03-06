@@ -38,7 +38,7 @@ namespace SonyAPILib
         /// <summary>
         /// Gets or Sets the UPnP Services discovered
         /// </summary>
-        public Services mySony { get { return _mySony; } set { _mySony = value; } }
+        public Services mySony { get { return  _mySony; } set { _mySony = value; } }
         /// <summary>
         /// API Logging Object
         /// </summary>
@@ -54,7 +54,7 @@ namespace SonyAPILib
         /// <summary>
         /// UPnP Discovered Services
         /// </summary>
-        static Services _mySony;
+        static Services _mySony = _API.getAllServices();
         #endregion
 
         #region API Library
@@ -89,7 +89,7 @@ namespace SonyAPILib
             [STAThread]
             public List<SonyDevice> sonyDiscover(string service = null)
             {
-                _mySony = getAllServices();
+                //_mySony = getAllServices();
                 if (service == null) { service = "IRCC:1"; }
                 _Log.writetolog("UPnP is Discovering devices with a service of: " + service, true);
                 List<SonyDevice> foundDevices = new List<SonyDevice>();
@@ -117,7 +117,7 @@ namespace SonyAPILib
             /// This method discovers all UPnP services on the LAN.
             /// </summary>
             /// <returns>All Services found</returns>
-            private Services getAllServices()
+            public Services getAllServices()
             {
                 Services lsServices = Discovery.FindServices(AddressFamilyFlags.IPvBoth, false);
                 return lsServices;
