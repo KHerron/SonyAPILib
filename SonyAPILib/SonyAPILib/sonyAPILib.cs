@@ -319,6 +319,7 @@ namespace SonyAPILib
                     }
                 }
                 this.getControlURL(this.Name);
+                this.get_remote_command_list();
                 this.checkReg();
                 _Log.writetolog("Device Initialized: " + this.Name, true);
             }
@@ -433,6 +434,7 @@ namespace SonyAPILib
                     this.Device_Macaddress = findDevMac().ToString();
                 }
                 this.getControlURL(this.Name);
+                this.get_remote_command_list();
                 this.checkReg();
                 _Log.writetolog(" Device Initialized: " + this.Name, true);
             }
