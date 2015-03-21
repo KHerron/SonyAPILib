@@ -54,7 +54,7 @@ namespace SonyAPILib
         /// <summary>
         /// UPnP Discovered Services
         /// </summary>
-        static Services _mySony = _API.getAllServices();
+        static Services _mySony = new Services();
         #endregion
 
         #region API Library
@@ -89,7 +89,7 @@ namespace SonyAPILib
             [STAThread]
             public List<SonyDevice> sonyDiscover(string service = null)
             {
-                //_mySony = getAllServices();
+                getAllServices();
                 if (service == null) { service = "IRCC:1"; }
                 _Log.writetolog("UPnP is Discovering devices with a service of: " + service, true);
                 List<SonyDevice> foundDevices = new List<SonyDevice>();
@@ -117,10 +117,10 @@ namespace SonyAPILib
             /// This method discovers all UPnP services on the LAN.
             /// </summary>
             /// <returns>All Services found</returns>
-            public Services getAllServices()
+            public void getAllServices()
             {
                 Services lsServices = Discovery.FindServices(AddressFamilyFlags.IPvBoth, false);
-                return lsServices;
+                _mySony = lsServices;
             }
             #endregion            
         }
@@ -218,10 +218,10 @@ namespace SonyAPILib
             /// This method discovers all UPnP services on the LAN.
             /// </summary>
             /// <returns>All Services found</returns>
-            static Services getAllServices()
+            static void getAllServices()
             {
                 Services lsServices = Discovery.FindServices(AddressFamilyFlags.IPvBoth, false);
-                return lsServices;
+                _mySony = lsServices;
             }
             #endregion
 
@@ -240,6 +240,10 @@ namespace SonyAPILib
                 // Initialize and set Device Variables
                 if (this.actionList_URL == null)
                 {
+                    if (_mySony.Count == 0)
+                    {
+                        getAllServices();
+                    }
                     this.getActionlist_URL(this.Name);
                 }
                 if (this.Generation == 0)
@@ -295,18 +299,18 @@ namespace SonyAPILib
                 {
                     this.Server_Name = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
                 }
-                string service = "IRCC:1";
-                foreach (Service mySonyServ in _mySony)
-                {
-                    if (mySonyServ.Device.FriendlyName == this.Name)
-                    {
-                        string serName = mySonyServ.FriendlyServiceTypeIdentifier.ToString();
-                        if (serName == service)
-                        {
-                            this.ircc = mySonyServ;
-                        }
-                    }
-                }
+                //string service = "IRCC:1";
+                //foreach (Service mySonyServ in _mySony)
+                //{
+                //    if (mySonyServ.Device.FriendlyName == this.Name)
+                //    {
+                //        string serName = mySonyServ.FriendlyServiceTypeIdentifier.ToString();
+                //        if (serName == service)
+                //        {
+                //            this.ircc = mySonyServ;
+                //        }
+                //    }
+                //}
                 if (this.Server_Macaddress == null)
                 {
                     this.Server_Macaddress = getControlMac();
@@ -318,7 +322,14 @@ namespace SonyAPILib
                         this.Device_Macaddress = findDevMac().ToString();
                     }
                 }
-                this.getControlURL(this.Name);
+                if (this.control_URL == null)
+                {
+                    if (_mySony.Count == 0)
+                    {
+                        getAllServices();
+                    }
+                    this.getControlURL(this.Name);
+                }
                 this.get_remote_command_list();
                 this.checkReg();
                 _Log.writetolog("Device Initialized: " + this.Name, true);
@@ -346,6 +357,10 @@ namespace SonyAPILib
                 // Set Action List URL
                 if (device.actionList_URL == null)
                 {
+                    if (_mySony.Count == 0)
+                    {
+                        getAllServices();
+                    }
                     this.getActionlist_URL(this.Name);
                 }
                 else
@@ -416,24 +431,31 @@ namespace SonyAPILib
                 {
                     this.Server_Name = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
                 }
-                string service = "IRCC:1";
-                foreach (Service mySonyServ in _mySony)
-                {
-                    if(mySonyServ.Device.FriendlyName == this.Name)
-                    {
-                        string serName = mySonyServ.FriendlyServiceTypeIdentifier.ToString();
-                        if (serName == service)
-                        {
-                            this.ircc = mySonyServ;
-                        }
-                    }
-                }
+                //string service = "IRCC:1";
+                //foreach (Service mySonyServ in _mySony)
+                //{
+                //    if(mySonyServ.Device.FriendlyName == this.Name)
+                //    {
+                //        string serName = mySonyServ.FriendlyServiceTypeIdentifier.ToString();
+                //        if (serName == service)
+                //        {
+                //            this.ircc = mySonyServ;
+                //        }
+                //    }
+                //}
                 this.Server_Macaddress = getControlMac();
                 if (this.Generation == 3) 
                 { 
                     this.Device_Macaddress = findDevMac().ToString();
                 }
-                this.getControlURL(this.Name);
+                if (device.control_URL == null)
+                {
+                    if (_mySony.Count == 0)
+                    {
+                        getAllServices();
+                    }
+                    this.getControlURL(this.Name);
+                }
                 this.get_remote_command_list();
                 this.checkReg();
                 _Log.writetolog(" Device Initialized: " + this.Name, true);

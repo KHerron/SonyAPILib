@@ -356,6 +356,7 @@
         <member name="T:SonyAPILib.SonyAPI_Lib.APILogging">
             <summary>
             Sony Device Logging Class
+            Very Basic Logging System to txt file.
             </summary>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.writetolog(System.String,System.Boolean)">
