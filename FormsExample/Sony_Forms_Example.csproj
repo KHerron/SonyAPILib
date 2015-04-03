@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{29924990-6F2A-4E19-A03A-90B8455B0A80}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sony_Forms_Example</RootNamespace>
+    <AssemblyName>Sony_Forms_Example</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SonyAPILib">
+      <HintPath>..\..\..\..\OSA Files\Sony API\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3.Designer.cs">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form4.Designer.cs">
+      <DependentUpon>Form4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form4.resx">
+      <DependentUpon>Form4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Stereo-Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TV_icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowd_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowd_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowl.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowl_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowl_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowr_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowr_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowu_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrowu_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blue_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\blue_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\confirm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\confirm_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\confirm_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dot_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dot_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enter_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enter_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastbackwards.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastbackwards_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastbackwards_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastforward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastforward_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fastforward_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\green_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\green_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\guide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\guide_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\guide_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\input.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\input_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\input_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\minus_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\muting.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\muting_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\muting_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num0_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num0_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num1_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num1_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num2_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num2_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num3_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num3_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num4_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num4_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num5_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num5_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num6_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num6_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num7_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num7_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num8_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num8_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num9_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\num9_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\offline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\online.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\options_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\options_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\play_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pwr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\red_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\return.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\return_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\return_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skipbackwards.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skipbackwards_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skipbackwards_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skipforward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skipforward_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\skipforward_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stop_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yellow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yellow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\yellow_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\display.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\display_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\display_hover.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
