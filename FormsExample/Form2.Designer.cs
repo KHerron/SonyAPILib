@@ -154,9 +154,9 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(268, 58);
             this.label3.TabIndex = 8;
-            this.label3.Text = "To increase Performance, include the Action List and Control URL\'s. If Gen3, leav" +
-    "e Action List blank.         Include full URL: ie http://192.168.1.100:8080/sony" +
-    "/IRCC";
+            this.label3.Text = "To increase Performance, include the Action List and Control URL\'s. If Gen3, ente" +
+    "r a Single space for the  Action List or Include full URL: ie http://192.168.1.1" +
+    "00:8080/sony/IRCC";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label4
@@ -208,7 +208,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form2";
             this.Text = "Form2";
-            this.Load += new System.EventHandler(this.Form2_Load_1);
+            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

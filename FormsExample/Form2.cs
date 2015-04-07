@@ -39,7 +39,14 @@ namespace Sony_Forms_Example
                     nDev.Device_IP_Address = r.Cells[1].Value.ToString();
                     if (r.Cells[2].Value != null)
                     {
-                        nDev.actionList_URL = r.Cells[2].Value.ToString();
+                        if (r.Cells[2].Value.ToString() == " ")
+                        {
+                            nDev.actionList_URL = "";
+                        }
+                        else
+                        {
+                            nDev.actionList_URL = r.Cells[2].Value.ToString();
+                        }
                     }
                     if (r.Cells[3].Value != null)
                     {
@@ -73,11 +80,6 @@ namespace Sony_Forms_Example
             dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
         }
 
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             dataGridView1.Refresh();
@@ -99,7 +101,14 @@ namespace Sony_Forms_Example
                     nDev.dIP = r.Cells[1].Value.ToString();
                     if (r.Cells[2].Value != null)
                     {
-                        nDev.dAction = r.Cells[2].Value.ToString();
+                        if (r.Cells[2].Value.ToString() == " ")
+                        {
+                            nDev.dAction = "";
+                        }
+                        else
+                        {
+                            nDev.dAction = r.Cells[2].Value.ToString();
+                        }
                     }
                     if (r.Cells[3].Value != null)
                     {
@@ -144,13 +153,20 @@ namespace Sony_Forms_Example
                 dataGridView1.Refresh();
                 dataGridView1.Rows[i].Cells[0].Value = d.dName;
                 dataGridView1.Rows[i].Cells[1].Value = d.dIP;
-                dataGridView1.Rows[i].Cells[2].Value = d.dAction;
+                if (d.dAction == "")
+                {
+                    dataGridView1.Rows[i].Cells[2].Value = " ";
+                }
+                else
+                {
+                    dataGridView1.Rows[i].Cells[2].Value = d.dAction;
+                }
                 dataGridView1.Rows[i].Cells[3].Value = d.dControl;
                 i++;
             }
         }
 
-        private void Form2_Load_1(object sender, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e)
         {
             if (Program.fDev.Count > 0)
             {
@@ -162,7 +178,14 @@ namespace Sony_Forms_Example
                     dataGridView1.Refresh();
                     dataGridView1.Rows[i].Cells[0].Value = d.Name;
                     dataGridView1.Rows[i].Cells[1].Value = d.Device_IP_Address;
-                    dataGridView1.Rows[i].Cells[2].Value = d.actionList_URL;
+                    if (d.actionList_URL == "")
+                    {
+                        dataGridView1.Rows[i].Cells[2].Value = " ";
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells[2].Value = d.actionList_URL;
+                    }
                     dataGridView1.Rows[i].Cells[3].Value = d.control_URL;
                     i++;
                 }
