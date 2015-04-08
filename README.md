@@ -18,3 +18,5 @@ This library also requires two 3rd party Libraries.
 
 These can be downloaded from several locations on the internet,
 or you can use the provided copies located in the Assemblies folder.
+
+Visit our forum page for more information here https://groups.google.com/d/forum/sony-api-library 
