@@ -1,4 +1,4 @@
-Sony API Library Example Program: ConsoleExample.EXE
+Sony API Library
 ===============
 SonyAPILib.dll v5.0 written by: Kirk Herron
 
