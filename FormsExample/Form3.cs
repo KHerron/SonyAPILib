@@ -18,7 +18,10 @@ namespace Sony_Forms_Example
         public Form3()
         {
             InitializeComponent();
-            Device.DataSource = Program.fDev;
+            foreach (SonyAPI_Lib.SonyDevice d in Program.fDev)
+            {
+                Device.Items.Add(d);
+            }
             Device.DisplayMember = "Name";
             Device.ValueMember = "Name";
             devName.Text = "";
@@ -36,12 +39,6 @@ namespace Sony_Forms_Example
             Commands.DataSource = null;
             Commands.DisplayMember = "Name";
             Commands.ValueMember = "Name";
-            if (Program.fDev.Count > 0)
-            {
-                curDev = Program.fDev[0];
-                curDev.initialize();
-                showDevice(curDev);
-            }
         }
 
         private void showDevice(SonyAPI_Lib.SonyDevice cDev)
@@ -95,6 +92,7 @@ namespace Sony_Forms_Example
             {
                 regButton.Visible = true;
             }
+            this.Refresh();
         }
 
         private void Device_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,6 +100,7 @@ namespace Sony_Forms_Example
             curDev = Program.fDev[Device.SelectedIndex];
             curDev.initialize();
             showDevice(curDev);
+            this.Refresh();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1033,6 +1032,11 @@ namespace Sony_Forms_Example
                     ePin.Dispose();
                 }
             }
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+            Device.SelectedIndex = 0;
         }
     }
 }

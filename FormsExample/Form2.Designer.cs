@@ -30,21 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.DName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DActionList = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DControl = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.OK_but = new System.Windows.Forms.Button();
+            this.Cancel_but = new System.Windows.Forms.Button();
+            this.Add_but = new System.Windows.Forms.Button();
+            this.Delete_But = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.Save_but = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button6 = new System.Windows.Forms.Button();
+            this.Load_but = new System.Windows.Forms.Button();
+            this.DName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DIP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DActionList = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DControl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Generation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,77 +58,56 @@
             this.DName,
             this.DIP,
             this.DActionList,
-            this.DControl});
+            this.DControl,
+            this.Generation});
             this.dataGridView1.Location = new System.Drawing.Point(15, 62);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(548, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(649, 150);
             this.dataGridView1.TabIndex = 0;
             // 
-            // DName
+            // OK_but
             // 
-            this.DName.HeaderText = "Device Name";
-            this.DName.Name = "DName";
+            this.OK_but.Location = new System.Drawing.Point(488, 227);
+            this.OK_but.Name = "OK_but";
+            this.OK_but.Size = new System.Drawing.Size(75, 23);
+            this.OK_but.TabIndex = 1;
+            this.OK_but.Text = "OK";
+            this.toolTip1.SetToolTip(this.OK_but, "Save and Continue");
+            this.OK_but.UseVisualStyleBackColor = true;
+            this.OK_but.Click += new System.EventHandler(this.OK_but_Click);
             // 
-            // DIP
+            // Cancel_but
             // 
-            this.DIP.HeaderText = "Device IP";
-            this.DIP.Name = "DIP";
+            this.Cancel_but.Location = new System.Drawing.Point(407, 227);
+            this.Cancel_but.Name = "Cancel_but";
+            this.Cancel_but.Size = new System.Drawing.Size(75, 23);
+            this.Cancel_but.TabIndex = 2;
+            this.Cancel_but.Text = "Cancel";
+            this.toolTip1.SetToolTip(this.Cancel_but, "Cancel");
+            this.Cancel_but.UseVisualStyleBackColor = true;
+            this.Cancel_but.Click += new System.EventHandler(this.Cancel_but_Click);
             // 
-            // DActionList
+            // Add_but
             // 
-            this.DActionList.HeaderText = "Action List URL";
-            this.DActionList.Name = "DActionList";
-            this.DActionList.Width = 150;
+            this.Add_but.Location = new System.Drawing.Point(15, 227);
+            this.Add_but.Name = "Add_but";
+            this.Add_but.Size = new System.Drawing.Size(75, 23);
+            this.Add_but.TabIndex = 3;
+            this.Add_but.Text = "Add";
+            this.toolTip1.SetToolTip(this.Add_but, "Add a new Device");
+            this.Add_but.UseVisualStyleBackColor = true;
+            this.Add_but.Click += new System.EventHandler(this.Add_but_Click);
             // 
-            // DControl
+            // Delete_But
             // 
-            this.DControl.HeaderText = "Control URL";
-            this.DControl.Name = "DControl";
-            this.DControl.Width = 150;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(488, 227);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "OK";
-            this.toolTip1.SetToolTip(this.button1, "Save and Continue");
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(407, 227);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Cancel";
-            this.toolTip1.SetToolTip(this.button2, "Cancel");
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(15, 227);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Add";
-            this.toolTip1.SetToolTip(this.button3, "Add a new Device");
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(96, 227);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Delete";
-            this.toolTip1.SetToolTip(this.button5, "Delete the selected Device");
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.Delete_But.Location = new System.Drawing.Point(96, 227);
+            this.Delete_But.Name = "Delete_But";
+            this.Delete_But.Size = new System.Drawing.Size(75, 23);
+            this.Delete_But.TabIndex = 5;
+            this.Delete_But.Text = "Delete";
+            this.toolTip1.SetToolTip(this.Delete_But, "Delete the selected Device");
+            this.Delete_But.UseVisualStyleBackColor = true;
+            this.Delete_But.Click += new System.EventHandler(this.Delete_but_Click);
             // 
             // label1
             // 
@@ -168,43 +148,70 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Click Add to add a new device.";
             // 
-            // button4
+            // Save_but
             // 
-            this.button4.Location = new System.Drawing.Point(177, 227);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "Save";
-            this.toolTip1.SetToolTip(this.button4, "Saves this configuration");
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.Save_but.Location = new System.Drawing.Point(177, 227);
+            this.Save_but.Name = "Save_but";
+            this.Save_but.Size = new System.Drawing.Size(75, 23);
+            this.Save_but.TabIndex = 10;
+            this.Save_but.Text = "Save";
+            this.toolTip1.SetToolTip(this.Save_but, "Saves this configuration");
+            this.Save_but.UseVisualStyleBackColor = true;
+            this.Save_but.Click += new System.EventHandler(this.Save_but_Click);
             // 
-            // button6
+            // Load_but
             // 
-            this.button6.Location = new System.Drawing.Point(258, 227);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 11;
-            this.button6.Text = "Load";
-            this.toolTip1.SetToolTip(this.button6, "Loads a Saved Configuration");
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.Load_but.Location = new System.Drawing.Point(258, 227);
+            this.Load_but.Name = "Load_but";
+            this.Load_but.Size = new System.Drawing.Size(75, 23);
+            this.Load_but.TabIndex = 11;
+            this.Load_but.Text = "Load";
+            this.toolTip1.SetToolTip(this.Load_but, "Loads a Saved Configuration");
+            this.Load_but.UseVisualStyleBackColor = true;
+            this.Load_but.Click += new System.EventHandler(this.Load_but_Click);
+            // 
+            // DName
+            // 
+            this.DName.HeaderText = "Device Name";
+            this.DName.Name = "DName";
+            // 
+            // DIP
+            // 
+            this.DIP.HeaderText = "Device IP";
+            this.DIP.Name = "DIP";
+            // 
+            // DActionList
+            // 
+            this.DActionList.HeaderText = "Action List URL";
+            this.DActionList.Name = "DActionList";
+            this.DActionList.Width = 150;
+            // 
+            // DControl
+            // 
+            this.DControl.HeaderText = "Control URL";
+            this.DControl.Name = "DControl";
+            this.DControl.Width = 150;
+            // 
+            // Generation
+            // 
+            this.Generation.HeaderText = "Generation";
+            this.Generation.Name = "Generation";
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(588, 262);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button4);
+            this.ClientSize = new System.Drawing.Size(676, 262);
+            this.Controls.Add(this.Load_but);
+            this.Controls.Add(this.Save_but);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Delete_But);
+            this.Controls.Add(this.Add_but);
+            this.Controls.Add(this.Cancel_but);
+            this.Controls.Add(this.OK_but);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form2";
             this.Text = "Form2";
@@ -218,20 +225,21 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button OK_but;
+        private System.Windows.Forms.Button Cancel_but;
+        private System.Windows.Forms.Button Add_but;
+        private System.Windows.Forms.Button Delete_But;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button Save_but;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button Load_but;
         private System.Windows.Forms.DataGridViewTextBoxColumn DName;
         private System.Windows.Forms.DataGridViewTextBoxColumn DIP;
         private System.Windows.Forms.DataGridViewTextBoxColumn DActionList;
         private System.Windows.Forms.DataGridViewTextBoxColumn DControl;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Generation;
     }
 }

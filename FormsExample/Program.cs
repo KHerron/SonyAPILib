@@ -16,6 +16,7 @@ namespace Sony_Forms_Example
         public class devConfig
         {
             public string dName, dIP, dAction, dControl;
+            public int dGeneration;
         }
         
         /// <summary>
