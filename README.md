@@ -1,6 +1,6 @@
 Sony API Library
 ===============
-SonyAPILib.dll v5.0 written by: Kirk Herron
+SonyAPILib.dll v5.1 written by: Kirk Herron
 
 Works with All 3 Generations of Sony Devices!
 
