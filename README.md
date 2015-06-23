@@ -16,10 +16,15 @@ Party - urn:schemas-upnp-org:service:Party:1
 Files Included:
 
 ConsoleExample.exe  - Sample program that shows how to use the Sony API Library in a console.
+
 DLNAControlPanel - Sample Program that shows how to use all the services and read State Variables.
+
 DLNALib - This is a Command Line application the uses the SonyAPILib v5.2
+
 Sony_Forms_Example - Sample program that shows how to use the Sony API Library in a Windows Forms application.
+
 SonyOff - Another sample program that shows how to use the Sony API Library in a console.
+
 SonyAPILib - The Sony API Library.
 
 This library also requires two 3rd party Libraries.
