@@ -23,7 +23,7 @@ SonyOff - Another sample program that shows how to use the Sony API Library in a
 
 SonyAPILib - The Sony API Library.
 
-This library also requires two 3rd party Libraries.
+This library also requires a 3rd party Libraries.
 ----------------------------------------------------------------------
 1) Newtonsoft.JSON developed by James Newton-King
     (This is located in the Assemblies folder.)
