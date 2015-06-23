@@ -19,14 +19,20 @@ namespace ConsoleExample
         [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("SonyAPILib v5.0 by: Kirk Herron");
+            Console.WriteLine("SonyAPILib v5.2 by: Kirk Herron");
             Console.WriteLine("Starting Console Example Program");
             Console.WriteLine("================================");
             
-            // 1st create new instance of the SonyAPILib
-            // This Class will be used to Discover Sony Devices on the LAN.
+            // 1st we create a new instance of the SonyAPILib
             SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
 
+            // Now create new instances of the UPnP/DLNA services
+            //SonyAPI_Lib.IRCC1 ircc1 = new SonyAPI_Lib.IRCC1();  // Only required if you plan to use this service
+            //SonyAPI_Lib.AVTransport1 avtransport1 = new SonyAPI_Lib.AVTransport1(); // Only required if you plan to use this service
+            //SonyAPI_Lib.ConnectionManager1 connectionmanager1 = new SonyAPI_Lib.ConnectionManager1(); // Only required if you plan to use this service
+            //SonyAPI_Lib.RenderingControl1 renderingcontrol1 = new SonyAPI_Lib.RenderingControl1(); // Only required if you plan to use this service
+            //SonyAPI_Lib.Party1 party1 = new SonyAPI_Lib.Party1(); // Only required if you plan to use this service
+             
             #region Set Logging
             // Next Set the API logging information.
             // Enable Logging: default is set to FALSE.
@@ -55,26 +61,24 @@ namespace ConsoleExample
             mySonyLib.LOG.clearLog(null);
             #endregion
 
-            #region Discovery
+            #region Device Locator
             // Perform a Discovery to find all/any compatiable devices on the LAN.
-            // Returns a list of all Sony Devices that matches service criteria.
-            // Send null as default service to locate Sony devices that support the IRCC service.
-            // If a different service is used, the SonyAPILib may NOT function properly. (To be Used in Future projects)
-            // Return value is a list with each item containg a SonyDevice object.
-            // Each returned object will contain only the Name of the Device along with it's IP Address
-            // All other properties will be filled in when the device is Initialized.
+            // Returns a list of all Devices found through the UPnP Broadcast
+            // Return value is a list containg the Description.xml file for each Device object discovered.
+            // Each returned object will contain the full URL to the devices Description.xml file
+
             Console.WriteLine("Searching for Devices...");
-            List<SonyAPI_Lib.SonyDevice> fDev = mySonyLib.API.sonyDiscover(null);
+            List<string> foundDevices = mySonyLib.Locator.locateDevices();
             #endregion
 
-            // fDev.Count will return the number of devices found
+            // foundDevices.Count will return the number of devices found
             #region Console Output 
-            Console.WriteLine("Device Count: " + fDev.Count);
+            Console.WriteLine("Device Count: " + foundDevices.Count);
             Console.WriteLine("---------------------------------");
             int i = 0;
-            foreach (SonyAPI_Lib.SonyDevice fd in fDev)
+            foreach (string fd in foundDevices)
             {
-                Console.WriteLine(i + " - " + fd.Name);
+                Console.WriteLine(i + " - " + fd.ToString());
                 i = i + 1;
             }
             Console.WriteLine("---------------------------------");
@@ -82,14 +86,17 @@ namespace ConsoleExample
 
             // TODO: Here you can perform task or other code as to which device to select or use.
             // You could also do a For Next loop and go through each one.
+            // Or save the Description.xml URL for later use!
 
-            // This example checks if there are any devices in the list, if not then Exit
-            if (fDev.Count > 0)
+            // This example makes sure that there is at least one object returned in the list, if not then it will Exit.
+            if (foundDevices.Count > 0)
             {
                 // Allow User to select from the devices found which one to test
                 Console.WriteLine("Enter the Device # to Test");
                 string cki;
                 cki = Console.ReadLine();
+
+                // 1st create a new Device Object
                 SonyAPI_Lib.SonyDevice mySonyDevice = new SonyAPI_Lib.SonyDevice();
 
                 // Here you can save the device information to a database or text file.
@@ -100,34 +107,25 @@ namespace ConsoleExample
                 //     1) The Device Name - MUST Match what the device returns as it's name. (selDev.Name)
                 //     2) The IP address of the device. (selDev.Device_IP_Address)
 
-                // Now we initialize a new sonyDevice object with the selected device above.
-                #region initialize
-                // The Initialize method is used to fill in all the other required properties for the device.
-                // For example, during the Initiliation process, the device port, mac, command list and UPnP services are
-                // discovered and set to the device object.
-                // Also the Registered porperty is checked during this process.
-                // However, on Generation 1 devices, this will return a false value if the device is not powered ON.
-                // See Wiki page on GitHub for more information about the Initialize method.
+                // Now we build the new sonyDevice object with the selected device above.
+                #region Build Device from Description.xml file
+                // The buildFromDocument() method will retrieve the devices Description file, and build/populate the device object.
 
-                // You MUST perform an Initialize on the device before doing anything else!
+                // From above, selDev or each item in the list foundDevices[] is a SonyDevice object.
 
-                // From above, selDev or each item in the list fDev[] is a SonyDevice object.
-
-                // To initialize with the default information retrieved from sonyDiscovery, use the following method:
-                // mySonyDevice.initialize(fDev[1]) or by setting the index to the device you wish.
-
-                // You can also manually initialize the sonyDevice by setting the device information yourself.
-                // To manually initialize without using sonyDiscovery, use the following method:
-                        // mySonyDevice.Name = "NameOfMySonyDevice";
-                        // mySonyDevice.Device_IP_Address = "192.168.0.66";
-                        // mySonyDevice.Server_Name = "TheNameOfMyApplication";
-                        // mySonyDevice.initialize();
-                // This information could be retrieved from a database or other file as your desire.
+                // To build the device with the default information retrieved from locateDevices, use the following method:
+                // mySonyDevice.DocumentURL = foundDevices[0].ToString(); or set the array to the device you want.
+                // mySonyDevice.buildFromDocument(new Uri(mySonyDevice.DocumentURL));
 
                 // This example will use the first method to initialize the device chosen by the user.
                 Console.WriteLine("");
-                Console.WriteLine(fDev[Convert.ToInt32(cki)].Name + ": Performing Initilization....");
-                mySonyDevice.initialize(fDev[Convert.ToInt32(cki)]);
+                Console.WriteLine(foundDevices[Convert.ToInt16(cki)].ToString() + ": Building Device....");
+                
+                // Set the devices DocumentUrl property first
+                mySonyDevice.DocumentURL = foundDevices[Convert.ToInt16(cki)].ToString();
+
+                // Then build the device from the document
+                mySonyDevice.buildFromDocument(new Uri(mySonyDevice.DocumentURL));
 
                 #endregion
 
@@ -140,7 +138,9 @@ namespace ConsoleExample
                 //An emplty string "" will be returned if there is no response from the device. This could also mean the device is off.
                 //Also, this method requires the device to be registered on Generation 1 and 2 devices.
                 Console.WriteLine(mySonyDevice.Name + ": Checking Device Status....");
-                string status = mySonyDevice.checkStatus(); 
+                // Without a response: mySonyLib.ircc1.XGetStatus(mySonyDevice);
+                string status = mySonyLib.ircc1.XGetStatus(mySonyDevice);
+                // Use the Device State Variable: if (mySonyDevice.IRCC.sv_CurrentStatus == "" | mySonyDevice.IRCC.sv_CurrentStatus == null)
                 if (status == "" | status == null)
                 {
                     // NO Response!!
@@ -162,7 +162,7 @@ namespace ConsoleExample
 
                 bool mySonyReg = false;
 
-                // first check to see if the initize process determined the registration value.
+                // first check to see if the Build process determined the registration value.
                 if (mySonyDevice.Registered == false)
                 {
                     Console.WriteLine(mySonyDevice.Name + ": Performing Registration....");
@@ -193,7 +193,7 @@ namespace ConsoleExample
                     if (mySonyDevice.Registered == false)
                     {
                         //Check if Generaton 3. If yes, prompt for pin code
-                        if (mySonyDevice.Generation == 3)
+                        if (mySonyDevice.Actionlist.RegisterMode == 3)
                         {
                             string ckii;
                             Console.WriteLine("Enter PIN Code.");
@@ -227,12 +227,11 @@ namespace ConsoleExample
                     Console.WriteLine("Mac Address: " + mySonyDevice.Device_Macaddress);
                     Console.WriteLine("IP Address: " + mySonyDevice.Device_IP_Address);
                     Console.WriteLine("Port: " + mySonyDevice.Device_Port);
-                    Console.WriteLine("Generation: " + mySonyDevice.Generation);
+                    Console.WriteLine("Registration Mode: " + mySonyDevice.Actionlist.RegisterMode);
                     Console.WriteLine("Registration: " + mySonyDevice.Registered.ToString());
                     Console.WriteLine("Server Name: " + mySonyDevice.Server_Name);
                     Console.WriteLine("Server Mac: " + mySonyDevice.Server_Macaddress);
-                    Console.WriteLine("Action List URL: " + mySonyDevice.actionList_URL);
-                    Console.WriteLine("IRCC Control URL: " + mySonyDevice.control_URL);
+                    Console.WriteLine("Action List URL: " + mySonyDevice.Actionlist_Url);
                     Console.WriteLine("---------------------------------");
                     Console.WriteLine("");
                 }
@@ -314,7 +313,12 @@ namespace ConsoleExample
                 // it asumes we already know the value to send to the device.
                 // We will use the irccCmd we retrieved above in the getIRCCCommandString method.
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command Value " + irccCmd + " to device");
-                string results = mySonyDevice.send_ircc(irccCmd);
+               
+                //renderingcontrol1.SetMute(mySonyDevice, true);
+                //renderingcontrol1.SetMute(mySonyDevice, false);
+                //connectionmanager1.GetProtocolInfo(mySonyDevice);
+
+                string results = mySonyLib.ircc1.XSendIRCC(mySonyDevice,irccCmd);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -331,7 +335,7 @@ namespace ConsoleExample
                 // Then send it to the device
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeDown to device");
                 String mycommand = mySonyDevice.getIRCCcommandString("VolumeDown");
-                mySonyDevice.send_ircc(mycommand);
+                results = mySonyLib.ircc1.XSendIRCC(mySonyDevice,mycommand);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -346,7 +350,7 @@ namespace ConsoleExample
                 #region Example 3
                 // The next example will use a combination of both examples above for the command "VolumeUp".
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeUp to device again");
-                mySonyDevice.send_ircc(mySonyDevice.getIRCCcommandString("VolumeUp"));
+                mySonyLib.ircc1.XSendIRCC(mySonyDevice, mySonyDevice.getIRCCcommandString("VolumeUp"));
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -355,32 +359,6 @@ namespace ConsoleExample
                 Console.WriteLine("Hit any key to continue");
                 Console.WriteLine("---------------------------------");
                 Console.ReadKey();
-                #endregion
-                #endregion
-
-                #region Example 4
-                // The next example will use the "channel_set" method to send a complete channel number.
-                // This example will use channel 47.1 since it is a valid station in my area. You can change this to what ever you need to.
-                // This example should only be used on TV's, as Home theater systems and DVD players will not respond to this!
-                Console.WriteLine(mySonyDevice.Name + ": Sending a Set Channel command to device, if device is a TV");
-                string checkChannel = mySonyDevice.getIRCCcommandString("ChannelUp");
-                if (checkChannel != "")
-                {
-                    mySonyDevice.channel_set("47.1");
-                    System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
-                }
-
-                #region Console Output
-                // Show the Set Channel Information
-                if (checkChannel != "")
-                {
-                    Console.WriteLine("Sent Command: Channel_Set");
-                    Console.WriteLine("Command Value: " + mySonyDevice.current_Channel);
-                }
-                else
-                {
-                    Console.WriteLine("Set Channel Not sent, Device is NOT a TV!");
-                }
                 #endregion
                 #endregion
 
@@ -397,7 +375,7 @@ namespace ConsoleExample
                 Console.WriteLine("---------------------------------");
                 Console.WriteLine("Enter a command from the list above.");
                 cki = Console.ReadLine();
-                results = mySonyDevice.send_ircc(mySonyDevice.getIRCCcommandString(cki));
+                results = mySonyLib.ircc1.XSendIRCC(mySonyDevice, mySonyDevice.getIRCCcommandString(cki));
                 #endregion
 
                 #region Example 6

@@ -1,0 +1,70 @@
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe.config
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.pdb
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.dll
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\ManagedUPnP.dll
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Newtonsoft.Json.dll
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.pdb
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.xml
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\ManagedUPnP.pdb
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\ManagedUPnP.xml
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csprojResolveAssemblyReference.cache
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form1.resources
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Properties.Resources.resources
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csproj.GenerateResource.Cache
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.exe
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.pdb
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form2.resources
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form3.resources
+F:\VS_Test\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form4.resources
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe.config
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.dll
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\ManagedUPnP.dll
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Newtonsoft.Json.dll
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\ManagedUPnP.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\ManagedUPnP.xml
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csprojResolveAssemblyReference.cache
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form1.resources
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form2.resources
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form3.resources
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form4.resources
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Properties.Resources.resources
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csproj.GenerateResource.Cache
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.exe
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.1\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.xml
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csprojResolveAssemblyReference.cache
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form1.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form2.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form3.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form4.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Properties.Resources.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csproj.GenerateResource.Cache
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.exe
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe.config
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.dll
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Newtonsoft.Json.dll
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.xml
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe.config
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.exe
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Sony_Forms_Example.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.xml
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form1.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form3.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Form4.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Properties.Resources.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csproj.GenerateResource.Cache
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.exe
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.Devices.resources
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\obj\Debug\Sony_Forms_Example.csprojResolveAssemblyReference.cache
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.dll
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\Newtonsoft.Json.dll
+F:\OSA Files\Sony API\SonyAPILib_5.2\Sony_Forms_Example\Sony_Forms_Example\bin\Debug\SonyAPILib.pdb
