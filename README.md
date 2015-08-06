@@ -9,8 +9,9 @@ SonyAPILib.dll is an API written in C# to help developers create applications th
 RenderingControl - urn:schemas-upnp-org:service:RenderingControl:1  
 AVTransport - urn:schemas-upnp-org:service:AVTransport:1  
 Connection Mannager - urn:schemas-upnp-org:service:ConnectionManager:1  
-IRCC - urn:schemas-sony-com:service:IRCC:1  
 Party - urn:schemas-upnp-org:service:Party:1  
+IRCC - urn:schemas-sony-com:service:IRCC:1  
+
 
 
 Files Included:
@@ -23,7 +24,7 @@ SonyOff - Another sample program that shows how to use the Sony API Library in a
 
 SonyAPILib - The Sony API Library.
 
-This library also requires a 3rd party Libraries.
+This library also requires a 3rd party Library.
 ----------------------------------------------------------------------
 1) Newtonsoft.JSON developed by James Newton-King
     (This is located in the Assemblies folder.)
