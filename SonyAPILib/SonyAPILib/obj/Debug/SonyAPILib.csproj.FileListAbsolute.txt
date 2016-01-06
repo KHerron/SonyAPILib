@@ -24,3 +24,6 @@ F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\bin\Debug\Newtonsoft.
 F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.dll
 F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.pdb
 F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.dll
+F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.csprojResolveAssemblyReference.cache
+F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.dll.CodeAnalysisLog.xml
+F:\OSA Files\Sony API\SonyAPILib_5.2\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.dll.lastcodeanalysissucceeded

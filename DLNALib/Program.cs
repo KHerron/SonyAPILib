@@ -28,8 +28,8 @@ namespace DLNALib
             #region Logging
             if (args[args.Length - 1] == "/log")
             {
-                mySonyLib.LOG.enableLogging = true;
-                mySonyLib.LOG.enableLogginglev = "All";
+                mySonyLib.LOG.Enable = true;
+                mySonyLib.LOG.Level = "All";
             }
             #endregion
 
@@ -175,6 +175,7 @@ namespace DLNALib
                     string devService = "";
                     string devAction = "";
                     string devP = "";
+                    string devP2 = "";
                     devFile = args[1];
                     devService = args[2];
                     devAction = args[3];
@@ -189,7 +190,64 @@ namespace DLNALib
                     }
                     else if (devService == "AVTransport")
                     {
-
+                        if (devAction == "SetAVTransportURI")
+                        {
+                            if (args.Length > 5)
+                            {
+                                if (args[5] != "/log")
+                                {
+                                    devP2 = args[5];
+                                }
+                                else
+                                {
+                                    devP2 = null;
+                                }
+                            }
+                            else
+                            {
+                                devP = null;
+                            }
+                            mySonyLib.avtransport1.SetAVTransportURI(device, devP,devP2);
+                        }
+                        if (devAction == "SetNextAVTransportURI")
+                        {
+                            if (args.Length > 5)
+                            {
+                                if (args[5] != "/log")
+                                {
+                                    devP2 = args[5];
+                                }
+                                else
+                                {
+                                    devP2 = null;
+                                }
+                            }
+                            else
+                            {
+                                devP2 = null;
+                            }
+                            mySonyLib.avtransport1.SetNextAVTransportURI(device, devP, devP2);
+                        }
+                        if (devAction == "Play")
+                        {
+                            mySonyLib.avtransport1.Play(device, Convert.ToInt32(devP));
+                        }
+                        if (devAction == "Stop")
+                        {
+                            mySonyLib.avtransport1.Stop(device);
+                        }
+                        if (devAction == "Pause")
+                        {
+                            mySonyLib.avtransport1.Pause(device);
+                        }
+                        if (devAction == "Next")
+                        {
+                            mySonyLib.avtransport1.Next(device);
+                        }
+                        if (devAction == "Previous")
+                        {
+                            mySonyLib.avtransport1.Previous(device);
+                        }
                     }
                     else if (devService == "ConnectionManager")
                     {

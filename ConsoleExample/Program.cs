@@ -36,23 +36,23 @@ namespace ConsoleExample
             #region Set Logging
             // Next Set the API logging information.
             // Enable Logging: default is set to FALSE.
-            mySonyLib.LOG.enableLogging = true;
+            mySonyLib.LOG.Enable = true;
 
             // Set Logging Level. 
             // Set to "Basic" to only Log Minimum information
             // Set to "All" for all Logging information
             // Default is set to "Basic"
-            mySonyLib.LOG.enableLogginglev = "All";
+            mySonyLib.LOG.Level = "All";
 
             // Set where the logging file will be saved.
             // Folder will be created if it does not exist!
             // Set to Null to use Default
             // Default is set to C:\ProgramData\Sony
-            mySonyLib.LOG.loggingPath = null;
+            mySonyLib.LOG.Path = null;
 
             // Set the name of the Logging file.
             // Default is set to SonyAPILib_LOG.txt
-            mySonyLib.LOG.loggingName = "SonyAPILib_LOG.txt";
+            mySonyLib.LOG.Name = "SonyAPILib_LOG.txt";
 
             // Clears the existing log file and starts a new one
             // Send Null as the param to just clear the file and start a new one

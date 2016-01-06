@@ -22,17 +22,17 @@ namespace DLNA_Control_Panel
         public Form1()
         {
             InitializeComponent();
-            mySonyLib.LOG.enableLogging = true;
-            mySonyLib.LOG.enableLogginglev = "All";
+            mySonyLib.LOG.Enable = true;
+            mySonyLib.LOG.Level = "All";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoggEnabled.Text = mySonyLib.LOG.enableLogging.ToString();
-            LogLevel.Text = mySonyLib.LOG.enableLogginglev.ToString();
-            LogName.Text = mySonyLib.LOG.loggingName.ToString();
-            LogPath.Text = mySonyLib.LOG.loggingPath.ToString();
-            UpdateLog(mySonyLib.LOG.loggingPath.ToString(), mySonyLib.LOG.loggingName.ToString());
+            LoggEnabled.Text = mySonyLib.LOG.Enable.ToString();
+            LogLevel.Text = mySonyLib.LOG.Level.ToString();
+            LogName.Text = mySonyLib.LOG.Name.ToString();
+            LogPath.Text = mySonyLib.LOG.Path.ToString();
+            UpdateLog(mySonyLib.LOG.Path.ToString(), mySonyLib.LOG.Name.ToString());
         }
 
         private void UpdateLog(String Path, String Name)
@@ -286,7 +286,7 @@ namespace DLNA_Control_Panel
             logEchgBut.Visible = true;
             LoggEnabled.Enabled = false;
             logEsetBut.Visible = false;
-             mySonyLib.LOG.enableLogging = Convert.ToBoolean(LoggEnabled.Text);
+             mySonyLib.LOG.Enable = Convert.ToBoolean(LoggEnabled.Text);
         }
 
         private void logLsetBut_Click(object sender, EventArgs e)
@@ -294,7 +294,7 @@ namespace DLNA_Control_Panel
             logLchgBut.Visible = true;
             LogLevel.Enabled = false;
             logLsetBut.Visible = false;
-             mySonyLib.LOG.enableLogginglev = LogLevel.Text;
+             mySonyLib.LOG.Level = LogLevel.Text;
         }
 
         private void logNsetBut_Click(object sender, EventArgs e)
@@ -302,7 +302,7 @@ namespace DLNA_Control_Panel
             logNchgBut.Visible = true;
             LogName.Enabled = false;
             logNsetBut.Visible = false;
-             mySonyLib.LOG.loggingName = LogName.Text;
+             mySonyLib.LOG.Name = LogName.Text;
         }
 
         private void logPsetBut_Click(object sender, EventArgs e)
@@ -310,7 +310,7 @@ namespace DLNA_Control_Panel
             logPchgBut.Visible = true;
             LogPath.Enabled = false;
             logPsetBut.Visible = false;
-            mySonyLib.LOG.loggingPath = LogPath.Text;
+            mySonyLib.LOG.Path = LogPath.Text;
         }
 
         private void irccservCmds_SelectedIndexChanged(object sender, EventArgs e)

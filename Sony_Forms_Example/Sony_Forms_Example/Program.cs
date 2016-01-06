@@ -11,13 +11,6 @@ namespace Sony_Forms_Example
     {
         public static SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
         public static List<SonyAPI_Lib.SonyDevice> fDev = new List<SonyAPI_Lib.SonyDevice>();
-
-        //[Serializable]
-        //public class devConfig
-        //{
-        //    public string dName, dIP, dAction, dControl;
-        //    public int dGeneration;
-        //}
         
         /// <summary>
         /// The main entry point for the application.

@@ -249,16 +249,6 @@
             Re4nderingControl:1 Service Description class
             </summary>
         </member>
-        <member name="F:SonyAPILib.renderingcontrol.sv_Channel">
-            <summary>
-            Gets or Sets the State Variable for the Channel(Master).
-            </summary>
-        </member>
-        <member name="F:SonyAPILib.renderingcontrol.sv_InstanceID">
-            <summary>
-            Gets or Sets the State Variable for the Instance ID (0).
-            </summary>
-        </member>
         <member name="P:SonyAPILib.renderingcontrol.serviceType">
             <summary>
             Gets or Sets the Service Type
@@ -307,6 +297,16 @@
         <member name="P:SonyAPILib.renderingcontrol.sv_Volume">
             <summary>
             Gets or Sets the State Variable for the Volume state.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.renderingcontrol.sv_Channel">
+            <summary>
+            Gets or Sets the State Variable for the Channel(Master).
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.renderingcontrol.sv_InstanceID">
+            <summary>
+            Gets or Sets the State Variable for the Instance ID (0).
             </summary>
         </member>
         <member name="P:SonyAPILib.renderingcontrol.sv_PresetName">
@@ -394,7 +394,7 @@
             Gets or Sets the State Variable for the Proticol Information.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ProticolSink">
+        <member name="P:SonyAPILib.connectionmanager.sv_ProtocolSink">
             <summary>
             Gets or Sets the State Variable for the Proticol Sink.
             </summary>
@@ -574,37 +574,19 @@
             Gets or Sets the State Variable for the Current Status
             </summary>
         </member>
-        <member name="T:Extentions">
-            <summary>
-            Extra Extention Class
-            </summary>
-        </member>
-        <member name="M:Extentions.ChopOffBefore(System.String,System.String)">
-            <summary>
-            Chops Off all characters Before parameter
-            </summary>
-            <param name="s">The Full sting</param> 
-            <param name="Before">The string to chop off to</param> 
-        </member>
-        <member name="M:Extentions.ChopOffAfter(System.String,System.String)">
-            <summary>
-            Chops Off all characters After parameter
-            </summary>
-            <param name="s">The Full sting</param> 
-            <param name="After">The string to chop off after</param> 
-        </member>
-        <member name="M:Extentions.ReplaceIgnoreCase(System.String,System.String,System.String)">
-            <summary>
-            Replaces string contents while ignoring case
-            </summary>
-            <param name="Source">The Full sting</param> 
-            <param name="Pattern">The string to remove</param> 
-            <param name="Replacement">The string to replace</param>
-            <returns>Returns replaced string</returns>
-        </member>
         <member name="T:SonyAPILib.SonyAPI_Lib">
             <summary>
             Sony API Library
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.LOG">
+            <summary>
+            Gets or Sets the API Logging Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.Locator">
+            <summary>
+            Gets or Sets the Sony_API Object
             </summary>
         </member>
         <member name="F:SonyAPILib.SonyAPI_Lib.ircc1">
@@ -642,16 +624,6 @@
             API Object
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.LOG">
-            <summary>
-            Gets or Sets the API Logging Object
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Locator">
-            <summary>
-            Gets or Sets the Sony_API Object
-            </summary>
-        </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.Locate">
             <summary>
             Class used to Discover Sony devices with the IRCC service via a LAN connection
@@ -662,9 +634,14 @@
             Contains the a Dataset of the Device's Command List
             </summary>
         </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.Locate.actionListUrl">
+            <summary>
+            Variable for storing the devices Action List URL used in API Class and Discovery.
+            </summary>
+        </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.Locate.locateDevices">
             <summary>
-            Execute to scan and locate all compatiable devices on network
+            Execute an SSDP Scan to locate any UPnP/DLNA devices on the network
             </summary>
             <returns>A list containing the full URL to each device's Description.xml file</returns>
         </member>
@@ -681,14 +658,89 @@
             <param name="path">Full path including File Name: c://temp/device.xml</param>
             <param name="dev">The Device Object to save.</param>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Locate.actionListUrl">
-            <summary>
-            Variable for storing the devices Action List URL used in API Class and Discovery.
-            </summary>
-        </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.SonyDevice">
             <summary>
             Sony Device Object used to Register and Control via Lan connection
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Name">
+            <summary>
+            Gets or Sets the Sony Device Object Name
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Manufacture">
+            <summary>
+            Gets or Sets the Sony Device Manufacture
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelName">
+            <summary>
+            Gets or Sets the Sony Device Model Name
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelDescription">
+            <summary>
+            Gets or Sets the Sony Device Model Description
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelNumber">
+            <summary>
+            Gets or Sets the Sony Device Model Number
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.UDN">
+            <summary>
+            Gets or Sets the Sony Device Unique Identifier Number
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.DeviceType">
+            <summary>
+            Gets or Sets the Sony Device type Identifier
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_IP_Address">
+            <summary>
+            Gets or Sets the Sony Device Object's IP Address
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Macaddress">
+            <summary>
+            Gets or Sets the Sony Device Object's MAC Address
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Port">
+            <summary>
+            Gets or Sets the Sony Device Object's Port number
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Commands">
+            <summary>
+            Gets or Sets the Sony Device Object's List of Commands
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Macaddress">
+            <summary>
+            Gets or Sets the Mac Address of he controlling device
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Name">
+            <summary>
+            Gets or Sets the Name of he controlling device
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Cookie">
+            <summary>
+            Gets or Sets the Sony Device Gen 3 Object's Authintication Cookie
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Registered">
+            <summary>
+            Gets or Sets the status of registration
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Actionlist_Url">
+            <summary>
+            This will contain the retrieved X_CERS_ActionList_URL used in registration and other commands.
             </summary>
         </member>
         <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.Actionlist">
@@ -734,6 +786,11 @@
         <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.IRCC">
             <summary>
             Gets or Sets the IRCC Service if it exist
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.DocumentURL">
+            <summary>
+            Gets or Sets the Devices Document URL
             </summary>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.register">
@@ -900,95 +957,38 @@
             Sends the device a "Wake-On-Lan" command
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Name">
-            <summary>
-            Gets or Sets the Sony Device Object Name
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Manufacture">
-            <summary>
-            Gets or Sets the Sony Device Manufacture
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelName">
-            <summary>
-            Gets or Sets the Sony Device Model Name
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelDescription">
-            <summary>
-            Gets or Sets the Sony Device Model Description
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelNumber">
-            <summary>
-            Gets or Sets the Sony Device Model Number
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.UDN">
-            <summary>
-            Gets or Sets the Sony Device Unique Identifier Number
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.DeviceType">
-            <summary>
-            Gets or Sets the Sony Device type Identifier
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_IP_Address">
-            <summary>
-            Gets or Sets the Sony Device Object's IP Address
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Macaddress">
-            <summary>
-            Gets or Sets the Sony Device Object's MAC Address
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Port">
-            <summary>
-            Gets or Sets the Sony Device Object's Port number
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Commands">
-            <summary>
-            Gets or Sets the Sony Device Object's List of Commands
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Macaddress">
-            <summary>
-            Gets or Sets the Mac Address of he controlling device
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Name">
-            <summary>
-            Gets or Sets the Name of he controlling device
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Cookie">
-            <summary>
-            Gets or Sets the Sony Device Gen 3 Object's Authintication Cookie
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Registered">
-            <summary>
-            Gets or Sets the status of registration
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Actionlist_Url">
-            <summary>
-            This will contain the retrieved X_CERS_ActionList_URL used in registration and other commands.
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.DocumentURL">
-            <summary>
-            Gets or Sets the Devices Document URL
-            </summary>
-        </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.APILogging">
             <summary>
             Sony Device Logging Class
             Very Basic Logging System to txt file.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Enable">
+            <summary>
+            Gets or Sets Enabling cerDevice API Logging
+            True - Turns Loggin On
+            False - Turns Loggin Off
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Level">
+            <summary>
+            Gets or Sets Enabling cerDevice API Logging Level
+            Basic - for only basic entries
+            All - for all entries
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Path">
+            <summary>
+            Gets or Sets the cerDevice API logging path
+            Destination Folder MUST exist.
+            Must be Full Path. ex: c:\programdata\sony\
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Name">
+            <summary>
+            Gets or Sets the cerDevice API logging file name
+            Must be a .txt file
+            default is cerDevice_LOG.txt
             </summary>
         </member>
         <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.writetolog(System.String,System.Boolean)">
@@ -1003,34 +1003,6 @@
             This method is used to Clear the current log and start a new.
             </summary>
             <param name="newName">Default is Null. If NOT Null, Log file is copied to newName before it is Cleared!</param>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.enableLogging">
-            <summary>
-            Gets or Sets Enabling cerDevice API Logging
-            True - Turns Loggin On
-            False - Turns Loggin Off
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.enableLogginglev">
-            <summary>
-            Gets or Sets Enabling cerDevice API Logging Level
-            Basic - for only basic entries
-            All - for all entries
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.loggingPath">
-            <summary>
-            Gets or Sets the cerDevice API logging path
-            Destination Folder MUST exist.
-            Must be Full Path. ex: c:\programdata\sony\
-            </summary>
-        </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.loggingName">
-            <summary>
-            Gets or Sets the cerDevice API logging file name
-            Must be a .txt file
-            default is cerDevice_LOG.txt
-            </summary>
         </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.SonyCommandList">
             <summary>
@@ -1308,131 +1280,6 @@
             Gets the service type identifier for the RenderingControl1 service.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetAVTransportURI(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String)">
-            <summary>
-            Executes the SetAVTransportURI action.
-            </summary>
-            <param name="parent">The Parent Device object to execute this action on.</param>
-            <param name="currentURI">In value for the CurrentURI action parameter.</param>
-            <param name="currentURIMetaData">In value for the CurrentURIMetaData action parameter.</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetNextAVTransportURI(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String,System.UInt32)">
-            <summary>
-            Executes the SetNextAVTransportURI action.
-            </summary>
-            <param name="parent">The Parent Device object to execute this action on.</param>
-            <param name="instanceID">In value for the InstanceID action parameter.</param>
-            <param name="nextURI">In value for the NextURI action parameter.</param>
-            <param name="nextURIMetaData">In value for the NextURIMetaData action parameter.</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetMediaInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the GetMediaInfo action.
-            </summary>
-            <param name="parent">The Device object to execute the request on.</param>
-            <remarks>Populates the following State Variable: Number of Tracks, Track Duration, Track Meta Data, Track URI, Next URI, Next URI Meta Data, Record Medium and Current Record Write Status.</remarks>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetTransportInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the GetTransportInfo action.
-            </summary>
-            <param name="parent">The Parent Device object to execute this action on.</param>
-            <remarks>Populates the following State Variables: Current Transport State, Current Transport Status, Current Play Speed</remarks>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetPosition(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the GetPositionInfo action.
-            </summary>
-            <param name="parent">The Parent Device object to execute this action on.</param>
-            <remarks>Populates the following State Variables: Curent Track, Track Duration, Track Meta Data, Track URI, Relative Time, Absolute Time, Relative Counter and Absolute Counter.</remarks>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetDeviceCapabilities(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the GetDeviceCapabilities action.
-            </summary>
-            <param name="parent">The Parent Device object to execute this action on.</param>
-            <remarks>Populates the following State Variables: PlayBack Medium, Record Medium and Available Record Quality Modes</remarks>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetTransportSettings(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the GetTransportSettings action.
-            </summary>
-            <param name="parent">The Parent Device object to execute this action on.</param>
-            <remarks>Populates the following State Variables: Current Play Mode, Record Quality Mode</remarks>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Stop(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the Stop action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Play(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32)">
-            <summary>
-            Executes the Play action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-            <param name="speed">In value for the Speed action parameter.</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Pause(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the Pause action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Seek(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32,System.String)">
-            <summary>
-            Executes the Seek action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-            <param name="unit">In value for the Unit action parameter.</param>
-            <param name="target">In value for the Target action parameter.</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Next(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the Next action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Previous(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the Previous action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetPlayMode(SonyAPILib.SonyAPI_Lib.SonyDevice,SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum)">
-            <summary>
-            Executes the SetPlayMode action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-            <param name="newPlayMode">In value for the NewPlayMode action parameter. Default value of NORMAL.</param>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetCurrentTransportActions(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the GetCurrentTransportActions action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-            <returns>Out value for the Actions action parameter.</returns>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.XGetOperationList(SonyAPILib.SonyAPI_Lib.SonyDevice)">
-            <summary>
-            Executes the XGetOperationList action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-            <returns>Out value for the OperationList action parameter.</returns>
-        </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.XExecuteOperation(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String)">
-            <summary>
-            Executes the XExecuteOperation action.
-            </summary>
-            <param name="parent">The Device object to execute the request on</param>
-            <param name="actionDirective">In value for the ActionDirective action parameter.</param>
-            <returns>Out value for the Result action parameter.</returns>
-        </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.ReturnCode">
-            <summary>
-            Socket Return Code
-            </summary>
-        </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum">
             <summary>
             Gets the enumeration type to hold a value for the TransportState state variable.
@@ -1613,6 +1460,130 @@
             Value describing an invalid or unknown AARGTYPESeekMode value.
             </summary>
         </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetAVTransportURI(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String)">
+            <summary>
+            Executes the SetAVTransportURI action.
+            </summary>
+            <param name="parent">The Parent Device object to execute this action on.</param>
+            <param name="currentURI">In value for the CurrentURI action parameter.</param>
+            <param name="currentURIMetaData">In value for the CurrentURIMetaData action parameter.</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetNextAVTransportURI(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String)">
+            <summary>
+            Executes the SetNextAVTransportURI action.
+            </summary>
+            <param name="parent">The Parent Device object to execute this action on.</param>
+            <param name="nextURI">In value for the NextURI action parameter.</param>
+            <param name="nextURIMetaData">In value for the NextURIMetaData action parameter.</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetMediaInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the GetMediaInfo action.
+            </summary>
+            <param name="parent">The Device object to execute the request on.</param>
+            <remarks>Populates the following State Variable: Number of Tracks, Track Duration, Track Meta Data, Track URI, Next URI, Next URI Meta Data, Record Medium and Current Record Write Status.</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetTransportInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the GetTransportInfo action.
+            </summary>
+            <param name="parent">The Parent Device object to execute this action on.</param>
+            <remarks>Populates the following State Variables: Current Transport State, Current Transport Status, Current Play Speed</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetPosition(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the GetPositionInfo action.
+            </summary>
+            <param name="parent">The Parent Device object to execute this action on.</param>
+            <remarks>Populates the following State Variables: Curent Track, Track Duration, Track Meta Data, Track URI, Relative Time, Absolute Time, Relative Counter and Absolute Counter.</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetDeviceCapabilities(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the GetDeviceCapabilities action.
+            </summary>
+            <param name="parent">The Parent Device object to execute this action on.</param>
+            <remarks>Populates the following State Variables: PlayBack Medium, Record Medium and Available Record Quality Modes</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetTransportSettings(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the GetTransportSettings action.
+            </summary>
+            <param name="parent">The Parent Device object to execute this action on.</param>
+            <remarks>Populates the following State Variables: Current Play Mode, Record Quality Mode</remarks>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Stop(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the Stop action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Play(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32)">
+            <summary>
+            Executes the Play action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+            <param name="speed">In value for the Speed action parameter.</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Pause(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the Pause action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Seek(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32,System.String)">
+            <summary>
+            Executes the Seek action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+            <param name="unit">In value for the Unit action parameter.</param>
+            <param name="target">In value for the Target action parameter.</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Next(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the Next action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Previous(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the Previous action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetPlayMode(SonyAPILib.SonyAPI_Lib.SonyDevice,SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum)">
+            <summary>
+            Executes the SetPlayMode action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+            <param name="newPlayMode">In value for the NewPlayMode action parameter. Default value of NORMAL.</param>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetCurrentTransportActions(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the GetCurrentTransportActions action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+            <returns>Out value for the Actions action parameter.</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.XGetOperationList(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+            <summary>
+            Executes the XGetOperationList action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+            <returns>Out value for the OperationList action parameter.</returns>
+        </member>
+        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.XExecuteOperation(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String)">
+            <summary>
+            Executes the XExecuteOperation action.
+            </summary>
+            <param name="parent">The Device object to execute the request on</param>
+            <param name="actionDirective">In value for the ActionDirective action parameter.</param>
+            <returns>Out value for the Result action parameter.</returns>
+        </member>
+        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.ReturnCode">
+            <summary>
+            Socket Return Code
+            </summary>
+        </member>
         <member name="T:SonyAPILib.SonyAPI_Lib.Party1">
             <summary>
             Service class for the Party1 (urn:schemas-sony-com:service:Party:1) service.
@@ -1733,6 +1704,34 @@
             <summary>
             Stops the Execution of the SSDP Broadcast
             </summary>
+        </member>
+        <member name="T:Extentions">
+            <summary>
+            Extra Extention Class
+            </summary>
+        </member>
+        <member name="M:Extentions.ChopOffBefore(System.String,System.String)">
+            <summary>
+            Chops Off all characters Before parameter
+            </summary>
+            <param name="s">The Full sting</param> 
+            <param name="Before">The string to chop off to</param> 
+        </member>
+        <member name="M:Extentions.ChopOffAfter(System.String,System.String)">
+            <summary>
+            Chops Off all characters After parameter
+            </summary>
+            <param name="s">The Full sting</param> 
+            <param name="After">The string to chop off after</param> 
+        </member>
+        <member name="M:Extentions.ReplaceIgnoreCase(System.String,System.String,System.String)">
+            <summary>
+            Replaces string contents while ignoring case
+            </summary>
+            <param name="Source">The Full sting</param> 
+            <param name="Pattern">The string to remove</param> 
+            <param name="Replacement">The string to replace</param>
+            <returns>Returns replaced string</returns>
         </member>
     </members>
 </doc>

@@ -12,7 +12,7 @@ namespace SonyOff
         static void Main(string[] args)
         {
             SonyAPI_Lib mySonyLib = new SonyAPI_Lib();  // Create an Instance of the Library
-            mySonyLib.LOG.enableLogging = false;  // Set to NO logging
+            mySonyLib.LOG.Enable = false;  // Set to NO logging
             SonyAPI_Lib.SonyDevice mySonyDev = new SonyAPI_Lib.SonyDevice();  // Create a new instance of a Device Object
             
             // Now there are 2 ways you can complete the next part.

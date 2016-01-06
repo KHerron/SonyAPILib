@@ -96,9 +96,9 @@ namespace SonyAPILib
 
             #endregion
 
-            #region Locate Devices by Service
+            #region Locate Devices
             /// <summary>
-            /// Execute to scan and locate all compatiable devices on network
+            /// Execute an SSDP Scan to locate any UPnP/DLNA devices on the network
             /// </summary>
             /// <returns>A list containing the full URL to each device's Description.xml file</returns>
             [STAThread]
@@ -1265,10 +1265,10 @@ namespace SonyAPILib
                             }
                         }
                     }
-                    if (node.Name == "av:X_TrackID_DeviceInfo")
+
+                    if (node.Name == "av:X_ScalarWebAPI_DeviceInfo")
                     {
                         this.Actionlist.RegisterMode = 3;
-
                         _Log.writetolog("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
                         this.Device_Macaddress = this.getDeviceMac(this);
                         this.get_remote_command_list();
@@ -1411,7 +1411,7 @@ namespace SonyAPILib
 
         }
         #endregion
-
+            
         #region Logging
         /// <summary>
         /// Sony Device Logging Class
@@ -1425,7 +1425,7 @@ namespace SonyAPILib
             /// True - Turns Loggin On
             /// False - Turns Loggin Off
             /// </summary>
-            public bool enableLogging 
+            public bool Enable 
             {
                 get
                 {
@@ -1442,7 +1442,7 @@ namespace SonyAPILib
             /// Basic - for only basic entries
             /// All - for all entries
             /// </summary>
-            public string enableLogginglev
+            public string Level
             {
                 get
                 {
@@ -1459,7 +1459,7 @@ namespace SonyAPILib
             /// Destination Folder MUST exist.
             /// Must be Full Path. ex: c:\programdata\sony\
             /// </summary>
-            public string loggingPath
+            public string Path
             {
                 get
                 {
@@ -1476,7 +1476,7 @@ namespace SonyAPILib
             /// Must be a .txt file
             /// default is cerDevice_LOG.txt
             /// </summary>
-            public string loggingName
+            public string Name
             {
                 get
                 {
@@ -1506,14 +1506,22 @@ namespace SonyAPILib
             /// <param name="oride">Set to true to ALWAYS log this message. Otherwise set to false</param>
             public void writetolog(string message, bool oride)
             {
-                if (this.loggingPath == null | this.loggingPath == "") { this.loggingPath = @"c:\ProgramData\Sony\"; }
-                Directory.CreateDirectory(this.loggingPath);
-                if (this.loggingName == null | this.loggingName == "") { this.loggingName = @"SonyAPILib_LOG.txt"; }
-                if (this.enableLogginglev == null | this.enableLogginglev == "") { this.enableLogginglev = "Basic"; }
-                string logPath = this.loggingPath + this.loggingName;
-                if (enableLogging == true)
+                if (this.Path == null | this.Path == "") { this.Path = @"c:\ProgramData\Sony\"; }
+                Directory.CreateDirectory(this.Path);
+                if (this.Name == null | this.Name == "") { this.Name = @"SonyAPILib_LOG.txt"; }
+                if(File.Exists(this.Path + this.Name))
                 {
-                    if (this.enableLogginglev == "Basic")
+                    // File already there!
+                }
+                else
+                {
+                    File.Create(this.Path + this.Name);
+                }
+                if (this.Level == null | this.Level == "") { this.Level = "Basic"; }
+                string logPath = this.Path + this.Name;
+                if (Enable == true)
+                {
+                    if (this.Level == "Basic")
                     {
                         if (oride == true)
                         {
@@ -1539,14 +1547,14 @@ namespace SonyAPILib
             {
                 if (newName != null)
                 {
-                    File.Copy(@loggingPath + loggingName, @loggingPath + newName);
-                    File.Delete(@loggingPath + loggingName);
-                    writetolog("Saving Log file as: " + @loggingPath + newName, true);
+                    File.Copy(@Path + Name, @Path + newName);
+                    File.Delete(@Path + Name);
+                    writetolog("Saving Log file as: " + @Path + newName, true);
                 }
                 else
                 {
-                    File.Delete(@loggingPath + loggingName);
-                    writetolog("Clearing Log file: " + @loggingPath + loggingName, true);
+                    File.Delete(@Path + Name);
+                    writetolog("Clearing Log file: " + @Path + Name, true);
                 }
 
             }
@@ -2138,7 +2146,7 @@ namespace SonyAPILib
                            foreach (XmlNode snode in node.ChildNodes)
                            {
                                if (snode.Name == "Source") { parent.ConnectionManager.sv_ProticolSource = snode.InnerText; }
-                               if (snode.Name == "Sink") { parent.ConnectionManager.sv_ProticolSink = snode.InnerText; }
+                               if (snode.Name == "Sink") { parent.ConnectionManager.sv_ProtocolSink = snode.InnerText; }
                            }
                        }
                        parent.ConnectionManager.sv_LastChange = "GetProtocolInfo";
@@ -2538,10 +2546,9 @@ namespace SonyAPILib
                 /// Executes the SetNextAVTransportURI action.
                 /// </summary>
                 /// <param name="parent">The Parent Device object to execute this action on.</param>
-                /// <param name="instanceID">In value for the InstanceID action parameter.</param>
                 /// <param name="nextURI">In value for the NextURI action parameter.</param>
                 /// <param name="nextURIMetaData">In value for the NextURIMetaData action parameter.</param>
-                public string SetNextAVTransportURI(SonyDevice parent, String nextURI, String nextURIMetaData, UInt32 instanceID = 0)
+                public string SetNextAVTransportURI(SonyDevice parent, String nextURI, String nextURIMetaData)
                 {
                     if (parent.AVTransport.controlURL != null)
                     {
@@ -2549,7 +2556,7 @@ namespace SonyAPILib
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<u:SetNextAVTransportURI xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">" + Environment.NewLine;
-                        XML += "<InstanceID>" + instanceID + "</InstanceID>" + Environment.NewLine;
+                        XML += "<InstanceID>" + InstanceID + "</InstanceID>" + Environment.NewLine;
                         XML += "<NextURI>" + nextURI.Replace(" ", "%20") + "</NextURI>" + Environment.NewLine;
                         XML += "<NextURIMetaData>" + nextURIMetaData + "</NextURIMetaData>" + Environment.NewLine;
                         XML += "</u:SetNextAVTransportURI>" + Environment.NewLine;
@@ -2565,7 +2572,7 @@ namespace SonyAPILib
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         parent.AVTransport.sv_LastChange = "SetNextAVTransportURI";
                         parent.AVTransport.sv_NextAVTransportURI = nextURI;
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)instanceID;
+                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
                         return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     return null;
@@ -2909,31 +2916,67 @@ namespace SonyAPILib
 
                 }
 
+                #region Next
                 /// <summary>
                 /// Executes the Next action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 public void Next(SonyAPI_Lib.SonyDevice parent)
                 {
-                //    object[] loIn = new object[1];
-
-                //    loIn[0] = instanceID;
-                //    InvokeAction(csAction_Next, loIn);
-
+                    if (parent.AVTransport.controlURL != null)
+                    {
+                        string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
+                        string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
+                        string XML = XMLHead;
+                        XML += "<u:Next xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID></u:Next>" + Environment.NewLine;
+                        XML += XMLFoot + Environment.NewLine;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
+                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
+                        string req = parent.AVTransport.controlURL.Substring(reqi);
+                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        req = req.Substring(reqi);
+                        reqi = req.IndexOf("/") + 1;
+                        req = req.Substring(reqi);
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Next", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
+                        parent.AVTransport.sv_LastChange = "Next";
+                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        //return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
+                    }
+                    //return null;
                 }
+                #endregion
 
+                #region Previous
                 /// <summary>
                 /// Executes the Previous action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 public void Previous(SonyAPI_Lib.SonyDevice parent)
                 {
-                //    object[] loIn = new object[1];
-
-                //    loIn[0] = instanceID;
-                //    InvokeAction(csAction_Previous, loIn);
-
+                    if (parent.AVTransport.controlURL != null)
+                    {
+                        string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
+                        string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
+                        string XML = XMLHead;
+                        XML += "<u:Previous xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID></u:Previous>" + Environment.NewLine;
+                        XML += XMLFoot + Environment.NewLine;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
+                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
+                        string req = parent.AVTransport.controlURL.Substring(reqi);
+                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        req = req.Substring(reqi);
+                        reqi = req.IndexOf("/") + 1;
+                        req = req.Substring(reqi);
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Previous", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
+                        parent.AVTransport.sv_LastChange = "Next";
+                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        //return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
+                    }
+                    //return null;
                 }
+                #endregion
 
                 /// <summary>
                 /// Executes the SetPlayMode action.

@@ -18,7 +18,7 @@ namespace Sony_Forms_Example
         public Form1()
         {
             InitializeComponent();
-            Program.mySonyLib.LOG.enableLogging = false;  // This application will NOT use the API logging
+            Program.mySonyLib.LOG.Enable = false;  // This application will NOT use the API logging
         }
 
         private void button4_Click(object sender, EventArgs e)

@@ -343,7 +343,7 @@ namespace SonyAPILib
         /// <summary>
         /// Gets or Sets the State Variable for the Proticol Sink.
         /// </summary>
-        public string sv_ProticolSink { get; set; }
+        public string sv_ProtocolSink { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Proticol Source.
         /// </summary>
