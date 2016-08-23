@@ -32,3 +32,13 @@ F:\OSA Files\Sony API\SonyAPILib_5.2\ConsoleExample\obj\Debug\ConsoleExample.exe
 F:\OSA Files\Sony API\SonyAPILib_5.2\ConsoleExample\obj\Debug\ConsoleExample.pdb
 F:\OSA Files\Sony API\SonyAPILib_5.2\ConsoleExample\obj\Debug\ConsoleExample.csprojResolveAssemblyReference.cache
 F:\OSA Files\Sony API\SonyAPILib_5.2\ConsoleExample\bin\Debug\SonyAPILib.xml
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\ConsoleExample.exe.config
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\obj\Debug\ConsoleExample.exe
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\obj\Debug\ConsoleExample.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\obj\Debug\ConsoleExample.csprojResolveAssemblyReference.cache
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\ConsoleExample.exe
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\ConsoleExample.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\SonyAPILib.dll
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\Newtonsoft.Json.dll
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\SonyAPILib.pdb
+F:\OSA Files\Sony API\SonyAPILib_5.3\ConsoleExample\bin\Debug\SonyAPILib.xml

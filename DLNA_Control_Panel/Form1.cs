@@ -15,24 +15,24 @@ namespace DLNA_Control_Panel
 {
     public partial class Form1 : Form
     {
-        public static SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
-        public static List<SonyAPI_Lib.SonyDevice> fDev = new List<SonyAPI_Lib.SonyDevice>();
-        public static SonyAPI_Lib.SonyDevice curDev = new SonyAPI_Lib.SonyDevice();
+        public static SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
+        public static List<SonyAPILib.SonyAPILib.SonyDevice> fDev = new List<SonyAPILib.SonyAPILib.SonyDevice>();
+        public static SonyAPILib.SonyAPILib.SonyDevice curDev = new SonyAPILib.SonyAPILib.SonyDevice();
         
         public Form1()
         {
             InitializeComponent();
-            mySonyLib.LOG.Enable = true;
-            mySonyLib.LOG.Level = "All";
+            mySonyLib.Log.Enable = true;
+            mySonyLib.Log.Level = "All";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoggEnabled.Text = mySonyLib.LOG.Enable.ToString();
-            LogLevel.Text = mySonyLib.LOG.Level.ToString();
-            LogName.Text = mySonyLib.LOG.Name.ToString();
-            LogPath.Text = mySonyLib.LOG.Path.ToString();
-            UpdateLog(mySonyLib.LOG.Path.ToString(), mySonyLib.LOG.Name.ToString());
+            LoggEnabled.Text = mySonyLib.Log.Enable.ToString();
+            LogLevel.Text = mySonyLib.Log.Level.ToString();
+            LogName.Text = mySonyLib.Log.Name.ToString();
+            LogPath.Text = mySonyLib.Log.Path.ToString();
+            UpdateLog(mySonyLib.Log.Path.ToString(), mySonyLib.Log.Name.ToString());
         }
 
         private void UpdateLog(String Path, String Name)
@@ -86,7 +86,7 @@ namespace DLNA_Control_Panel
             if (bDocURL.Text != "")
             {
                 ShowWait1();
-                curDev.buildFromDocument(new Uri(bDocURL.Text));
+                curDev.BuildFromDocument(new Uri(bDocURL.Text));
                 fDev.Add(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
@@ -104,7 +104,7 @@ namespace DLNA_Control_Panel
         {
             ShowWait1();
             List<string> foundDevices = new List<string>();
-            foundDevices = mySonyLib.Locator.locateDevices();
+            foundDevices = mySonyLib.Locator.LocateDevices();
             foreach (string d in foundDevices)
             {
                 LocatedDevices.Text = LocatedDevices.Text + d + Environment.NewLine;
@@ -117,38 +117,38 @@ namespace DLNA_Control_Panel
         {
             if (saveLogName.Text == "")
             {
-                mySonyLib.LOG.clearLog(null);
+                mySonyLib.Log.ClearLog(null);
             }
             else
             {
-                mySonyLib.LOG.clearLog(saveLogName.Text);
+                mySonyLib.Log.ClearLog(saveLogName.Text);
             }
             UpdateLog(LogPath.Text, LogName.Text);
         }
 
         private void LogWriteBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.LOG.writetolog(LogLine.Text, true);
+            mySonyLib.Log.AddMessage(LogLine.Text, true);
             UpdateLog(LogPath.Text, LogName.Text);
         }
 
         private void UpdateDevice()
         {
             devName.Text = curDev.Name;
-            devIP.Text = curDev.Device_IP_Address;
-            devPort.Text = curDev.Device_Port.ToString();
-            devMac.Text = curDev.Device_Macaddress;
-            devServName.Text = curDev.Server_Name;
-            devServMac.Text =  curDev.Server_Macaddress;
+            devIP.Text = curDev.IPAddress;
+            devPort.Text = curDev.Port.ToString();
+            devMac.Text = curDev.MacAddress;
+            devServName.Text = curDev.ServerName;
+            devServMac.Text =  curDev.ServerMacAddress;
             devManuf.Text =  curDev.Manufacture;
             devModel.Text =  curDev.ModelName;
             devModnum.Text =  curDev.ModelNumber;
-            devUDN.Text =  curDev.UDN;
-            devActionList.Text =  curDev.Actionlist_Url;
+            devUDN.Text =  curDev.Udn;
+            devActionList.Text =  curDev.ActionListUrl;
             devRegistered.Text =  curDev.Registered.ToString();
-            devType.Text =  curDev.DeviceType;
+            devType.Text =  curDev.Type;
             devMDesc.Text =  curDev.ModelDescription;
-            devDocumentUrl.Text =  curDev.DocumentURL;
+            devDocumentUrl.Text =  curDev.DocumentUrl;
             devRegMode.Text =  curDev.Actionlist.RegisterMode.ToString();
             devCookie.Text =  curDev.Cookie;
 
@@ -159,16 +159,16 @@ namespace DLNA_Control_Panel
 
         private void UpdateIRCC()
         {
-            if ( curDev.IRCC.controlURL != null)
+            if ( curDev.Ircc.ControlUrl != null)
             {
-                irccservControl.Text =  curDev.IRCC.controlURL;
-                irccservEvent.Text =  curDev.IRCC.eventSubURL;
-                irccservSCPD.Text =  curDev.IRCC.SCPDURL;
-                irccservType.Text =  curDev.IRCC.serviceType;
-                irccservId.Text =  curDev.IRCC.serviceID;
-                irccservIdent.Text =  curDev.IRCC.friendlyServiceIdentifier;
-                irccservLastChange.Text =  curDev.IRCC.sv_LastChange;
-                irccservCurStatus.Text =  curDev.IRCC.sv_CurrentStatus;
+                irccservControl.Text =  curDev.Ircc.ControlUrl;
+                irccservEvent.Text =  curDev.Ircc.EventSubURL;
+                irccservSCPD.Text =  curDev.Ircc.ScpdUrl;
+                irccservType.Text =  curDev.Ircc.Type;
+                irccservId.Text =  curDev.Ircc.ServiceID;
+                irccservIdent.Text =  curDev.Ircc.ServiceIdentifier;
+                irccservLastChange.Text =  curDev.Ircc.LastChange;
+                irccservCurStatus.Text =  curDev.Ircc.CurrentStatus;
                 irccservCmdCount.Text =  curDev.Commands.Count().ToString();
                 irccservCmds.DataSource =  curDev.Commands;
                 irccservCmds.DisplayMember = "Name";
@@ -178,66 +178,66 @@ namespace DLNA_Control_Panel
 
         private void UpdateRenderingControl()
         {
-            if (curDev.RenderingControl.controlURL != null)
+            if (curDev.RenderingControl.ControlUrl != null)
             {
-                rendservControl.Text = curDev.RenderingControl.controlURL;
-                rendservEvent.Text = curDev.RenderingControl.eventSubURL;
-                rendservSCPD.Text = curDev.RenderingControl.SCPDURL;
-                rendservType.Text = curDev.RenderingControl.serviceType;
-                rendservId.Text = curDev.RenderingControl.serviceID;
-                rendservIdent.Text = curDev.RenderingControl.friendlyServiceIdentifier;
-                rendservLastChange.Text = curDev.RenderingControl.sv_LastChange;
-                rendservPreList.Text = curDev.RenderingControl.sv_PresetNameList;
-                rendservMute.Text = curDev.RenderingControl.sv_Mute.ToString();
-                rendservVolume.Text = curDev.RenderingControl.sv_Volume.ToString();
-                rendservInstId.Text = curDev.RenderingControl.sv_InstanceID.ToString();
-                rendservPreName.Text = curDev.RenderingControl.sv_PresetName;
-                rendservChan.Text = curDev.RenderingControl.sv_Channel;
+                rendservControl.Text = curDev.RenderingControl.ControlUrl;
+                rendservEvent.Text = curDev.RenderingControl.EventSubUrl;
+                rendservSCPD.Text = curDev.RenderingControl.ScpdUrl;
+                rendservType.Text = curDev.RenderingControl.Type;
+                rendservId.Text = curDev.RenderingControl.ServiceID;
+                rendservIdent.Text = curDev.RenderingControl.ServiceIdentifier;
+                rendservLastChange.Text = curDev.RenderingControl.LastChange;
+                rendservPreList.Text = curDev.RenderingControl.PresetNameList;
+                rendservMute.Text = curDev.RenderingControl.MuteState.ToString();
+                rendservVolume.Text = curDev.RenderingControl.VolumeState.ToString();
+                rendservInstId.Text = curDev.RenderingControl.InstanceId.ToString();
+                rendservPreName.Text = curDev.RenderingControl.PresetName;
+                rendservChan.Text = curDev.RenderingControl.ChannelState;
             }
         }
 
         private void UpdateAVTransport()
         {
-            if (curDev.AVTransport.controlURL != null)
+            if (curDev.AVTransport.ControlUrl != null)
             {
-                avtransservLastChange.Text = curDev.AVTransport.sv_LastChange;
-                avtransservControl.Text = curDev.AVTransport.controlURL;
-                avtransservEvent.Text = curDev.AVTransport.eventSubURL;
-                avtransservSCPD.Text = curDev.AVTransport.SCPDURL;
-                avtransservType.Text = curDev.AVTransport.serviceType;
-                avtransservId.Text = curDev.AVTransport.serviceID;
-                avtransservIdent.Text = curDev.AVTransport.friendlyServiceIdentifier;
-                avtransservState.Text = curDev.AVTransport.sv_TransportState;
-                avtransservStatus.Text = curDev.AVTransport.sv_TransportStatus;
-                avtransservPlaybackStorage.Text = curDev.AVTransport.sv_PlayBackStorageMedium;
-                avtransservRecordStorage.Text = curDev.AVTransport.sv_RecordStorageMedium;
-                avtransservPossiblePlayback.Text = curDev.AVTransport.sv_PossiblePlaybackStorageMedia;
-                avtransservPossibleRecord.Text = curDev.AVTransport.sv_PossibleRecordStorageMedia;
-                avtransservPlayMode.Text = curDev.AVTransport.sv_CurrentPlayMode;
-                avtransservPlaySpeed.Text = curDev.AVTransport.sv_TransportPlaySpeed.ToString();
-                avtransservRecStatus.Text = curDev.AVTransport.sv_RecordMediumWriteStatus;
-                avtransservRecQuality.Text = curDev.AVTransport.sv_CurrentRecordQualityMode;
-                avtransservPossibleQuality.Text = curDev.AVTransport.sv_PossibleRecordQualityModes;
-                avtransservTracks.Text = curDev.AVTransport.sv_NumberOfTracks.ToString();
-                if (curDev.AVTransport.sv_CurrentTrackDuration != null)
+                avtransservLastChange.Text = curDev.AVTransport.LastChange;
+                avtransservControl.Text = curDev.AVTransport.ControlUrl;
+                avtransservEvent.Text = curDev.AVTransport.EventSubUrl;
+                avtransservSCPD.Text = curDev.AVTransport.ScpdUrl;
+                avtransservType.Text = curDev.AVTransport.Type;
+                avtransservId.Text = curDev.AVTransport.ServiceID;
+                avtransservIdent.Text = curDev.AVTransport.ServiceIdentifier;
+                avtransservState.Text = curDev.AVTransport.TransportState;
+                avtransservStatus.Text = curDev.AVTransport.TransportStatus;
+                avtransservPlaybackStorage.Text = curDev.AVTransport.PlayBackStorageMedium;
+                avtransservRecordStorage.Text = curDev.AVTransport.RecordStorageMedium;
+                avtransservPossiblePlayback.Text = curDev.AVTransport.PossiblePlaybackStorageMedia;
+                avtransservPossibleRecord.Text = curDev.AVTransport.PossibleRecordStorageMedia;
+                avtransservPlayMode.Text = curDev.AVTransport.CurrentPlayMode;
+                avtransservPlaySpeed.Text = curDev.AVTransport.TransportPlaySpeed.ToString();
+                avtransservRecStatus.Text = curDev.AVTransport.RecordMediumWriteStatus;
+                avtransservRecQuality.Text = curDev.AVTransport.CurrentRecordQualityMode;
+                avtransservPossibleQuality.Text = curDev.AVTransport.PossibleRecordQualityModes;
+                avtransservTracks.Text = curDev.AVTransport.NumberOfTracks.ToString();
+                if (curDev.AVTransport.CurrentTrackDuration != null)
                 {
-                    avtransservTrackDuration.Text = curDev.AVTransport.sv_CurrentTrackDuration.ToString();
+                    avtransservTrackDuration.Text = curDev.AVTransport.CurrentTrackDuration.ToString();
                 }
-                avtransservTrackMeta.Text = curDev.AVTransport.sv_CurrentTrackMetaData;
-                avtransservURI.Text = curDev.AVTransport.sv_CurrentTrackURI;
-                avtransservURIMeta.Text = curDev.AVTransport.sv_AVTransportURIMetaData;
-                avtransservNextURI.Text = curDev.AVTransport.sv_NextAVTransportURI;
-                avtransservNextURIMeta.Text = curDev.AVTransport.sv_NextAVTransportURIMetaData;
-                avtransservRelativeTime.Text = curDev.AVTransport.sv_RelativeTimePosition;
-                avtransservAbsoluteTime.Text = curDev.AVTransport.sv_AbsoluteTimePosition;
-                avtransservRelativePosition.Text = curDev.AVTransport.sv_RelativeCounterPosition;
-                avtransservAbsolutiePosition.Text = curDev.AVTransport.sv_AbsoluteCounterPosition;
-                avtransservActions.Text = curDev.AVTransport.sv_CurrentTransportActions;
-                avtransservAbsBytePosition.Text = curDev.AVTransport.sv_X_DLNA_AbsoluteBytePosition;
-                avtransservRelBytePosition.Text = curDev.AVTransport.sv_X_DLNA_RelativeBytePosition;
-                avtransservTrackSize.Text = curDev.AVTransport.sv_X_DLNA_CurrentTrackSize;
-                avtransservSeekMode.Text = curDev.AVTransport.sv_A_ARG_TYPE_SeekMode;
-                avtransservSeekTarget.Text = curDev.AVTransport.sv_A_ARG_TYPE_SeekTarget;
+                avtransservTrackMeta.Text = curDev.AVTransport.CurrentTrackMetaData;
+                avtransservURI.Text = curDev.AVTransport.CurrentTrackURI;
+                avtransservURIMeta.Text = curDev.AVTransport.AVTransportURIMetaData;
+                avtransservNextURI.Text = curDev.AVTransport.NextAVTransportURI;
+                avtransservNextURIMeta.Text = curDev.AVTransport.NextAVTransportURIMetaData;
+                avtransservRelativeTime.Text = curDev.AVTransport.RelativeTimePosition;
+                avtransservAbsoluteTime.Text = curDev.AVTransport.AbsoluteTimePosition;
+                avtransservRelativePosition.Text = curDev.AVTransport.RelativeCounterPosition;
+                avtransservAbsolutiePosition.Text = curDev.AVTransport.AbsoluteCounterPosition;
+                avtransservActions.Text = curDev.AVTransport.CurrentTransportActions;
+                avtransservAbsBytePosition.Text = curDev.AVTransport.X_DLNA_AbsoluteBytePosition;
+                avtransservRelBytePosition.Text = curDev.AVTransport.X_DLNA_RelativeBytePosition;
+                avtransservTrackSize.Text = curDev.AVTransport.X_DLNA_CurrentTrackSize;
+                avtransservSeekMode.Text = curDev.AVTransport.A_ARG_TYPE_SeekMode;
+                avtransservSeekTarget.Text = curDev.AVTransport.A_ARG_TYPE_SeekTarget;
                 avtransservInstanceId.Text = "0";
             }
         }
@@ -245,7 +245,7 @@ namespace DLNA_Control_Panel
         private void UpdateDeviceList()
         {
             devList.Items. Clear();
-            foreach (SonyAPI_Lib.SonyDevice dev in fDev)
+            foreach (SonyAPILib.SonyAPILib.SonyDevice dev in fDev)
             {
                 devList.Items.Add(dev.Name);
             }
@@ -286,7 +286,7 @@ namespace DLNA_Control_Panel
             logEchgBut.Visible = true;
             LoggEnabled.Enabled = false;
             logEsetBut.Visible = false;
-             mySonyLib.LOG.Enable = Convert.ToBoolean(LoggEnabled.Text);
+             mySonyLib.Log.Enable = Convert.ToBoolean(LoggEnabled.Text);
         }
 
         private void logLsetBut_Click(object sender, EventArgs e)
@@ -294,7 +294,7 @@ namespace DLNA_Control_Panel
             logLchgBut.Visible = true;
             LogLevel.Enabled = false;
             logLsetBut.Visible = false;
-             mySonyLib.LOG.Level = LogLevel.Text;
+             mySonyLib.Log.Level = LogLevel.Text;
         }
 
         private void logNsetBut_Click(object sender, EventArgs e)
@@ -302,7 +302,7 @@ namespace DLNA_Control_Panel
             logNchgBut.Visible = true;
             LogName.Enabled = false;
             logNsetBut.Visible = false;
-             mySonyLib.LOG.Name = LogName.Text;
+             mySonyLib.Log.Name = LogName.Text;
         }
 
         private void logPsetBut_Click(object sender, EventArgs e)
@@ -310,7 +310,7 @@ namespace DLNA_Control_Panel
             logPchgBut.Visible = true;
             LogPath.Enabled = false;
             logPsetBut.Visible = false;
-            mySonyLib.LOG.Path = LogPath.Text;
+            mySonyLib.Log.Path = LogPath.Text;
         }
 
         private void irccservCmds_SelectedIndexChanged(object sender, EventArgs e)
@@ -322,7 +322,7 @@ namespace DLNA_Control_Panel
         {
             if (irccservCmds.Text != "")
             {
-                irccservcmdValue.Text = curDev.getIRCCcommandString(irccservCmds.Text);
+                irccservcmdValue.Text = curDev.GetCommandString(irccservCmds.Text);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -336,7 +336,7 @@ namespace DLNA_Control_Panel
         {
             if (irccservcmdValue.Text != "")
             {
-                mySonyLib.ircc1.XSendIRCC(curDev, irccservcmdValue.Text);
+                mySonyLib.Ircc.SendIRCC(curDev, irccservcmdValue.Text);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -350,7 +350,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.ircc1.XGetStatus(curDev);
+                mySonyLib.Ircc.GetStatus(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -364,7 +364,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.renderingcontrol1.ListPresets(curDev);
+                mySonyLib.RenderingControl.ListPresets(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -383,7 +383,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.renderingcontrol1.GetMute(curDev);
+                mySonyLib.RenderingControl.GetMute(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -399,7 +399,7 @@ namespace DLNA_Control_Panel
             {
                 if (rendsetMute.Text != "")
                 {
-                    mySonyLib.renderingcontrol1.SetMute(curDev, Convert.ToBoolean(rendsetMute.Text));
+                    mySonyLib.RenderingControl.SetMute(curDev, Convert.ToBoolean(rendsetMute.Text));
                     UpdateLog(LogPath.Text, LogName.Text);
                     UpdateDevice();
                 }
@@ -420,7 +420,7 @@ namespace DLNA_Control_Panel
             {
                 if (rendservVolume.Text != "0")
                 {
-                    mySonyLib.renderingcontrol1.SetVolume(curDev, Convert.ToInt32(rendVolLevel.Text));
+                    mySonyLib.RenderingControl.SetVolume(curDev, Convert.ToInt32(rendVolLevel.Text));
                     UpdateLog(LogPath.Text, LogName.Text);
                     UpdateDevice();
                 }
@@ -439,7 +439,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.renderingcontrol1.GetVolume(curDev);
+                mySonyLib.RenderingControl.GetVolume(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -466,35 +466,35 @@ namespace DLNA_Control_Panel
 
         private void avtransGetPositionBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.avtransport1.GetPosition(curDev);
+            mySonyLib.AVTransport.GetPosition(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtranGetMediaBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.avtransport1.GetMediaInfo(curDev);
+            mySonyLib.AVTransport.GetMediaInfo(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtransGetTransportBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.avtransport1.GetTransportInfo(curDev);
+            mySonyLib.AVTransport.GetTransportInfo(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtransCapabilitiesBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.avtransport1.GetDeviceCapabilities(curDev);
+            mySonyLib.AVTransport.GetDeviceCapabilities(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtrasGetTransportSettingsBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.avtransport1.GetTransportSettings(curDev);
+            mySonyLib.AVTransport.GetTransportSettings(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }

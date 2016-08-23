@@ -15,20 +15,21 @@ using System.Xml.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Threading;
+using System.Globalization;
 
 namespace SonyAPILib
 {
     /// <summary>
     /// Sony API Library
     /// </summary>
-    public class SonyAPI_Lib
+    public class SonyAPILib
     {
         #region Library Varables
 
         /// <summary>
         /// Gets or Sets the API Logging Object
         /// </summary>
-        public APILogging LOG { get { return _Log; } set { _Log = value; } }
+        public APILogging Log { get { return _Log; } set { _Log = value; } }
 
         /// <summary>
         /// Gets or Sets the Sony_API Object
@@ -38,27 +39,27 @@ namespace SonyAPILib
         /// <summary>
         /// Represents the IRCC1 Service
         /// </summary>
-        public IRCC1 ircc1 = new IRCC1();
+        public IRCC1 Ircc = new IRCC1();
 
         /// <summary>
         /// Represents the AVTransport1 Service
         /// </summary>
-        public AVTransport1 avtransport1 = new AVTransport1();
+        public AVTransport1 AVTransport = new AVTransport1();
 
         /// <summary>
         /// Represents the ConnectionManager Service
         /// </summary>
-        public ConnectionManager1 connectionmanager1 = new ConnectionManager1();
+        public ConnectionManager1 ConnectionManager = new ConnectionManager1();
 
         /// <summary>
         /// Represents the RenderingControl Service
         /// </summary>
-        public RenderingControl1 renderingcontrol1 = new RenderingControl1();
+        public RenderingControl1 RenderingControl = new RenderingControl1();
 
         /// <summary>
         /// Represents the Party Service
         /// </summary>
-        public Party1 party1 = new Party1();
+        public Party1 Party = new Party1();
 
         /// <summary>
         /// API Logging Object
@@ -90,7 +91,7 @@ namespace SonyAPILib
             /// <summary>
             /// Variable for storing the devices Action List URL used in API Class and Discovery.
             /// </summary>
-            public string actionListUrl { get; set; }
+            public string ActionListUrl { get; set; }
 
             
 
@@ -102,20 +103,20 @@ namespace SonyAPILib
             /// </summary>
             /// <returns>A list containing the full URL to each device's Description.xml file</returns>
             [STAThread]
-            public List<string> locateDevices()
+            public List<string> LocateDevices()
             {
                 SonyDevice fdev = new SonyDevice();
                 //if (service == null) { service = "IRCC:1"; }
-                _Log.writetolog("UPnP is Discovering devices....", true);
+                _Log.AddMessage("UPnP is Discovering devices....", true);
                 List<string> foundDevices = new List<string>();
-                SonyAPILib.SSDP.Start();
+                global::SonyAPILib.SSDP.Start();
                 Thread.Sleep(15000);
-                SonyAPILib.SSDP.Stop();
+                global::SonyAPILib.SSDP.Stop();
                 foreach (string u in SSDP.Servers)
                 {
                     foundDevices.Add(u);
                 }
-                _Log.writetolog("Devices Discovered: " + foundDevices.Count.ToString(), true);
+                _Log.AddMessage("Devices Discovered: " + foundDevices.Count.ToString(), true);
                 return foundDevices;
             }
             #endregion
@@ -125,16 +126,16 @@ namespace SonyAPILib
             /// Loads a device from a file
             /// </summary>
             /// <param name="path">The FULL path to the Device XML file</param>
-            public SonyAPI_Lib.SonyDevice DeviceLoad(string path)
+            public SonyAPILib.SonyDevice DeviceLoad(string path)
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(SonyDevice));
-                SonyAPI_Lib.SonyDevice sDev = new SonyAPI_Lib.SonyDevice();
+                SonyAPILib.SonyDevice sDev = new SonyAPILib.SonyDevice();
                 TextReader reader = new StreamReader(path);
 
                 //deserialize
                 sDev = (SonyDevice)deserializer.Deserialize(reader);
                 reader.Close();
-                sDev.checkReg();
+                sDev.CheckReg();
                 return sDev;
             }
 
@@ -199,27 +200,27 @@ namespace SonyAPILib
             /// <summary>
             /// Gets or Sets the Sony Device Unique Identifier Number
             /// </summary>
-            public string UDN { get; set; }
+            public string Udn { get; set; }
 
             /// <summary>
             /// Gets or Sets the Sony Device type Identifier
             /// </summary>
-            public string DeviceType { get; set; }
+            public string Type { get; set; }
             
             /// <summary>
             /// Gets or Sets the Sony Device Object's IP Address
             /// </summary>
-            public string Device_IP_Address { get; set; }
+            public string IPAddress { get; set; }
             
             /// <summary>
             /// Gets or Sets the Sony Device Object's MAC Address
             /// </summary>
-            public string Device_Macaddress { get; set; }
+            public string MacAddress { get; set; }
             
             /// <summary>
             /// Gets or Sets the Sony Device Object's Port number
             /// </summary>
-            public int Device_Port { get; set; }
+            public int Port { get; set; }
             
             /// <summary>
             /// Gets or Sets the Sony Device Object's List of Commands
@@ -227,14 +228,14 @@ namespace SonyAPILib
             public List<SonyCommands> Commands { get; set; }
             
             /// <summary>
-            /// Gets or Sets the Mac Address of he controlling device
+            /// Gets or Sets the Mac Address of The controlling device (Server)
             /// </summary>
-            public string Server_Macaddress { get; set; }
+            public string ServerMacAddress { get; set; }
             
             /// <summary>
-            /// Gets or Sets the Name of he controlling device
+            /// Gets or Sets the Name of the controlling device (Server)
             /// </summary>
-            public string Server_Name { get; set; }
+            public string ServerName { get; set; }
             
             /// <summary>
             /// Gets or Sets the Sony Device Gen 3 Object's Authintication Cookie
@@ -249,7 +250,7 @@ namespace SonyAPILib
             /// <summary>
             /// This will contain the retrieved X_CERS_ActionList_URL used in registration and other commands.
             /// </summary>
-            public string Actionlist_Url { get; set; }
+            public string ActionListUrl { get; set; }
 
             /// <summary>
             /// This will contain the retrieved ActionList objects.
@@ -259,49 +260,47 @@ namespace SonyAPILib
             /// <summary>
             /// List of Device Commands
             /// </summary>
-            SonyCommandList dataSet = new SonyCommandList();
-            
-            // Socket _socket = null;
+            SonyCommandList DataSet = new SonyCommandList();
             
             /// <summary>
             /// Default PIN code used with Gen3 devices
             /// </summary>
-            public string pincode = "0000";
+            public string PinCode = "0000";
             
             /// <summary>
             /// Cookie container for Gen3 Devices
             /// </summary>
-            CookieContainer allcookies = new CookieContainer();
+            CookieContainer AllCookies = new CookieContainer();
             
             /// <summary>
             /// Gets or Sets the RenderingControl Service if it exist
             /// </summary>
-            public renderingcontrol RenderingControl =new renderingcontrol();
+            public RenderingControl1 RenderingControl =new RenderingControl1();
 
             /// <summary>
             /// Gets or Sets the ConnectionManager Service if it exist
             /// </summary>
-            public connectionmanager ConnectionManager = new connectionmanager();
+            public ConnectionManager1 ConnectionManager = new ConnectionManager1();
 
             /// <summary>
             /// Gets or Sets the AVTransport Service if it exist
             /// </summary>
-            public avtransport AVTransport = new avtransport();
+            public AVTransport1 AVTransport = new AVTransport1();
 
             /// <summary>
             /// Gets or Sets the Party Service if it exist
             /// </summary>
-            public party Party = new party();
+            public Party1 Party = new Party1();
 
             /// <summary>
             /// Gets or Sets the IRCC Service if it exist
             /// </summary>
-            public ircc IRCC = new ircc();
+            public IRCC1 Ircc = new IRCC1();
 
             /// <summary>
             /// Gets or Sets the Devices Document URL
             /// </summary>
-            public string DocumentURL { get; set; }
+            public string DocumentUrl { get; set; }
 
             #endregion
 
@@ -311,41 +310,41 @@ namespace SonyAPILib
 
             #endregion
 
-            #region register
+            #region Register
             /// <summary>
             /// Sends the Registration command to the selected device
             /// </summary>
             /// <returns>Returns a bool True or False</returns>
-            public bool register()
+            public bool Register()
             {
-                _Log.writetolog("Controlling Mac address: " + this.Server_Macaddress, false);
+                _Log.AddMessage("Controlling Mac address: " + this.ServerMacAddress, false);
                 string reg = "false";
-                string args1 = "name=" + this.Server_Name + "&registrationType=initial&deviceId=TVSideView%3A" + this.Server_Macaddress + " ";
-                string args2 = "name=" + this.Server_Name + "&registrationType=new&deviceId=TVSideView%3A" + this.Server_Macaddress + " ";
+                string args1 = "name=" + this.ServerName + "&registrationType=initial&deviceId=TVSideView%3A" + this.ServerMacAddress + " ";
+                string args2 = "name=" + this.ServerName + "&registrationType=new&deviceId=TVSideView%3A" + this.ServerMacAddress + " ";
                 if (this.Actionlist.RegisterMode == 1)
                 {
                     reg = HttpGet(this.Actionlist.RegisterUrl + "?" + args1);
-                    _Log.writetolog("Register Mode: 2 Sony Device", false);
+                    _Log.AddMessage("Register Mode: 2 Sony Device", false);
                 }
                 else if (this.Actionlist.RegisterMode == 2)
                 {
                     reg = HttpGet(this.Actionlist.RegisterUrl + "?" + args2);
-                    _Log.writetolog("Register Mode: 1 Sony Device", false);
+                    _Log.AddMessage("Register Mode: 1 Sony Device", false);
                 }
                 else if (this.Actionlist.RegisterMode == 3)
                 {
-                    _Log.writetolog("Register Mode 3 Sony Sevice", false);
-                    string hostname = this.Server_Name;
+                    _Log.AddMessage("Register Mode 3 Sony Sevice", false);
+                    string hostname = this.ServerName;
                     string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
                     try
                     {
-                        _Log.writetolog("Creating JSON Web Request", false);
-                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(" http://" + this.Device_IP_Address + "/sony/accessControl");
+                        _Log.AddMessage("Creating JSON Web Request", false);
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(" http://" + this.IPAddress + "/sony/accessControl");
                         httpWebRequest.ContentType = "application/json";
                         httpWebRequest.Method = "POST";
                         httpWebRequest.AllowAutoRedirect = true;
                         httpWebRequest.Timeout = 500;
-                        _Log.writetolog("Sending Generation 3 JSON Registration", false);
+                        _Log.AddMessage("Sending Generation 3 JSON Registration", false);
                         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                         {
                             streamWriter.Write(jsontosend);
@@ -356,10 +355,10 @@ namespace SonyAPILib
                             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                             {
                                 var responseText = streamReader.ReadToEnd();
-                                _Log.writetolog("Registration response: " + responseText, false);
+                                _Log.AddMessage("Registration response: " + responseText, false);
                                 this.Registered = true;
                             }
-                            string answerCookie = JsonConvert.SerializeObject(httpWebRequest.CookieContainer.GetCookies(new Uri("http://" + this.Device_IP_Address + "/sony/appControl")));
+                            string answerCookie = JsonConvert.SerializeObject(httpWebRequest.CookieContainer.GetCookies(new Uri("http://" + this.IPAddress + "/sony/appControl")));
                             System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
                             file.WriteLine(answerCookie);
                             file.Close();
@@ -368,30 +367,30 @@ namespace SonyAPILib
                         }
                         catch
                         {
-                            _Log.writetolog("Must run Method: SendAuth(pincode)", true);
+                            _Log.AddMessage("Must run Method: SendAuth(pincode)", true);
                             reg = "Gen3 Pin Code Required";
                         }
                     }
                     catch
                     {
-                        _Log.writetolog("device not reachable", false);
+                        _Log.AddMessage("device not reachable", false);
                     }
                 }
                 if (reg == "")
                 {
-                    _Log.writetolog("Registration was Successful for device at: " + this.Device_IP_Address, true);
+                    _Log.AddMessage("Registration was Successful for device at: " + this.IPAddress, true);
                     this.Registered = true;
                     return true;
                 }
                 else if (reg == "Gen3 Pin Code Required")
                 {
-                    _Log.writetolog("Registration not complete for Gen3 device at: " + this.Device_IP_Address, true);
+                    _Log.AddMessage("Registration not complete for Gen3 device at: " + this.IPAddress, true);
                     this.Registered = false;
                     return true;
                 }
                 else
                 {
-                    _Log.writetolog("Registration was NOT successful for device at: " + this.Device_IP_Address, true);
+                    _Log.AddMessage("Registration was NOT successful for device at: " + this.IPAddress, true);
                     this.Registered = false;
                     return false;
                 }
@@ -402,38 +401,38 @@ namespace SonyAPILib
             /// <summary>
             /// Sends the Authorization PIN code to the Gen3 Device
             /// </summary>
-            /// <param name="pincode"></param>
+            /// <param name="PinCode"></param>
             /// <returns>True or False</returns>
-            public bool sendAuth(string pincode)
+            public bool SendAuth(string PinCode)
             {
                 bool reg = false;
-                string hostname = this.Server_Name;
+                string hostname = this.ServerName;
                 string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
                 try
                 {
-                    var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.Device_IP_Address + @"/sony/accessControl");
+                    var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + @"/sony/accessControl");
                     httpWebRequest2.ContentType = "application/json";
                     httpWebRequest2.Method = "POST";
                     httpWebRequest2.AllowAutoRedirect = true;
-                    httpWebRequest2.CookieContainer = allcookies;
+                    httpWebRequest2.CookieContainer = AllCookies;
                     httpWebRequest2.Timeout = 500;
                     using (var streamWriter = new StreamWriter(httpWebRequest2.GetRequestStream()))
                     {
                         streamWriter.Write(jsontosend);
                     }
-                    string authInfo = "" + ":" + pincode;
+                    string authInfo = "" + ":" + PinCode;
                     authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
                     httpWebRequest2.Headers["Authorization"] = "Basic " + authInfo;
                     var httpResponse = (HttpWebResponse)httpWebRequest2.GetResponse();
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var responseText = streamReader.ReadToEnd();
-                        _Log.writetolog("Registration response: " + responseText, false);
+                        _Log.AddMessage("Registration response: " + responseText, false);
                         this.Registered = true;
-                        this.pincode = pincode;
+                        this.PinCode = PinCode;
                         reg = true;
                     }
-                    string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.Device_IP_Address + "/sony/appControl")));
+                    string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.IPAddress + "/sony/appControl")));
                     System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
                     file.WriteLine(answerCookie);
                     file.Close();
@@ -441,29 +440,34 @@ namespace SonyAPILib
                 }
                 catch
                 {
-                    _Log.writetolog("Registration process Timed Out", false);
+                    _Log.AddMessage("Registration process Timed Out", false);
                     this.Registered = false;
                 }
                 return reg;
             }
             #endregion
 
-            #region get remote command list
+            #region Get remote command list
             /// <summary>
-            /// This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3 JSON Command List.
+            /// This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3+ JSON Command List.
             /// </summary>
             /// <returns>Returns a string containing the contents of the returned XML Command List for your Use</returns>
             /// <remarks>This method will also populate the SonyDevice.Commands object list with the retrieved command list</remarks>
-            public string get_remote_command_list()
+            public string GetRemoteCommandList()
             {
+                if(this.Registered == false)
+                {
+                    _Log.AddMessage("Can Not Retrieve Command List, No Registration", true);
+                    return "";
+                }
                 string cmdList = "";
                 if (this.Actionlist.RegisterMode <= 2)
                 {
-                    _Log.writetolog(this.Name + " is Retrieving Generation:" + this.Actionlist.RegisterMode + " Remote Command List", false);
-                    cmdList = HttpGet(this.Actionlist.getRemoteCommandList);
+                    _Log.AddMessage(this.Name + " is Retrieving Generation:" + this.Actionlist.RegisterMode + " Remote Command List", false);
+                    cmdList = HttpGet(this.Actionlist.RemoteCommandListUrl);
                     if (cmdList != "")
                     {
-                        _Log.writetolog("Retrieve Command List was Successful", true);
+                        _Log.AddMessage("Retrieve Command List was Successful", true);
                         DataSet CommandList = new DataSet();
                         System.IO.StringReader xmlSR = new System.IO.StringReader(cmdList);
                         CommandList.ReadXml(xmlSR, XmlReadMode.Auto);
@@ -471,17 +475,17 @@ namespace SonyAPILib
                         var items = CommandList.Tables[0].AsEnumerable().Select(r => new SonyCommands { name = r.Field<string>("name"), value = r.Field<string>("value") });
                         var itemlist = items.ToList();
                         this.Commands = itemlist;
-                        _Log.writetolog(this.Name + " Commands have been Populated", true);
+                        _Log.AddMessage(this.Name + " Commands have been Populated", true);
                     }
                     else
                     {
-                        _Log.writetolog("Retrieve Command List was NOT successful", true);
+                        _Log.AddMessage("Retrieve Command List was NOT successful", true);
                     }
                 }
                 else
                 {
-                    _Log.writetolog(this.Name + " is Retrieving Generation:" + this.Actionlist.RegisterMode + " Remote Command List", false);
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + this.Device_IP_Address + @"/sony/system");
+                    _Log.AddMessage(this.Name + " is Retrieving Generation:" + this.Actionlist.RegisterMode + " Remote Command List", false);
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + @"/sony/system");
                     httpWebRequest.ContentType = "text/json";
                     httpWebRequest.Method = "POST";
                     using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -496,19 +500,19 @@ namespace SonyAPILib
                         cmdList = responseText;
                         if (cmdList != "")
                         {
-                            _Log.writetolog("Response Returned: " + cmdList, true);
-                            _Log.writetolog("Retrieve Command List was Successful", true);
+                            _Log.AddMessage("Response Returned: " + cmdList, true);
+                            _Log.AddMessage("Retrieve Command List was Successful", true);
                         }
                         else
                         {
-                            _Log.writetolog("Retrieve Command List was NOT successful", true);
+                            _Log.AddMessage("Retrieve Command List was NOT successful", true);
                         }
-                        dataSet = JsonConvert.DeserializeObject<SonyCommandList>(responseText);
+                        DataSet = JsonConvert.DeserializeObject<SonyCommandList>(responseText);
                     }
-                    string first = dataSet.result[1].ToString();
+                    string first = DataSet.result[1].ToString();
                     List<SonyCommands> bal = JsonConvert.DeserializeObject<List<SonyCommands>>(first);
                     this.Commands = bal;
-                    _Log.writetolog(this.Name + " Commands have been Populated: " + this.Commands.Count().ToString(), true);
+                    _Log.AddMessage(this.Name + " Commands have been Populated: " + this.Commands.Count().ToString(), true);
                 }
                 return cmdList;
             }
@@ -517,31 +521,37 @@ namespace SonyAPILib
             #region HTTP GET command
             private string HttpGet(string Url)
             {
-                _Log.writetolog("Creating HttpWebRequest to URL: " + Url, true);
+                int getPort = this.Port;
+                Uri getUri = new Uri(Url);
+                if(getUri.Port != getPort)
+                {
+                    getPort = getUri.Port;
+                }
+                _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, true);
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
                 req.KeepAlive = true;
                 // Set our default header Info
-                _Log.writetolog("Setting Header Information: " + req.Host.ToString(), false);
-                req.Host = this.Device_IP_Address + ":" + this.Device_Port;
+                _Log.AddMessage("Setting Header Information: " + req.Host.ToString(), false);
+                req.Host = this.IPAddress + ":" + getPort.ToString();
                 req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
                 req.Headers.Add("X-CERS-DEVICE-INFO", "Android4.03/TVSideViewForAndroid2.7.1/EVO");
-                req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.Server_Macaddress);
+                req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.ServerMacAddress);
                 req.Headers.Add("Accept-Encoding", "gzip");
                 try
                 {
-                    _Log.writetolog("Creating Web Request Response", false);
+                    _Log.AddMessage("Creating Web Request Response", false);
                     System.Net.WebResponse resp = req.GetResponse();
-                    _Log.writetolog("Executing StreamReader", false);
+                    _Log.AddMessage("Executing StreamReader", false);
                     System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                     string results = sr.ReadToEnd().Trim();
-                    _Log.writetolog("Response returned: " + results, false);
+                    _Log.AddMessage("Response returned: " + results, false);
                     sr.Close();
                     resp.Close();
                     return results;
                 }
                 catch (Exception e)
                 {
-                    _Log.writetolog("There was an error during the Web Request or Response! " + e.ToString(), true);
+                    _Log.AddMessage("There was an error during the Web Request or Response! " + e.ToString(), true);
                     return "false : " + e;
                 }
             }
@@ -557,39 +567,45 @@ namespace SonyAPILib
             /// <returns></returns>
             public string HttpPost(string Url, String Parameters)
             {
-                _Log.writetolog("Creating HttpWebRequest to URL: " + Url, true);
+                int getPort = this.Port;
+                Uri getUri = new Uri(Url);
+                if (getUri.Port != getPort)
+                {
+                    getPort = getUri.Port;
+                }
+                _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, true);
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
-                _Log.writetolog("Sending the following parameter: " + Parameters.ToString(), true);
+                _Log.AddMessage("Sending the following parameter: " + Parameters.ToString(), true);
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Parameters);
                 req.KeepAlive = true;
                 req.Method = "POST";
                 req.ContentType = "text/xml; charset=utf-8";
                 req.ContentLength = bytes.Length;
-                _Log.writetolog("Setting Header Information: " + req.Host.ToString(), false);
-                if (this.Device_Port != 80)
+                _Log.AddMessage("Setting Header Information: " + req.Host.ToString(), false);
+                if (this.Port != 80)
                 {
-                    req.Host = this.Device_IP_Address + ":" + this.Device_Port;
+                    req.Host = this.IPAddress + ":" + getUri.Port;
                 }
                 else
                 {
-                    req.Host = this.Device_IP_Address;
+                    req.Host = this.IPAddress;
                 }
-                _Log.writetolog("Header Host: " + req.Host.ToString(), false);
+                _Log.AddMessage("Header Host: " + req.Host.ToString(), false);
                 req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
-                _Log.writetolog("Setting Header User Agent: " + req.UserAgent, false);
+                _Log.AddMessage("Setting Header User Agent: " + req.UserAgent, false);
                 if (this.Actionlist.RegisterMode == 3)
                 {
-                    _Log.writetolog("Processing Auth Cookie", false);
+                    _Log.AddMessage("Processing Auth Cookie", false);
                     req.CookieContainer = new CookieContainer();
                     List<SonyCookie> bal = JsonConvert.DeserializeObject<List<SonyCookie>>(this.Cookie);
-                    req.CookieContainer.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path.ToString()), new Cookie(bal[0].Name, bal[0].Value));
-                    _Log.writetolog("Cookie Container Count: " + req.CookieContainer.Count.ToString(), false);
-                    _Log.writetolog("Setting Header Cookie: auth=" + bal[0].Value, false);
+                    req.CookieContainer.Add(new Uri(@"http://" + this.IPAddress + bal[0].Path.ToString()), new Cookie(bal[0].Name, bal[0].Value));
+                    _Log.AddMessage("Cookie Container Count: " + req.CookieContainer.Count.ToString(), false);
+                    _Log.AddMessage("Setting Header Cookie: auth=" + bal[0].Value, false);
                 }
                 else
                 {
-                    _Log.writetolog("Setting Header X-CERS-DEVICE-ID: TVSideView-" + this.Server_Macaddress, false);
-                    req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.Server_Macaddress);
+                    _Log.AddMessage("Setting Header X-CERS-DEVICE-ID: TVSideView-" + this.ServerMacAddress, false);
+                    req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.ServerMacAddress);
                 }
                 req.Headers.Add("SOAPAction", "\"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC\"");
                 if (this.Actionlist.RegisterMode != 3)
@@ -601,18 +617,18 @@ namespace SonyAPILib
                 {
                     req.Headers.Add("Accept-Encoding", "gzip");
                 }
-                _Log.writetolog("Sending WebRequest", false);
+                _Log.AddMessage("Sending WebRequest", false);
                 System.IO.Stream os = req.GetRequestStream();
                 // Post data and close connection
                 os.Write(bytes, 0, bytes.Length);
-                _Log.writetolog("Sending WebRequest Complete", false);
+                _Log.AddMessage("Sending WebRequest Complete", false);
                 // build response object if any
-                _Log.writetolog("Creating Web Request Response", false);
+                _Log.AddMessage("Creating Web Request Response", false);
                 System.Net.HttpWebResponse resp = req.GetResponse() as HttpWebResponse;
                 Stream respData = resp.GetResponseStream();
                 StreamReader sr = new StreamReader(respData);
                 string response = sr.ReadToEnd();
-                _Log.writetolog("Response returned: " + response, false);
+                _Log.AddMessage("Response returned: " + response, false);
                 os.Close();
                 sr.Close();
                 respData.Close();
@@ -626,16 +642,16 @@ namespace SonyAPILib
             /// This method Checks the current Status of the device Registration
             /// </summary>
             /// <returns>Returns a Bool True or False</returns>
-            public bool checkReg()
+            public bool CheckReg()
             {
                 bool results = false;
                 
                 // Gen 1 or 2 Devices
                 if (this.Actionlist.RegisterMode <= 2)
                 {
-                    _Log.writetolog("Verifing Registration for: " + this.Name, false);
+                    _Log.AddMessage("Verifing Registration for: " + this.Name, false);
                     // Will NOT return a Status if not Registered
-                    if (this.checkStatus() != "") 
+                    if (this.CheckStatus() != "") 
                     { 
                         this.Registered = true;
                         results = true;
@@ -647,32 +663,37 @@ namespace SonyAPILib
                     try
                     {
                         // Check and Load cookie. If Found then Registration = True
-                        _Log.writetolog("Verifing Registration for: " + this.Name, false);
-                        _Log.writetolog("Checking for Generation 3 Cookie", false);
+                        _Log.AddMessage("Verifing Registration for: " + this.Name, false);
+                        _Log.AddMessage("Checking for Generation 3 Cookie", false);
                         System.IO.StreamReader myFile = new System.IO.StreamReader(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
                         string myString = myFile.ReadToEnd();
                         myFile.Close();
                         List<SonyCookie> bal = JsonConvert.DeserializeObject<List<SonyCookie>>(myString);
-                        _Log.writetolog(this.Name + ": Cookie Loaded: " + bal[0].Value, false);
+                        _Log.AddMessage(this.Name + ": Cookie Loaded: " + bal[0].Value, false);
 
                         // Check if cookie has expired
-                        DateTime CT = DateTime.Now;
-                        _Log.writetolog(this.Name + ": Checking if Cookie has Expired: " + bal[0].Expires, false);
-                        _Log.writetolog(this.Name + ": Cookie Expiration Date: " + bal[0].Expires, false);
-                        _Log.writetolog(this.Name + ": Current Date and Time : " + CT, false);
+                        _Log.AddMessage(this.Name + ": Getting Country Date/Time format", false);
+                        string sysFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+                        _Log.AddMessage(this.Name + ": System Culture Date/Time format is: " + sysFormat, false);
+                        CultureInfo ci = new CultureInfo(sysFormat);
+                        DateTime CT = DateTime.Parse(DateTime.UtcNow.ToString()).ToUniversalTime();
+                        DateTime cCT = DateTime.Parse(bal[0].Expires).ToUniversalTime();
+                        _Log.AddMessage(this.Name + ": Checking if Cookie has Expired: " + cCT.ToString(), false);
+                        _Log.AddMessage(this.Name + ": Cookie Expiration Date: " + cCT.ToString(), false);
+                        _Log.AddMessage(this.Name + ": Current Date and Time : " + CT, false);
                         if (CT > Convert.ToDateTime(bal[0].Expires))
                         {
-                            _Log.writetolog(this.Name + ": Cookie is Expired!", true);
-                            _Log.writetolog(this.Name + ": Retriving NEW Cookie!", true);
-                            string hostname = this.Server_Name;
+                            _Log.AddMessage(this.Name + ": Cookie is Expired!", true);
+                            _Log.AddMessage(this.Name + ": Retriving NEW Cookie!", true);
+                            string hostname = this.ServerName;
                             string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
                             try
                             {
-                                var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.Device_IP_Address + @"/sony/accessControl");
+                                var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + @"/sony/accessControl");
                                 httpWebRequest2.ContentType = "application/json";
                                 httpWebRequest2.Method = "POST";
                                 httpWebRequest2.AllowAutoRedirect = true;
-                                httpWebRequest2.CookieContainer = allcookies;
+                                httpWebRequest2.CookieContainer = AllCookies;
                                 httpWebRequest2.Timeout = 500;
                                 using (var streamWriter = new StreamWriter(httpWebRequest2.GetRequestStream()))
                                 {
@@ -682,46 +703,46 @@ namespace SonyAPILib
                                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                                 {
                                     var responseText = streamReader.ReadToEnd();
-                                    _Log.writetolog("Registration response: " + responseText, false);
+                                    _Log.AddMessage("Registration response: " + responseText, false);
                                 }
-                                string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.Device_IP_Address + "/sony/appControl")));
+                                string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.IPAddress + "/sony/appControl")));
                                 System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
                                 file.WriteLine(answerCookie);
                                 file.Close();
                                 this.Cookie = answerCookie;
                                 bal = JsonConvert.DeserializeObject<List<SonyCookie>>(answerCookie);
-                                allcookies.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
+                                AllCookies.Add(new Uri(@"http://" + this.IPAddress + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
                                 this.Registered = true;
                                 results = true;
-                                _Log.writetolog(this.Name + ": New Cookie auth=" + this.Cookie, false);
+                                _Log.AddMessage(this.Name + ": New Cookie auth=" + this.Cookie, false);
                             }
                             catch
                             {
-                                _Log.writetolog(this.Name + ": Failed to retrieve new Cookie", false);
+                                _Log.AddMessage(this.Name + ": Failed to retrieve new Cookie", false);
                                 this.Registered = false;
                                 results = false;
                             }
                         }
                         else
                         {
-                            _Log.writetolog(this.Name + ": Cookie is not Expired.", false);
-                            _Log.writetolog(bal[0].Name + ": Adding Cookie to Device: " + bal[0].Value, false);
-                            allcookies.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
+                            _Log.AddMessage(this.Name + ": Cookie is not Expired.", false);
+                            _Log.AddMessage(bal[0].Name + ": Adding Cookie to Device: " + bal[0].Value, false);
+                            AllCookies.Add(new Uri(@"http://" + this.IPAddress + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
                             this.Cookie = myString;
                             this.Registered = true;
                             results = true;
-                            _Log.writetolog(this.Name + ": Cookie Found: auth=" + this.Cookie, false);
+                            _Log.AddMessage(this.Name + ": Cookie Found: auth=" + this.Cookie, false);
                         }
                     }
                     catch (Exception ex)
                     {
-                        _Log.writetolog("No Cookie was found", false);
-                        _Log.writetolog(ex.ToString(), true);
+                        _Log.AddMessage("No Cookie was found", false);
+                        _Log.AddMessage(ex.ToString(), true);
                         results = false;
                         this.Registered = false;
                     }
                 }
-                _Log.writetolog(this.Name + ": Registration Check returned: " + results.ToString(), false);
+                _Log.AddMessage(this.Name + ": Registration Check returned: " + results.ToString(), false);
                 return results;
             }
             #endregion
@@ -732,17 +753,17 @@ namespace SonyAPILib
             /// This method Gets the current Status of the device
             /// </summary>
             /// <returns>Returns the device response as a string</returns>
-            public string checkStatus()
+            public string CheckStatus()
             {
                 string retstatus = "";
                 if (this.Actionlist.RegisterMode != 3)
                 {
                     try
                     {
-                        _Log.writetolog("Checking Status of Device " + this.Name, false);
+                        _Log.AddMessage("Checking Status of Device " + this.Name, false);
                         string cstatus;
                         int x;
-                        cstatus = HttpGet(this.Actionlist.getStatus);
+                        cstatus = HttpGet(this.Actionlist.StatusUrl);
                         cstatus = cstatus.Replace("/n", "");
                         x = cstatus.IndexOf("name=");
                         cstatus = cstatus.Substring(x + 6);
@@ -754,12 +775,12 @@ namespace SonyAPILib
                         x = cstatus.IndexOf("\"");
                         string sval = cstatus.Substring(0, x);
                         retstatus = sname + ":" + sval;
-                        _Log.writetolog("Device returned a Status of: " + retstatus, true);
+                        _Log.AddMessage("Device returned a Status of: " + retstatus, true);
                     }
                     catch (Exception ex)
                     {
-                        _Log.writetolog("Checking Device Status for " + this.Name + " Failed!", true);
-                        _Log.writetolog(ex.ToString(), true);
+                        _Log.AddMessage("Checking Device Status for " + this.Name + " Failed!", true);
+                        _Log.AddMessage(ex.ToString(), true);
                         retstatus = "";
                     }
                 }
@@ -767,8 +788,8 @@ namespace SonyAPILib
                 {
                     try
                     {
-                        _Log.writetolog("Checking Status of Device " + this.Name, false);
-                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + this.Device_IP_Address + @"/sony/system");
+                        _Log.AddMessage("Checking Status of Device " + this.Name, false);
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + @"/sony/system");
                         httpWebRequest.ContentType = "application/json";
                         httpWebRequest.Method = "POST";
                         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -780,39 +801,39 @@ namespace SonyAPILib
                         using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                         {
                             var responseText = streamReader.ReadToEnd();
-                            dataSet = JsonConvert.DeserializeObject<SonyCommandList>(responseText);
+                            DataSet = JsonConvert.DeserializeObject<SonyCommandList>(responseText);
                         }
-                        string first = dataSet.result[0].ToString();
+                        string first = DataSet.result[0].ToString();
                         first = first.Replace("{", "");
                         first = first.Replace("\"", "");
                         retstatus = first;
-                        _Log.writetolog("Device returned a Status of: " + retstatus, true);
+                        _Log.AddMessage("Device returned a Status of: " + retstatus, true);
                     }
                     catch (Exception ex)
                     {
-                        _Log.writetolog("Check Status Failed: " + ex, true);
+                        _Log.AddMessage("Check Status Failed: " + ex, true);
                     }
                 }
                 return retstatus;
             }
             #endregion
 
-            #region getRegistrationMode
+            #region Get Registration Mode
 
             /// <summary>
             /// Gets the Registration Mode from the ActionList.
             /// Or uses Gen 3 if no action list is found.
             /// </summary>
             /// <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
-            private string getRegistrationMode()
+            private string GetRegistrationMode()
             {
                 string lAction = "register";
                 string foundVal = "3";
-                _Log.writetolog("Retriving Device Registration Mode", false);
+                _Log.AddMessage("Retriving Device Registration Mode", false);
                 DataSet acList = new DataSet();
-                if (Actionlist_Url != "")
+                if (ActionListUrl != "")
                 {
-                    acList.ReadXml(Actionlist_Url);
+                    acList.ReadXml(ActionListUrl);
                     DataTable act = new DataTable();
                     act = acList.Tables[0];
                     var results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == lAction select myRow;
@@ -820,41 +841,41 @@ namespace SonyAPILib
                 }
                 else
                 {
-                    _Log.writetolog("No Action List found.", true);
+                    _Log.AddMessage("No Action List found.", true);
                 }
-                _Log.writetolog("Using Registration mode: " + foundVal, true);
+                _Log.AddMessage("Using Registration mode: " + foundVal, true);
                 return foundVal;
             }
             #endregion
 
-            #region getIRCCCommandString
+            #region Get IRCC Command String
 
             /// <summary>
             /// This method is used to find the Device Command Value based on the Command Name from the SonyDevice.Commands object list.
             /// </summary>
-            /// <param name="cmdname">A valid command name found in the SonyDevice.Commands object list. (ie: "ChannelUp")</param>
+            /// <param name="CmdName">A valid command name found in the SonyDevice.Commands object list. (ie: "ChannelUp")</param>
             /// <returns>Returns the command value for the matched command name. ie: "AAAAAQAAAAEAAAAQAw==". or returns an empty string if no match is found</returns>
             /// <remarks>This can be used with send_ircc("AAAAAQAAAAEAAAAQAw==")
             ///  like this: send_ircc(getIRCCcommandString("ChannelUp")
             /// </remarks>
-            public string getIRCCcommandString(string cmdname)
+            public string GetCommandString(string CmdName)
             {
                 // Convert XML String to Dataset
-                _Log.writetolog("Retrieving Command String for Command: " + cmdname, true);
+                _Log.AddMessage("Retrieving Command String for Command: " + CmdName, true);
                 string foundCmd="";
-                var results = this.Commands.FirstOrDefault(o => o.name.ToLower() == cmdname.ToLower());
+                var results = this.Commands.FirstOrDefault(o => o.name.ToLower() == CmdName.ToLower());
                 if (results != null)
                 {
                     try
                     {
                         foundCmd = results.value;
-                        _Log.writetolog("Found Command String for: " + cmdname + " - " + foundCmd, false);
+                        _Log.AddMessage("Found Command String for: " + CmdName + " - " + foundCmd, false);
                     }
                     catch (Exception e)
                     {
                         foundCmd = "";
-                        _Log.writetolog("Command String for: " + cmdname + " NOT Found! ", true);
-                        _Log.writetolog(e.ToString(), true);
+                        _Log.AddMessage("Command String for: " + CmdName + " NOT Found! ", true);
+                        _Log.AddMessage(e.ToString(), true);
                     }
                 }
                 return foundCmd;
@@ -866,33 +887,33 @@ namespace SonyAPILib
             /// <summary>
             /// This method send Inputed Text via an HTTP GET command
             /// </summary>
-            /// <param name="sendtext">A string containing the text to send to the device</param>
+            /// <param name="SendText">A string containing the text to send to the device</param>
             /// <returns>Returns the device response as a string</returns>
-            public string send_text(string sendtext = "")
+            public string SendText(string SendText = "")
             {
                 string response = "";
                 if (this.Actionlist.RegisterMode < 3)
                 {
-                    _Log.writetolog("Sending TEXT to device", false);
-                    response = HttpGet(this.Actionlist.sendText + "?text=" + sendtext);
+                    _Log.AddMessage("Sending TEXT to device", false);
+                    response = HttpGet(this.Actionlist.SendTextUrl + "?text=" + SendText);
                     if (response != "")
                     {
-                        _Log.writetolog("Send Text WAS sent Successfully", true);
+                        _Log.AddMessage("Send Text WAS sent Successfully", true);
                     }
                     else
                     {
-                        _Log.writetolog("Send Text was NOT sent successfully", true);
+                        _Log.AddMessage("Send Text was NOT sent successfully", true);
                     }
                 }
                 else
                 {
-                    string jsontosend = "{\"id\":78,\"method\":\"setTextForm\",\"version\":\"1.0\",\"params\":[\"" + sendtext + "\"]}";
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + this.Device_IP_Address + "/sony/appControl");
+                    string jsontosend = "{\"id\":78,\"method\":\"setTextForm\",\"version\":\"1.0\",\"params\":[\"" + SendText + "\"]}";
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + "/sony/appControl");
                     httpWebRequest.ContentType = "application/json";
                     httpWebRequest.Method = "POST";
                     httpWebRequest.CookieContainer = new CookieContainer();
                     List<SonyCookie> bal = JsonConvert.DeserializeObject<List<SonyCookie>>(this.Cookie);
-                    httpWebRequest.CookieContainer.Add(new Uri(@"http://" + this.Device_IP_Address + bal[0].Path.ToString()), new Cookie(bal[0].Name, bal[0].Value));
+                    httpWebRequest.CookieContainer.Add(new Uri(@"http://" + this.IPAddress + bal[0].Path.ToString()), new Cookie(bal[0].Name, bal[0].Value));
                     using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                     {
                         streamWriter.Write(jsontosend);
@@ -914,16 +935,16 @@ namespace SonyAPILib
             /// This method Gets Text
             /// </summary>
             /// <returns>Returns the device response as a string</returns>
-            public string get_text()
+            public string GetText()
             {
-                string response = HttpGet(this.Actionlist.getText);
+                string response = HttpGet(this.Actionlist.GetTextUrl);
                 return response;
             }
             #endregion
 
             #region Convert mdf commands
 
-            private string send_ircc_mdf(Int32 manu, Int32 device, Int32 function)
+            private string SendIrccMdf(Int32 manu, Int32 device, Int32 function)
             {
                 // Join each as a char and remove any /n
                 Int32 zero = 0;
@@ -957,7 +978,7 @@ namespace SonyAPILib
             /// </summary>
             public void hdmi_1()
             {
-                send_ircc_mdf(2, 26, 90);
+                SendIrccMdf(2, 26, 90);
             }
 
             /// <summary>
@@ -965,7 +986,7 @@ namespace SonyAPILib
             /// </summary>
             public void hdmi_2()
             {
-                send_ircc_mdf(2, 26, 91);
+                SendIrccMdf(2, 26, 91);
             }
 
             /// <summary>
@@ -973,7 +994,7 @@ namespace SonyAPILib
             /// </summary>
             public void hdmi_3()
             {
-                send_ircc_mdf(2, 26, 92);
+                SendIrccMdf(2, 26, 92);
             }
 
             /// <summary>
@@ -981,7 +1002,7 @@ namespace SonyAPILib
             /// </summary>
             public void hdmi_4()
             {
-                send_ircc_mdf(2, 26, 93);
+                SendIrccMdf(2, 26, 93);
             }
             #endregion
 
@@ -989,9 +1010,10 @@ namespace SonyAPILib
             /// <summary>
             /// Sends IRCC value for Volume Up
             /// </summary>
-            public void volume_up()
+            public void VolumeUp()
             {
                 //this.send_ircc(getIRCCcommandString("VolumeUp"));
+                //this.Ircc.XSendIRCC(this, getIRCCcommandString("VolumeUp"));
             }
             #endregion
 
@@ -999,7 +1021,7 @@ namespace SonyAPILib
             /// <summary>
             /// Sends IRCC value for Volume Down
             /// </summary>
-            public void volume_down()
+            public void VolumeDown()
             {
                 //this.send_ircc(getIRCCcommandString("VolumeDown"));
             }
@@ -1009,7 +1031,7 @@ namespace SonyAPILib
             /// <summary>
             /// Sends IRCC value for Channel Up
             /// </summary>
-            public void channel_up()
+            public void ChannelUp()
             {
                 //this.send_ircc(getIRCCcommandString("ChannelUp"));
             }
@@ -1019,7 +1041,7 @@ namespace SonyAPILib
             /// <summary>
             /// Sends IRCC value for Channel Down
             /// </summary>
-            public void channel_down()
+            public void ChannelDown()
             {
                 //this.send_ircc(getIRCCcommandString("ChannelDown"));
             }
@@ -1030,7 +1052,7 @@ namespace SonyAPILib
             /// This public method can be used to tune to a complete channel.
             /// </summary>
             /// <param name="channel">A string containing a valid complete channel. (ie. 47.1)</param>
-            public void channel_set(string channel)
+            public void ChannelSet(string channel)
             {
                 int chlen = channel.Length;
                 string ircc_cmd = "";
@@ -1040,37 +1062,37 @@ namespace SonyAPILib
                     switch (chchar)
                     {
                         case "1":
-                            ircc_cmd = getIRCCcommandString("Num1");
+                            ircc_cmd = GetCommandString("Num1");
                             break;
                         case "2":
-                            ircc_cmd = getIRCCcommandString("Num2");
+                            ircc_cmd = GetCommandString("Num2");
                             break;
                         case "3":
-                            ircc_cmd = getIRCCcommandString("Num3");
+                            ircc_cmd = GetCommandString("Num3");
                             break;
                         case "4":
-                            ircc_cmd = getIRCCcommandString("Num4");
+                            ircc_cmd = GetCommandString("Num4");
                             break;
                         case "5":
-                            ircc_cmd = getIRCCcommandString("Num5");
+                            ircc_cmd = GetCommandString("Num5");
                             break;
                         case "6":
-                            ircc_cmd = getIRCCcommandString("Num6");
+                            ircc_cmd = GetCommandString("Num6");
                             break;
                         case "7":
-                            ircc_cmd = getIRCCcommandString("Num7");
+                            ircc_cmd = GetCommandString("Num7");
                             break;
                         case "8":
-                            ircc_cmd = getIRCCcommandString("Num8");
+                            ircc_cmd = GetCommandString("Num8");
                             break;
                         case "9":
-                            ircc_cmd = getIRCCcommandString("Num9");
+                            ircc_cmd = GetCommandString("Num9");
                             break;
                         case "0":
-                            ircc_cmd = getIRCCcommandString("Num0");
+                            ircc_cmd = GetCommandString("Num0");
                             break;
                         case ".":
-                            ircc_cmd = getIRCCcommandString("DOT");
+                            ircc_cmd = GetCommandString("DOT");
                             break;
                     }
                     //this.execute("IRCC","X_SendIRCC", ircc_cmd);
@@ -1086,7 +1108,7 @@ namespace SonyAPILib
             /// </summary>
             /// <param name="cpath"> Path to check</param>
             /// <returns></returns>
-            public string checkFullPath(string cpath)
+            public string CheckFullPath(string cpath)
             {
                 if (cpath.StartsWith("http://"))
                 {
@@ -1095,7 +1117,7 @@ namespace SonyAPILib
                 else
                 {
                     //Complete the Path
-                    cpath = "http://" + this.Device_IP_Address + ":" + this.Device_Port + cpath ;
+                    cpath = "http://" + this.IPAddress + ":" + this.Port + cpath ;
                 }
                 return cpath;
             }
@@ -1108,12 +1130,12 @@ namespace SonyAPILib
             /// </summary>
             /// <returns>A string containing a processed MAC address. 
             /// For example: Actual Mac 01:02:03:04:05:06 returns 01-02-03-04-05-06</returns>
-            public string getServerMac()
+            public string GetServerMac()
             {
-                _Log.writetolog("Retrieving Controlling devices Mac Address. (this computer)", false);
+                _Log.AddMessage("Retrieving Controlling devices Mac Address. (this computer)", false);
                 string mac = GetMacAddress();
-                _Log.writetolog("Mac Address retrieved: " + mac, false);
-                _Log.writetolog("Re-Parsing Mac Address. (Replace : with -)", false);
+                _Log.AddMessage("Mac Address retrieved: " + mac, false);
+                _Log.AddMessage("Re-Parsing Mac Address. (Replace : with -)", false);
                 string new_mac = "";
                 int i = mac.Length;
                 int y = 1;
@@ -1132,7 +1154,7 @@ namespace SonyAPILib
                     y = y + 1;
                 }
                 mac = new_mac;
-                _Log.writetolog("Mac Address has been re-Parsed: " + mac, true);
+                _Log.AddMessage("Mac Address has been re-Parsed: " + mac, true);
                 return mac;
             }
             #endregion
@@ -1169,12 +1191,13 @@ namespace SonyAPILib
             /// <summary>
             /// Method used to retrieve Gen3 Devices Mac Address
             /// </summary>
+            /// <param name="mDev">The SonyDevice to obtain the Mac Address From</param>
             /// <returns></returns>
-            public string getDeviceMac(SonyDevice mDev)
+            public string GetDeviceMac(SonyDevice mDev)
             {
                 String macaddress = "";
-                _Log.writetolog("Retrieving the Mac Address from: " + mDev.Name + " at IP: " + mDev.Device_IP_Address, true);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + mDev.Device_IP_Address + @"/sony/system");
+                _Log.AddMessage("Retrieving the Mac Address from: " + mDev.Name + " at IP: " + mDev.IPAddress, true);
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + mDev.IPAddress + @"/sony/system");
                 httpWebRequest.ContentType = "text/json";
                 httpWebRequest.Method = "POST";
                 SonyCommandList dataSet = new SonyCommandList();
@@ -1192,7 +1215,7 @@ namespace SonyAPILib
                 string first = dataSet.result[0].ToString();
                 List<SonyOption> bal = JsonConvert.DeserializeObject<List<SonyOption>>(first);
                 macaddress = bal.Find(x => x.option.ToLower() == "WOL".ToLower()).value.ToString();
-                _Log.writetolog("Devices Mac Address: " + macaddress, true);
+                _Log.AddMessage("Devices Mac Address: " + macaddress, true);
                 return macaddress;
             }
 
@@ -1205,33 +1228,33 @@ namespace SonyAPILib
             /// </summary>
             /// <param name="dPath">A URI containg the URL to the device's Description XML file.</param>
             /// <returns>A Fully built and populated Sony Device</returns>
-            public void buildFromDocument(Uri dPath)
+            public void BuildFromDocument(Uri dPath)
             {
-                this.DocumentURL = dPath.ToString();
-                _Log.writetolog("Retrieving Device Description Document from URI:", false);
-                _Log.writetolog(dPath.ToString(), false);
+                this.DocumentUrl = dPath.ToString();
+                _Log.AddMessage("Retrieving Device Description Document from URI:", false);
+                _Log.AddMessage(dPath.ToString(), false);
                 XDocument dDoc = XDocument.Load(dPath.ToString());
-                this.buildFromDocument(dDoc.Root.Document.ToString(), dPath.ToString());
+                this.BuildFromDocument(dDoc.Root.Document.ToString(), dPath.ToString());
             }
 
             /// <summary>
             /// Builds a SonyDevice object based on the devices Description document text.
             /// </summary>
-            /// <param name="dDoc">A string containg the Description XML.</param>
-            /// <param name="fPath">A string containg the Full Path to the device's Description XML file.</param>
+            /// <param name="Doc">A string containg the Description XML.</param>
+            /// <param name="Path">A string containg the Full Path to the device's Description XML file.</param>
             /// <returns>A Fully built and populated Sony Device</returns>
-            public void buildFromDocument(string dDoc, string fPath)
+            public void BuildFromDocument(string Doc, string Path)
             {
-                this.DocumentURL = fPath;
-                Uri d = new Uri(fPath);
-                this.Device_IP_Address = d.Host;
-                this.Device_Port = d.Port;
-                this.Server_Macaddress = this.getServerMac();
-                this.Server_Name = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
+                this.DocumentUrl = Path;
+                _Log.AddMessage("Document Found", false);
+                Uri d = new Uri(Path);
+                this.IPAddress = d.Host;
+                this.Port = d.Port;
+                this.ServerMacAddress = this.GetServerMac();
+                this.ServerName = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
                 XmlDocument xDoc = new XmlDocument();
-                xDoc.LoadXml(dDoc);
+                xDoc.LoadXml(Doc);
                 XmlNode xNode = xDoc.DocumentElement.ChildNodes[1];
-                _Log.writetolog("Document Found", false);
                 foreach (XmlNode node in xNode.ChildNodes)
                 {
                     if (node.Name == "av:X_UNR_DeviceInfo")
@@ -1240,28 +1263,28 @@ namespace SonyAPILib
                         {
                             if (dserv.Name == "av:X_CERS_ActionList_URL")
                             {
-                                _Log.writetolog("Action List Found.", false);
+                                _Log.AddMessage("Action List Found.", false);
                                 string alPath = dserv.FirstChild.InnerText;
-                                this.Actionlist_Url = alPath;
+                                this.ActionListUrl = alPath;
                                 DataSet acList = new DataSet();
                                 acList.ReadXml(alPath);
                                 DataTable act = new DataTable();
                                 act = acList.Tables[0];
                                 var results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "register" select myRow;
                                 this.Actionlist.RegisterMode = Convert.ToInt16(results.ElementAt(0).ItemArray[1].ToString());
-                                _Log.writetolog("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
-                                this.Actionlist.RegisterUrl = this.checkFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
+                                this.Actionlist.RegisterUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                                 results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getSystemInformation" select myRow;
-                                this.Actionlist.getSystemInformation = this.checkFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                this.Actionlist.SystemInformationUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                                 results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getRemoteCommandList" select myRow;
-                                this.Actionlist.getRemoteCommandList = this.checkFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                this.get_remote_command_list();
+                                this.Actionlist.RemoteCommandListUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                //this.GetRemoteCommandList();
                                 results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getStatus" select myRow;
-                                this.Actionlist.getStatus = this.checkFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                this.Actionlist.StatusUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                                 results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getText" select myRow;
-                                this.Actionlist.getText = this.checkFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                this.Actionlist.GetTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                                 results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "sendText" select myRow;
-                                this.Actionlist.sendText = this.checkFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                this.Actionlist.SendTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                             }
                         }
                     }
@@ -1269,95 +1292,95 @@ namespace SonyAPILib
                     if (node.Name == "av:X_ScalarWebAPI_DeviceInfo")
                     {
                         this.Actionlist.RegisterMode = 3;
-                        _Log.writetolog("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
-                        this.Device_Macaddress = this.getDeviceMac(this);
-                        this.get_remote_command_list();
+                        _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
+                        this.MacAddress = this.GetDeviceMac(this);
                     }
                     if (node.Name == "friendlyName") { this.Name = node.FirstChild.InnerText; }
                     if (node.Name == "manufacturer") { this.Manufacture = node.FirstChild.InnerText; }
                     if (node.Name == "modelDescription") { this.ModelDescription = node.FirstChild.InnerText; }
                     if (node.Name == "modelName") { this.ModelName = node.FirstChild.InnerText; }
                     if (node.Name == "modelNumber") { this.ModelNumber = node.FirstChild.InnerText; }
-                    if (node.Name == "UDN") { this.UDN = node.FirstChild.InnerText; }
-                    if (node.Name == "deviceType") { this.DeviceType = node.FirstChild.InnerText; }
+                    if (node.Name == "UDN") { this.Udn = node.FirstChild.InnerText; }
+                    if (node.Name == "deviceType") { this.Type = node.FirstChild.InnerText; }
                     if (node.Name == "serviceList")
                     {
                         foreach (XmlNode cnode in node.ChildNodes)
                         {
-                            deviceService dServ = new deviceService();
+                            DeviceService dServ = new DeviceService();
                             foreach (XmlNode dserv in cnode.ChildNodes)
                             {
                                 if (dserv.Name == "serviceType")
                                 {
                                     
-                                    dServ.serviceType = dserv.InnerText;
-                                    dServ.friendlyServiceIdentifier = dServ.serviceType.ChopOffBefore("service:");
+                                    dServ.Type = dserv.InnerText;
+                                    dServ.ServiceIdentifier = dServ.Type.ChopOffBefore("service:");
                                 }
-                                if (dserv.Name == "serviceId") { dServ.serviceID = dserv.InnerText; }
-                                if (dserv.Name == "SCPDURL") { dServ.SCPDURL = this.checkFullPath(dserv.InnerText); }
-                                if (dserv.Name == "controlURL") { dServ.controlURL = this.checkFullPath(dserv.InnerText); }
+                                if (dserv.Name == "serviceId") { dServ.ServiceID = dserv.InnerText; }
+                                if (dserv.Name == "SCPDURL") { dServ.ScpdUrl = this.CheckFullPath(dserv.InnerText); }
+                                if (dserv.Name == "controlURL") { dServ.ControlUrl = this.CheckFullPath(dserv.InnerText); }
                                 if (dserv.Name == "eventSubURL")
                                 {
                                     if (dserv.InnerText != "")
                                     {
-                                        dServ.eventSubURL = this.checkFullPath(dserv.InnerText);
+                                        dServ.EventSubUrl = this.CheckFullPath(dserv.InnerText);
                                     }
                                 }
                             }
-                            if (dServ.friendlyServiceIdentifier == "IRCC:1")
+                            if (dServ.ServiceIdentifier == "IRCC:1")
                             {
-                                _Log.writetolog("IRCC:1 Service discovered on this device", false);
-                                this.IRCC.controlURL = dServ.controlURL;
-                                this.IRCC.SCPDURL = dServ.SCPDURL;
-                                this.IRCC.eventSubURL = dServ.eventSubURL;
-                                this.IRCC.serviceID = dServ.serviceID;
-                                this.IRCC.friendlyServiceIdentifier = dServ.friendlyServiceIdentifier;
-                                this.IRCC.serviceType = dServ.serviceType;
+                                _Log.AddMessage("IRCC:1 Service discovered on this device", false);
+                                this.Ircc.ControlUrl = dServ.ControlUrl;
+                                this.Ircc.ScpdUrl = dServ.ScpdUrl;
+                                this.Ircc.EventSubURL = dServ.EventSubUrl;
+                                this.Ircc.ServiceID = dServ.ServiceID;
+                                this.Ircc.ServiceIdentifier = dServ.ServiceIdentifier;
+                                this.Ircc.Type = dServ.Type;
                             }
-                            if (dServ.friendlyServiceIdentifier == "AVTransport:1")
+                            if (dServ.ServiceIdentifier == "AVTransport:1")
                             {
-                                _Log.writetolog("AVTransport:1 Service discovered on this device", false);
-                                this.AVTransport.controlURL = dServ.controlURL;
-                                this.AVTransport.SCPDURL = dServ.SCPDURL;
-                                this.AVTransport.eventSubURL = dServ.eventSubURL;
-                                this.AVTransport.serviceID = dServ.serviceID;
-                                this.AVTransport.friendlyServiceIdentifier = dServ.friendlyServiceIdentifier;
-                                this.AVTransport.serviceType = dServ.serviceType;
+                                _Log.AddMessage("AVTransport:1 Service discovered on this device", false);
+                                this.AVTransport.ControlUrl = dServ.ControlUrl;
+                                this.AVTransport.ScpdUrl = dServ.ScpdUrl;
+                                this.AVTransport.EventSubUrl = dServ.EventSubUrl;
+                                this.AVTransport.ServiceID = dServ.ServiceID;
+                                this.AVTransport.ServiceIdentifier = dServ.ServiceIdentifier;
+                                this.AVTransport.Type = dServ.Type;
                             }
-                            if (dServ.friendlyServiceIdentifier == "RenderingControl:1")
+                            if (dServ.ServiceIdentifier == "RenderingControl:1")
                             {
-                                _Log.writetolog("RenderingControl:1 Service discovered on this device", false);
-                                this.RenderingControl.controlURL = dServ.controlURL;
-                                this.RenderingControl.SCPDURL = dServ.SCPDURL;
-                                this.RenderingControl.eventSubURL = dServ.eventSubURL;
-                                this.RenderingControl.serviceID = dServ.serviceID;
-                                this.RenderingControl.friendlyServiceIdentifier = dServ.friendlyServiceIdentifier;
-                                this.RenderingControl.serviceType = dServ.serviceType;
+                                _Log.AddMessage("RenderingControl:1 Service discovered on this device", false);
+                                this.RenderingControl.ControlUrl = dServ.ControlUrl;
+                                this.RenderingControl.ScpdUrl = dServ.ScpdUrl;
+                                this.RenderingControl.EventSubUrl = dServ.EventSubUrl;
+                                this.RenderingControl.ServiceID = dServ.ServiceID;
+                                this.RenderingControl.ServiceIdentifier = dServ.ServiceIdentifier;
+                                this.RenderingControl.Type = dServ.Type;
                             }
-                            if (dServ.friendlyServiceIdentifier == "ConnectionManager:1")
+                            if (dServ.ServiceIdentifier == "ConnectionManager:1")
                             {
-                                _Log.writetolog("ConnectionManager:1 Service discovered on this device", false);
-                                this.ConnectionManager.controlURL = dServ.controlURL;
-                                this.ConnectionManager.SCPDURL = dServ.SCPDURL;
-                                this.ConnectionManager.eventSubURL = dServ.eventSubURL;
-                                this.ConnectionManager.serviceID = dServ.serviceID;
-                                this.ConnectionManager.friendlyServiceIdentifier = dServ.friendlyServiceIdentifier;
-                                this.ConnectionManager.serviceType = dServ.serviceType;
+                                _Log.AddMessage("ConnectionManager:1 Service discovered on this device", false);
+                                this.ConnectionManager.ControlUrl = dServ.ControlUrl;
+                                this.ConnectionManager.ScpdUrl = dServ.ScpdUrl;
+                                this.ConnectionManager.EventSubUrl = dServ.EventSubUrl;
+                                this.ConnectionManager.ServiceID = dServ.ServiceID;
+                                this.ConnectionManager.ServiceIdentifier = dServ.ServiceIdentifier;
+                                this.ConnectionManager.Type = dServ.Type;
                             }
-                            if (dServ.friendlyServiceIdentifier == "Party:1")
+                            if (dServ.ServiceIdentifier == "Party:1")
                             {
-                                _Log.writetolog("Party:1 Service discovered on this device", false);
-                                this.Party.controlURL = dServ.controlURL;
-                                this.Party.SCPDURL = dServ.SCPDURL;
-                                this.Party.eventSubURL = dServ.eventSubURL;
-                                this.Party.serviceID = dServ.serviceID;
-                                this.Party.friendlyServiceIdentifier = dServ.friendlyServiceIdentifier;
-                                this.Party.serviceType = dServ.serviceType;
+                                _Log.AddMessage("Party:1 Service discovered on this device", false);
+                                this.Party.ControlUrl = dServ.ControlUrl;
+                                this.Party.ScpdUrl = dServ.ScpdUrl;
+                                this.Party.EventSubUrl = dServ.EventSubUrl;
+                                this.Party.ServiceID = dServ.ServiceID;
+                                this.Party.ServiceIdentifier = dServ.ServiceIdentifier;
+                                this.Party.Type = dServ.Type;
                             }
                         }
                     }
                 }
-                this.checkReg();
+                this.CheckReg();
+                this.GetRemoteCommandList();
             }
 
             #endregion
@@ -1371,20 +1394,20 @@ namespace SonyAPILib
             {
                 if (this.Actionlist.RegisterMode == 3)
                 {
-                    _Log.writetolog("Sending Wake On Lan command to device", false);
+                    _Log.AddMessage("Sending Wake On Lan command to device", false);
                     Byte[] datagram = new byte[102];
                     for (int i = 0; i <= 5; i++)
                     {
                         datagram[i] = 0xff;
                     }
                     string[] macDigits = null;
-                    if (this.Device_Macaddress.Contains("-"))
+                    if (this.MacAddress.Contains("-"))
                     {
-                        macDigits = this.Device_Macaddress.Split('-');
+                        macDigits = this.MacAddress.Split('-');
                     }
                     else
                     {
-                        macDigits = this.Device_Macaddress.Split(':');
+                        macDigits = this.MacAddress.Split(':');
                     }
                     if (macDigits.Length != 6)
                     {
@@ -1400,11 +1423,11 @@ namespace SonyAPILib
                     }
                     UdpClient client = new UdpClient();
                     client.Send(datagram, datagram.Length, "255.255.255.255", 3);
-                    _Log.writetolog("Send WOL command to " + this.Name, true);
+                    _Log.AddMessage("Send WOL command to " + this.Name, true);
                 }
                 else
                 {
-                    _Log.writetolog("Device does not support WOL", true);
+                    _Log.AddMessage("Device does not support WOL", true);
                 }
             }
             #endregion
@@ -1504,19 +1527,19 @@ namespace SonyAPILib
             /// </summary>
             /// <param name="message">This is the Text message to be added to the log file</param>
             /// <param name="oride">Set to true to ALWAYS log this message. Otherwise set to false</param>
-            public void writetolog(string message, bool oride)
+            public void AddMessage(string message, bool oride)
             {
                 if (this.Path == null | this.Path == "") { this.Path = @"c:\ProgramData\Sony\"; }
                 Directory.CreateDirectory(this.Path);
                 if (this.Name == null | this.Name == "") { this.Name = @"SonyAPILib_LOG.txt"; }
-                if(File.Exists(this.Path + this.Name))
-                {
+                //if(File.Exists(this.Path + this.Name))
+                //{
                     // File already there!
-                }
-                else
-                {
-                    File.Create(this.Path + this.Name);
-                }
+                //}
+                //else
+                //{
+                //    File.Create(this.Path + this.Name);
+                //}
                 if (this.Level == null | this.Level == "") { this.Level = "Basic"; }
                 string logPath = this.Path + this.Name;
                 if (Enable == true)
@@ -1543,18 +1566,18 @@ namespace SonyAPILib
             /// This method is used to Clear the current log and start a new.
             /// </summary>
             /// <param name="newName">Default is Null. If NOT Null, Log file is copied to newName before it is Cleared!</param>
-            public void clearLog(string newName)
+            public void ClearLog(string newName)
             {
                 if (newName != null)
                 {
                     File.Copy(@Path + Name, @Path + newName);
                     File.Delete(@Path + Name);
-                    writetolog("Saving Log file as: " + @Path + newName, true);
+                    AddMessage("Saving Log file as: " + @Path + newName, true);
                 }
                 else
                 {
                     File.Delete(@Path + Name);
-                    writetolog("Clearing Log file: " + @Path + Name, true);
+                    AddMessage("Clearing Log file: " + @Path + Name, true);
                 }
 
             }
@@ -1780,7 +1803,7 @@ namespace SonyAPILib
             }
             #endregion
 
-        #region Services
+        #region DLNA / UPnP Services
 
             #region Rendering Control
 
@@ -1836,7 +1859,7 @@ namespace SonyAPILib
                 /// <returns>Out value for the CurrentPresetNameList action parameter.</returns>
                 public String ListPresets(SonyDevice parent)
                 {
-                    if (parent.RenderingControl.controlURL != null)
+                    if (parent.RenderingControl.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -1844,14 +1867,14 @@ namespace SonyAPILib
                         XML += "<m:ListPresets xmlns:m=\"urn:schemas-upnp-org:service:RenderingControl:1\">" + Environment.NewLine;
                         XML += "<InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID>" + Environment.NewLine;
                         XML += "</m:ListPresets>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.RenderingControl.controlURL.IndexOf(":") + 3;
-                        string req = parent.RenderingControl.controlURL.Substring(reqi);
-                        reqi = parent.RenderingControl.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.RenderingControl.ControlUrl.Substring(reqi);
+                        reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#ListPresets", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#ListPresets", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -1864,8 +1887,8 @@ namespace SonyAPILib
                         {
                             ret += node.InnerText;
                         }
-                        parent.RenderingControl.sv_LastChange = "ListPresets: " + ret;
-                        parent.RenderingControl.sv_PresetNameList = ret;
+                        parent.RenderingControl.LastChange = "ListPresets: " + ret;
+                        parent.RenderingControl.PresetNameList = ret;
                         return ret;
                     }
                     return null;
@@ -1878,7 +1901,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="presetName">In value for the PresetName action parameter.</param>
-                public void SelectPreset(SonyAPI_Lib.SonyDevice parent, string presetName)
+                public void SelectPreset(SonyAPILib.SonyDevice parent, string presetName)
                 {
                 //    object[] loIn = new object[2];
 
@@ -1897,7 +1920,7 @@ namespace SonyAPILib
                 /// <returns>Boolean value for the CurrentMute action parameter.</returns>
                 public Boolean GetMute(SonyDevice parent)
                 {
-                    if (parent.RenderingControl.controlURL != null)
+                    if (parent.RenderingControl.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -1906,14 +1929,14 @@ namespace SonyAPILib
                         XML += "<InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID>" + Environment.NewLine;
                         XML += "<Channel xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"string\">" + Channel + "</Channel>" + Environment.NewLine;
                         XML += "</m:GetMute>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.RenderingControl.controlURL.IndexOf(":") + 3;
-                        string req = parent.RenderingControl.controlURL.Substring(reqi);
-                        reqi = parent.RenderingControl.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.RenderingControl.ControlUrl.Substring(reqi);
+                        reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#GetMute", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#GetMute", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -1930,8 +1953,8 @@ namespace SonyAPILib
                                 ret = true;
                             }
                         }
-                        parent.RenderingControl.sv_LastChange = "GetMute: " + ret.ToString();
-                        parent.RenderingControl.sv_Mute = ret;
+                        parent.RenderingControl.LastChange = "GetMute: " + ret.ToString();
+                        parent.RenderingControl.MuteState = ret;
                         return ret;
                     }
                     return false;
@@ -1946,7 +1969,7 @@ namespace SonyAPILib
                 /// <param name="desiredMute">In value for the DesiredMute action parameter.</param>
                 public void SetMute(SonyDevice parent, Boolean desiredMute)
                 {
-                    if (parent.RenderingControl.controlURL != null)
+                    if (parent.RenderingControl.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -1961,19 +1984,19 @@ namespace SonyAPILib
                         XML += "<Channel xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"string\">" + Channel + "</Channel>" + Environment.NewLine;
                         XML += "<DesiredMute xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"boolean\">" + sMute.ToString() + "</DesiredMute>" + Environment.NewLine;
                         XML += "</m:SetMute>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.RenderingControl.controlURL.IndexOf(":") + 3;
-                        string req = parent.RenderingControl.controlURL.Substring(reqi);
-                        reqi = parent.RenderingControl.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.RenderingControl.ControlUrl.Substring(reqi);
+                        reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#SetMute", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#SetMute", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
-                        parent.RenderingControl.sv_LastChange = "SetMute: " + desiredMute;
-                        parent.RenderingControl.sv_Mute = desiredMute;
-                        parent.RenderingControl.sv_Channel = "Master";
+                        parent.RenderingControl.LastChange = "SetMute: " + desiredMute;
+                        parent.RenderingControl.MuteState = desiredMute;
+                        parent.RenderingControl.ChannelState = "Master";
                     }
                 }
                 #endregion
@@ -1986,7 +2009,7 @@ namespace SonyAPILib
                 /// <returns>Out value for the CurrentVolume action parameter. With range of 0 to 100. Increment of 1.</returns>
                 public int GetVolume(SonyDevice parent)
                 {
-                    if (parent.RenderingControl.controlURL != null)
+                    if (parent.RenderingControl.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -1995,14 +2018,14 @@ namespace SonyAPILib
                         XML += "<InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID>" + Environment.NewLine;
                         XML += "<Channel xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"string\">" + Channel + "</Channel>" + Environment.NewLine;
                         XML += "</m:GetVolume>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.RenderingControl.controlURL.IndexOf(":") + 3;
-                        string req = parent.RenderingControl.controlURL.Substring(reqi);
-                        reqi = parent.RenderingControl.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.RenderingControl.ControlUrl.Substring(reqi);
+                        reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#GetVolume", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#GetVolume", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2018,9 +2041,9 @@ namespace SonyAPILib
                                 ret = Convert.ToInt32(node.InnerText);
                             }
                         }
-                        parent.RenderingControl.sv_LastChange = "GetVolume: " + ret.ToString();
-                        parent.RenderingControl.sv_Volume = ret;
-                        parent.RenderingControl.sv_Channel = "Master";
+                        parent.RenderingControl.LastChange = "GetVolume: " + ret.ToString();
+                        parent.RenderingControl.VolumeState = ret;
+                        parent.RenderingControl.ChannelState = "Master";
                         return ret;
                     }
                     return 0;
@@ -2035,7 +2058,7 @@ namespace SonyAPILib
                 /// <param name="desiredVolume">In value for the DesiredVolume action parameter. With range of 0 to 100. Increment of 1.</param>
                 public void SetVolume(SonyDevice parent, int desiredVolume)
                 {
-                    if (parent.RenderingControl.controlURL != null)
+                    if (parent.RenderingControl.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -2045,19 +2068,19 @@ namespace SonyAPILib
                         XML += "<Channel xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"string\">" + Channel + "</Channel>" + Environment.NewLine;
                         XML += "<DesiredVolume xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui2\">" + desiredVolume.ToString() + "</DesiredVolume>" + Environment.NewLine;
                         XML += "</m:SetVolume>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.RenderingControl.controlURL.IndexOf(":") + 3;
-                        string req = parent.RenderingControl.controlURL.Substring(reqi);
-                        reqi = parent.RenderingControl.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.RenderingControl.ControlUrl.Substring(reqi);
+                        reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#SetVolume", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:RenderingControl:1#SetVolume", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
-                        parent.RenderingControl.sv_LastChange = "SetVolume: " + desiredVolume;
-                        parent.RenderingControl.sv_Volume = desiredVolume;
-                        parent.RenderingControl.sv_Channel = "Master";
+                        parent.RenderingControl.LastChange = "SetVolume: " + desiredVolume;
+                        parent.RenderingControl.VolumeState = desiredVolume;
+                        parent.RenderingControl.ChannelState = "Master";
                     }
                 }
                 #endregion
@@ -2069,9 +2092,60 @@ namespace SonyAPILib
                 /// Socket Return Code
                 /// </summary>
                 public int ReturnCode = 0;
-
+                /// <summary>
+                /// Gets or Sets the Service Type
+                /// </summary>
+                public string Type { get; set; }
+                /// <summary>
+                /// Gets of Sets the Friendly Service Identifier
+                /// </summary>
+                public string ServiceIdentifier { get; set; }
+                /// <summary>
+                /// Gets or sets the Service ID
+                /// </summary>
+                public string ServiceID { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Control URL
+                /// </summary>
+                public string ControlUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Event URL
+                /// </summary>
+                public string EventSubUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service SCPD URL
+                /// </summary>
+                public string ScpdUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Last Change.
+                /// </summary>
+                public string LastChange { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Preset Name List.
+                /// </summary>
+                public string PresetNameList { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Mute State.
+                /// </summary>
+                public Boolean MuteState { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Volume state.
+                /// </summary>
+                public int VolumeState { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Channel(Master).
+                /// </summary>
+                public string ChannelState = "Master";
+                /// <summary>
+                /// Gets or Sets the State Variable for the Preset Name.
+                /// </summary>
+                public string PresetName { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Instance ID (0).
+                /// </summary>
+                public int InstanceId = 0;
                 #endregion
-            }
+        }
 
             #endregion
 
@@ -2119,21 +2193,21 @@ namespace SonyAPILib
                 /// <remarks>Populates the following State Variables: Sink and Source</remarks>
                public void GetProtocolInfo(SonyDevice parent)
                {
-                   if (parent.ConnectionManager.controlURL != null)
+                   if (parent.ConnectionManager.ControlUrl != null)
                    {
                        string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                        string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                        string XML = XMLHead;
                        XML += "<m:GetProtocolInfo xmlns:m=\"urn:schemas-upnp-org:service:ConnectionManager:1\">" + Environment.NewLine;
                        XML += "</m:GetProtocolInfo>" + XMLFoot + Environment.NewLine;
-                       Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                       int reqi = parent.ConnectionManager.controlURL.IndexOf(":") + 3;
-                       string req = parent.ConnectionManager.controlURL.Substring(reqi);
-                       reqi = parent.ConnectionManager.controlURL.IndexOf(":") + 1;
+                       Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                       int reqi = parent.ConnectionManager.ControlUrl.IndexOf(":") + 3;
+                       string req = parent.ConnectionManager.ControlUrl.Substring(reqi);
+                       reqi = parent.ConnectionManager.ControlUrl.IndexOf(":") + 1;
                        req = req.Substring(reqi);
                        reqi = req.IndexOf("/") + 1;
                        req = req.Substring(reqi);
-                       string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:ConnectionManager:1#GetProtocolInfo", parent.Device_IP_Address, parent.Device_Port) + XML;
+                       string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:ConnectionManager:1#GetProtocolInfo", parent.IPAddress, parent.Port) + XML;
                        SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                        string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                        GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2145,11 +2219,11 @@ namespace SonyAPILib
                        {
                            foreach (XmlNode snode in node.ChildNodes)
                            {
-                               if (snode.Name == "Source") { parent.ConnectionManager.sv_ProticolSource = snode.InnerText; }
-                               if (snode.Name == "Sink") { parent.ConnectionManager.sv_ProtocolSink = snode.InnerText; }
+                               if (snode.Name == "Source") { parent.ConnectionManager.ProticolSource = snode.InnerText; }
+                               if (snode.Name == "Sink") { parent.ConnectionManager.ProtocolSink = snode.InnerText; }
                            }
                        }
-                       parent.ConnectionManager.sv_LastChange = "GetProtocolInfo";
+                       parent.ConnectionManager.LastChange = "GetProtocolInfo";
                    }
                 }
                 #endregion
@@ -2162,21 +2236,21 @@ namespace SonyAPILib
                 /// <returns>Out value for the ConnectionIDs action parameter.</returns>
                 public int GetCurrentConnectionIDs(SonyDevice parent)
                 {
-                    if (parent.ConnectionManager.controlURL != null)
+                    if (parent.ConnectionManager.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<m:GetCurrentConnectionIDs xmlns:m=\"urn:schemas-upnp-org:service:ConnectionManager:1\">" + Environment.NewLine;
                         XML += "</m:GetCurrentConnectionIDs>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.RenderingControl.controlURL.IndexOf(":") + 3;
-                        string req = parent.RenderingControl.controlURL.Substring(reqi);
-                        reqi = parent.RenderingControl.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.RenderingControl.ControlUrl.Substring(reqi);
+                        reqi = parent.RenderingControl.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:ConnectionManager:1#GetCurrentConnectionIDs", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:ConnectionManager:1#GetCurrentConnectionIDs", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2192,8 +2266,8 @@ namespace SonyAPILib
                                 ret = Convert.ToInt32(node.InnerText);
                             }
                         }
-                        parent.ConnectionManager.sv_LastChange = "GetCurrentConnectionIDs: " + ret.ToString();
-                        parent.ConnectionManager.sv_ConnectionID = ret;
+                        parent.ConnectionManager.LastChange = "GetCurrentConnectionIDs: " + ret.ToString();
+                        parent.ConnectionManager.ConnectionID = ret;
                         return ret;
                     }
                     return 0;
@@ -2207,22 +2281,22 @@ namespace SonyAPILib
                 /// <param name="parent">Parent Device object to get the Status from.</param>
                 public void GetCurrentConnectionInfo(SonyDevice parent)
                 {
-                    if (parent.ConnectionManager.controlURL != null)
+                    if (parent.ConnectionManager.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<m:GetCurrentConnectionInfo xmlns:m=\"urn:schemas-upnp-org:service:ConnectionManager:1\">" + Environment.NewLine;
-                        XML += "<ConnectionID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + parent.ConnectionManager.sv_ConnectionID.ToString() + "</ConnectionID>" + Environment.NewLine;
+                        XML += "<ConnectionID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + parent.ConnectionManager.ConnectionID.ToString() + "</ConnectionID>" + Environment.NewLine;
                         XML += "</m:GetCurrentConnectionInfo>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.ConnectionManager.controlURL.IndexOf(":") + 3;
-                        string req = parent.ConnectionManager.controlURL.Substring(reqi);
-                        reqi = parent.ConnectionManager.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.ConnectionManager.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.ConnectionManager.ControlUrl.Substring(reqi);
+                        reqi = parent.ConnectionManager.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:ConnectionManager:1#GetCurrentConnectionInfo", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:ConnectionManager:1#GetCurrentConnectionInfo", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2234,17 +2308,17 @@ namespace SonyAPILib
                         {
                             foreach (XmlNode snode in node.ChildNodes)
                             {
-                                if (snode.Name == "RcsID") { parent.ConnectionManager.sv_RcsID = snode.InnerText; }
-                                if (snode.Name == "AVTransportID") { parent.ConnectionManager.sv_AVTransportID = Convert.ToInt32(snode.InnerText); }
-                                if (snode.Name == "PeerConnectionManager") { parent.ConnectionManager.sv_ConnectionManager = snode.InnerText; }
+                                if (snode.Name == "RcsID") { parent.ConnectionManager.RcsID = snode.InnerText; }
+                                if (snode.Name == "AVTransportID") { parent.ConnectionManager.AVTransportID = Convert.ToInt32(snode.InnerText); }
+                                if (snode.Name == "PeerConnectionManager") { parent.ConnectionManager.Manager = snode.InnerText; }
                                 if (snode.Name == "Status") { parent.ConnectionManager.sv_ConnectionStatus = snode.InnerText; }
-                                if (snode.Name == "Direction") { parent.ConnectionManager.sv_Direction = snode.InnerText; }
-                                if (snode.Name == "PeerConnectionID") { parent.ConnectionManager.sv_PeerConnectionID = Convert.ToInt32(snode.InnerText); }
-                                if (snode.Name == "ProtocolInfo") { parent.ConnectionManager.sv_ProtocolInfo = snode.InnerText; }
-                                if (snode.Name == "RcsID") { parent.ConnectionManager.sv_Direction = snode.InnerText; }
+                                if (snode.Name == "Direction") { parent.ConnectionManager.Direction = snode.InnerText; }
+                                if (snode.Name == "PeerConnectionID") { parent.ConnectionManager.PeerConnectionID = Convert.ToInt32(snode.InnerText); }
+                                if (snode.Name == "ProtocolInfo") { parent.ConnectionManager.ProtocolInfo = snode.InnerText; }
+                                if (snode.Name == "RcsID") { parent.ConnectionManager.Direction = snode.InnerText; }
                             }
                         }
-                        parent.ConnectionManager.sv_LastChange = "GetCurrentConnectionInfo";
+                        parent.ConnectionManager.LastChange = "GetCurrentConnectionInfo";
                     }
                 }
                 #endregion
@@ -2256,9 +2330,77 @@ namespace SonyAPILib
                 /// Socket Return Code
                 /// </summary>
                 public int ReturnCode = 0;
+                /// <summary>
+                /// Gets or Sets the Service Type
+                /// </summary>
+                public string Type { get; set; }
+                /// <summary>
+                /// Gets of Sets the Friendly Service Identifier
+                /// </summary>
+                public string ServiceIdentifier { get; set; }
+                /// <summary>
+                /// Gets or sets the Service ID
+                /// </summary>
+                public string ServiceID { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Control URL
+                /// </summary>
+                public string ControlUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Event URL
+                /// </summary>
+                public string EventSubUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service SCPD URL
+                /// </summary>
+                public string ScpdUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Last Change.
+                /// </summary>
+                public string LastChange { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Connection Id.
+                /// </summary>
+                public int ConnectionID { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Connection Status.
+                /// </summary>
+                public string sv_ConnectionStatus { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Connection Manager.
+                /// </summary>
+                public string Manager { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Direction.
+                /// </summary>
+                public string Direction { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the RcsID.
+                /// </summary>
+                public string RcsID { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Transport ID.
+                /// </summary>
+                public int AVTransportID { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Peer Connection ID.
+                /// </summary>
+                public int PeerConnectionID { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Proticol Information.
+                /// </summary>
+                public string ProtocolInfo { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Proticol Sink.
+                /// </summary>
+                public string ProtocolSink { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Proticol Source.
+                /// </summary>
+                public string ProticolSource { get; set; }
 
                 #endregion
-            }
+        }
 
             #endregion
 
@@ -2270,7 +2412,166 @@ namespace SonyAPILib
             [Serializable]
             public partial class AVTransport1
             {
-            
+
+                #region Public Properties
+                /// <summary>
+                /// Gets or Sets the Service Type
+                /// </summary>
+                public string Type { get; set; }
+                /// <summary>
+                /// Gets of Sets the Friendly Service Identifier
+                /// </summary>
+                public string ServiceIdentifier { get; set; }
+                /// <summary>
+                /// Gets or sets the Service ID
+                /// </summary>
+                public string ServiceID { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Control URL
+                /// </summary>
+                public string ControlUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Event URL
+                /// </summary>
+                public string EventSubUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service SCPD URL
+                /// </summary>
+                public string ScpdUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Last Change variable
+                /// </summary>
+                public string LastChange { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Transport State.
+                /// </summary>
+                public string TransportState { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Transport Status.
+                /// </summary>
+                public string TransportStatus { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Playback Storage Medium.
+                /// </summary>
+                public string PlayBackStorageMedium { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Record Storage Medium.
+                /// </summary>
+                public string RecordStorageMedium { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Possible Playback Storage Medium.
+                /// </summary>
+                public string PossiblePlaybackStorageMedia { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Possible Record Storage Medium.
+                /// </summary>
+                public string PossibleRecordStorageMedia { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current PLay Maode.
+                /// </summary>
+                public string CurrentPlayMode { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Transport Play Speed.
+                /// </summary>
+                public int TransportPlaySpeed { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Record Medium Write Status.
+                /// </summary>
+                public string RecordMediumWriteStatus { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Record Quality Mode.
+                /// </summary>
+                public string CurrentRecordQualityMode { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Possible Record Quality Modes.
+                /// </summary>
+                public string PossibleRecordQualityModes { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Number of Tracks.
+                /// </summary>
+                public int NumberOfTracks { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Track.
+                /// </summary>
+                public int CurrentTrack { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Track Duration.
+                /// </summary>
+                public string CurrentTrackDuration { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Track Meta Data.
+                /// </summary>
+                public string CurrentTrackMetaData { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Track URI.
+                /// </summary>
+                public string CurrentTrackURI { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the AVTransport URI.
+                /// </summary>
+                public string AVTransportURI { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the AVTransport URI Meta Data.
+                /// </summary>
+                public string AVTransportURIMetaData { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Next AVTransport URI.
+                /// </summary>
+                public string NextAVTransportURI { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Next AVTransport URI Meta Data.
+                /// </summary>
+                public string NextAVTransportURIMetaData { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Relative Time Position.
+                /// </summary>
+                public string RelativeTimePosition { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Absolute Time Position.
+                /// </summary>
+                public string AbsoluteTimePosition { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Relative Counter Position.
+                /// </summary>
+                public string RelativeCounterPosition { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Absolute Counter POsition.
+                /// </summary>
+                public string AbsoluteCounterPosition { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Transport Actions.
+                /// </summary>
+                public string CurrentTransportActions { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Relative Byte Position.
+                /// </summary>
+                public string X_DLNA_RelativeBytePosition { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Absolute Byte Position.
+                /// </summary>
+                public string X_DLNA_AbsoluteBytePosition { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Track Size.
+                /// </summary>
+                public string X_DLNA_CurrentTrackSize { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Seek Mode.
+                /// </summary>
+                public string A_ARG_TYPE_SeekMode { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Seek Target.
+                /// </summary>
+                public string A_ARG_TYPE_SeekTarget { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Instance ID.
+                /// </summary>
+                public int A_ARG_TYPE_InstanceID { get; set; }
+                /// <summary>
+                /// Socket Return Code
+                /// </summary>
+                public int ReturnCode = 0;
+                #endregion
+
                 #region Public Constants
 
                 /// <summary>
@@ -2512,7 +2813,7 @@ namespace SonyAPILib
                 /// <param name="currentURIMetaData">In value for the CurrentURIMetaData action parameter.</param>
                 public string SetAVTransportURI(SonyDevice parent, String currentURI, String currentURIMetaData)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -2523,18 +2824,18 @@ namespace SonyAPILib
                         XML += "<CurrentURIMetaData>" + currentURIMetaData + "</CurrentURIMetaData>" + Environment.NewLine;
                         XML += "</u:SetAVTransportURI>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "SetAVTransportURI";
-                        parent.AVTransport.sv_AVTransportURI = currentURI;
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.LastChange = "SetAVTransportURI";
+                        parent.AVTransport.AVTransportURI = currentURI;
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
                         return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     return null;
@@ -2550,7 +2851,7 @@ namespace SonyAPILib
                 /// <param name="nextURIMetaData">In value for the NextURIMetaData action parameter.</param>
                 public string SetNextAVTransportURI(SonyDevice parent, String nextURI, String nextURIMetaData)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
@@ -2561,18 +2862,18 @@ namespace SonyAPILib
                         XML += "<NextURIMetaData>" + nextURIMetaData + "</NextURIMetaData>" + Environment.NewLine;
                         XML += "</u:SetNextAVTransportURI>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#SetNextAVTransportURI", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#SetNextAVTransportURI", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "SetNextAVTransportURI";
-                        parent.AVTransport.sv_NextAVTransportURI = nextURI;
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.LastChange = "SetNextAVTransportURI";
+                        parent.AVTransport.NextAVTransportURI = nextURI;
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
                         return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     return null;
@@ -2585,21 +2886,21 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on.</param>
                 /// <remarks>Populates the following State Variable: Number of Tracks, Track Duration, Track Meta Data, Track URI, Next URI, Next URI Meta Data, Record Medium and Current Record Write Status.</remarks>
-                public void GetMediaInfo(SonyAPI_Lib.SonyDevice parent)
+                public void GetMediaInfo(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead + "<m:GetMediaInfo xmlns:m=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID></m:GetMediaInfo>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetMediaInfo", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetMediaInfo", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2611,18 +2912,18 @@ namespace SonyAPILib
                         {
                             foreach (XmlNode snode in node.ChildNodes)
                             {
-                                if (snode.Name == "NrTracks") { parent.AVTransport.sv_NumberOfTracks = Convert.ToInt32(snode.InnerText); }
-                                if (snode.Name == "MediaDuration") { parent.AVTransport.sv_CurrentTrackDuration = snode.InnerText; }
-                                if (snode.Name == "CurrentURIMetaData") { parent.AVTransport.sv_CurrentTrackMetaData = snode.InnerText; }
-                                if (snode.Name == "CurrentURI") { parent.AVTransport.sv_CurrentTrackURI = snode.InnerText; }
-                                if (snode.Name == "NextURI") { parent.AVTransport.sv_NextAVTransportURI = snode.InnerText; }
-                                if (snode.Name == "NextURIMetaData") { parent.AVTransport.sv_NextAVTransportURIMetaData = snode.InnerText; }
-                                if (snode.Name == "PlayMedium") { parent.AVTransport.sv_PlayBackStorageMedium = snode.InnerText; }
-                                if (snode.Name == "RecordMedium") { parent.AVTransport.sv_RecordStorageMedium = snode.InnerText; }
-                                if (snode.Name == "WriteStatus") { parent.AVTransport.sv_RecordMediumWriteStatus = snode.InnerText; }
+                                if (snode.Name == "NrTracks") { parent.AVTransport.NumberOfTracks = Convert.ToInt32(snode.InnerText); }
+                                if (snode.Name == "MediaDuration") { parent.AVTransport.CurrentTrackDuration = snode.InnerText; }
+                                if (snode.Name == "CurrentURIMetaData") { parent.AVTransport.CurrentTrackMetaData = snode.InnerText; }
+                                if (snode.Name == "CurrentURI") { parent.AVTransport.CurrentTrackURI = snode.InnerText; }
+                                if (snode.Name == "NextURI") { parent.AVTransport.NextAVTransportURI = snode.InnerText; }
+                                if (snode.Name == "NextURIMetaData") { parent.AVTransport.NextAVTransportURIMetaData = snode.InnerText; }
+                                if (snode.Name == "PlayMedium") { parent.AVTransport.PlayBackStorageMedium = snode.InnerText; }
+                                if (snode.Name == "RecordMedium") { parent.AVTransport.RecordStorageMedium = snode.InnerText; }
+                                if (snode.Name == "WriteStatus") { parent.AVTransport.RecordMediumWriteStatus = snode.InnerText; }
                             }
                         }
-                        parent.AVTransport.sv_LastChange = "GetMediaInfo";
+                        parent.AVTransport.LastChange = "GetMediaInfo";
                     }
                 }
                 #endregion
@@ -2633,21 +2934,21 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Parent Device object to execute this action on.</param>
                 /// <remarks>Populates the following State Variables: Current Transport State, Current Transport Status, Current Play Speed</remarks>
-                public void GetTransportInfo(SonyAPI_Lib.SonyDevice parent)
+                public void GetTransportInfo(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead + "<m:GetTransportInfo xmlns:m=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID></m:GetTransportInfo>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2659,12 +2960,12 @@ namespace SonyAPILib
                         {
                             foreach (XmlNode snode in node.ChildNodes)
                             {
-                                if (snode.Name == "CurrentTransportState") { parent.AVTransport.sv_TransportState = snode.InnerText; }
-                                if (snode.Name == "CurrentTransportStatus") { parent.AVTransport.sv_TransportStatus = snode.InnerText; }
-                                if (snode.Name == "CurrentSpeed") { parent.AVTransport.sv_TransportPlaySpeed = Convert.ToInt32(snode.InnerText); }
+                                if (snode.Name == "CurrentTransportState") { parent.AVTransport.TransportState = snode.InnerText; }
+                                if (snode.Name == "CurrentTransportStatus") { parent.AVTransport.TransportStatus = snode.InnerText; }
+                                if (snode.Name == "CurrentSpeed") { parent.AVTransport.TransportPlaySpeed = Convert.ToInt32(snode.InnerText); }
                             }
                         }
-                        parent.AVTransport.sv_LastChange = "GetTransportInfo";
+                        parent.AVTransport.LastChange = "GetTransportInfo";
                     }
                 }
                 #endregion
@@ -2677,19 +2978,19 @@ namespace SonyAPILib
                 /// <remarks>Populates the following State Variables: Curent Track, Track Duration, Track Meta Data, Track URI, Relative Time, Absolute Time, Relative Counter and Absolute Counter.</remarks>
                 public string GetPosition(SonyDevice parent)
                 {//Returns the current position for the track that is playing on the DLNA server
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead + "<m:GetPositionInfo xmlns:m=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID></m:GetPositionInfo>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetPositionInfo", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2701,17 +3002,17 @@ namespace SonyAPILib
                         {
                             foreach (XmlNode snode in node.ChildNodes)
                             {
-                                if (snode.Name == "Track") { parent.AVTransport.sv_CurrentTrack = Convert.ToInt32(snode.InnerText); }
-                                if (snode.Name == "TrackDuration") { parent.AVTransport.sv_CurrentTrackDuration = snode.InnerText; }
-                                if (snode.Name == "TrackMetaData") { parent.AVTransport.sv_CurrentTrackMetaData = snode.InnerText; }
-                                if (snode.Name == "TrackURI") { parent.AVTransport.sv_CurrentTrackURI = snode.InnerText; }
-                                if (snode.Name == "RelTime") { parent.AVTransport.sv_RelativeTimePosition = snode.InnerText; }
-                                if (snode.Name == "AbsTimne") { parent.AVTransport.sv_AbsoluteTimePosition = snode.InnerText; }
-                                if (snode.Name == "RelCount") { parent.AVTransport.sv_RelativeCounterPosition = snode.InnerText; }
-                                if (snode.Name == "AbsCount") { parent.AVTransport.sv_AbsoluteCounterPosition = snode.InnerText; }
+                                if (snode.Name == "Track") { parent.AVTransport.CurrentTrack = Convert.ToInt32(snode.InnerText); }
+                                if (snode.Name == "TrackDuration") { parent.AVTransport.CurrentTrackDuration = snode.InnerText; }
+                                if (snode.Name == "TrackMetaData") { parent.AVTransport.CurrentTrackMetaData = snode.InnerText; }
+                                if (snode.Name == "TrackURI") { parent.AVTransport.CurrentTrackURI = snode.InnerText; }
+                                if (snode.Name == "RelTime") { parent.AVTransport.RelativeTimePosition = snode.InnerText; }
+                                if (snode.Name == "AbsTimne") { parent.AVTransport.AbsoluteTimePosition = snode.InnerText; }
+                                if (snode.Name == "RelCount") { parent.AVTransport.RelativeCounterPosition = snode.InnerText; }
+                                if (snode.Name == "AbsCount") { parent.AVTransport.AbsoluteCounterPosition = snode.InnerText; }
                             }
                         }
-                        parent.AVTransport.sv_LastChange = "GetPosition";
+                        parent.AVTransport.LastChange = "GetPosition";
 
                     }
                     return null;
@@ -2724,21 +3025,21 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Parent Device object to execute this action on.</param>
                 /// <remarks>Populates the following State Variables: PlayBack Medium, Record Medium and Available Record Quality Modes</remarks>
-                public void GetDeviceCapabilities(SonyAPI_Lib.SonyDevice parent)
+                public void GetDeviceCapabilities(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead + "<m:GetTransportInfo xmlns:m=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID></m:GetTransportInfo>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2750,12 +3051,12 @@ namespace SonyAPILib
                         {
                             foreach (XmlNode snode in node.ChildNodes)
                             {
-                                if (snode.Name == "PlayMedia") { parent.AVTransport.sv_PlayBackStorageMedium = snode.InnerText; }
-                                if (snode.Name == "RecMedia") { parent.AVTransport.sv_RecordStorageMedium = snode.InnerText; }
-                                if (snode.Name == "RecQualityModes") { parent.AVTransport.sv_PossibleRecordQualityModes = snode.InnerText; }
+                                if (snode.Name == "PlayMedia") { parent.AVTransport.PlayBackStorageMedium = snode.InnerText; }
+                                if (snode.Name == "RecMedia") { parent.AVTransport.RecordStorageMedium = snode.InnerText; }
+                                if (snode.Name == "RecQualityModes") { parent.AVTransport.PossibleRecordQualityModes = snode.InnerText; }
                             }
                         }
-                        parent.AVTransport.sv_LastChange = "GetTransportInfo";
+                        parent.AVTransport.LastChange = "GetTransportInfo";
                     }
                 }
                 #endregion
@@ -2766,21 +3067,21 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Parent Device object to execute this action on.</param>
                 /// <remarks>Populates the following State Variables: Current Play Mode, Record Quality Mode</remarks>
-                public void GetTransportSettings(SonyAPI_Lib.SonyDevice parent)
+                public void GetTransportSettings(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead + "<m:GetTransportSettings xmlns:m=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID xmlns:dt=\"urn:schemas-microsoft-com:datatypes\" dt:dt=\"ui4\">" + InstanceID + "</InstanceID></m:GetTransportSettings>" + XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetTransportSettings", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#GetTransportSettings", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         GG = Extentions.ChopOffBefore(GG, "<?xml");
@@ -2792,11 +3093,11 @@ namespace SonyAPILib
                         {
                             foreach (XmlNode snode in node.ChildNodes)
                             {
-                                if (snode.Name == "PlayMode") { parent.AVTransport.sv_CurrentPlayMode = snode.InnerText; }
-                                if (snode.Name == "RecQualityModes") { parent.AVTransport.sv_PossibleRecordQualityModes = snode.InnerText; }
+                                if (snode.Name == "PlayMode") { parent.AVTransport.CurrentPlayMode = snode.InnerText; }
+                                if (snode.Name == "RecQualityModes") { parent.AVTransport.PossibleRecordQualityModes = snode.InnerText; }
                             }
                         }
-                        parent.AVTransport.sv_LastChange = "GetTransportSettings";
+                        parent.AVTransport.LastChange = "GetTransportSettings";
                     }
                 }
                 #endregion
@@ -2808,25 +3109,25 @@ namespace SonyAPILib
                 /// <param name="parent">The Device object to execute the request on</param>
                 public string Stop(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<u:Stop xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID><Speed>1</Speed></u:Stop>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#PStop", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#PStop", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "Stop";
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
-                        parent.AVTransport.sv_TransportPlaySpeed = 0;
+                        parent.AVTransport.LastChange = "Stop";
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.TransportPlaySpeed = 0;
                         return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     return null;
@@ -2841,25 +3142,25 @@ namespace SonyAPILib
                 /// <param name="speed">In value for the Speed action parameter.</param>
                 public string Play(SonyDevice parent, int speed)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<u:Play xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID><Speed>" + speed + "</Speed></u:Play>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Play", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Play", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "Play";
-                        parent.AVTransport.sv_TransportPlaySpeed = speed;
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.LastChange = "Play";
+                        parent.AVTransport.TransportPlaySpeed = speed;
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
                         return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     return null;
@@ -2873,39 +3174,39 @@ namespace SonyAPILib
                 /// <param name="parent">The Device object to execute the request on</param>
                 public string Pause(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<u:Pause xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID></u:Pause>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Pause", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Pause", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "Pause";
-                        parent.AVTransport.sv_TransportPlaySpeed = 0;
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.LastChange = "Pause";
+                        parent.AVTransport.TransportPlaySpeed = 0;
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
                         return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     return null;
                 }
-                #endregion
+            #endregion
 
-
+                #region Seek
                 /// <summary>
                 /// Executes the Seek action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="unit">In value for the Unit action parameter.</param>
                 /// <param name="target">In value for the Target action parameter.</param>
-                public void Seek(SonyAPI_Lib.SonyDevice parent, int unit, String target)
+                public void Seek(SonyDevice parent, int unit, String target)
                 {
                 //    object[] loIn = new object[3];
 
@@ -2915,32 +3216,33 @@ namespace SonyAPILib
                 //    InvokeAction(csAction_Seek, loIn);
 
                 }
+                #endregion
 
                 #region Next
-                /// <summary>
-                /// Executes the Next action.
-                /// </summary>
-                /// <param name="parent">The Device object to execute the request on</param>
-                public void Next(SonyAPI_Lib.SonyDevice parent)
+            /// <summary>
+            /// Executes the Next action.
+            /// </summary>
+            /// <param name="parent">The Device object to execute the request on</param>
+            public void Next(SonyAPILib.SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<u:Next xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID></u:Next>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Next", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Next", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "Next";
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.LastChange = "Next";
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
                         //return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     //return null;
@@ -2952,38 +3254,39 @@ namespace SonyAPILib
                 /// Executes the Previous action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
-                public void Previous(SonyAPI_Lib.SonyDevice parent)
+                public void Previous(SonyDevice parent)
                 {
-                    if (parent.AVTransport.controlURL != null)
+                    if (parent.AVTransport.ControlUrl != null)
                     {
                         string XMLHead = "<?xml version=\"1.0\"?>" + Environment.NewLine + "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">" + Environment.NewLine + "<SOAP-ENV:Body>" + Environment.NewLine;
                         string XMLFoot = "</SOAP-ENV:Body>" + Environment.NewLine + "</SOAP-ENV:Envelope>" + Environment.NewLine;
                         string XML = XMLHead;
                         XML += "<u:Previous xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\"><InstanceID>" + InstanceID + "</InstanceID></u:Previous>" + Environment.NewLine;
                         XML += XMLFoot + Environment.NewLine;
-                        Socket SocWeb = HelperDLNA.MakeSocket(parent.Device_IP_Address, parent.Device_Port);
-                        int reqi = parent.AVTransport.controlURL.IndexOf(":") + 3;
-                        string req = parent.AVTransport.controlURL.Substring(reqi);
-                        reqi = parent.AVTransport.controlURL.IndexOf(":") + 1;
+                        Socket SocWeb = HelperDLNA.MakeSocket(parent.IPAddress, parent.Port);
+                        int reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 3;
+                        string req = parent.AVTransport.ControlUrl.Substring(reqi);
+                        reqi = parent.AVTransport.ControlUrl.IndexOf(":") + 1;
                         req = req.Substring(reqi);
                         reqi = req.IndexOf("/") + 1;
                         req = req.Substring(reqi);
-                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Previous", parent.Device_IP_Address, parent.Device_Port) + XML;
+                        string Request = HelperDLNA.MakeRequest("POST", req, XML.Length, "urn:schemas-upnp-org:service:AVTransport:1#Previous", parent.IPAddress, parent.Port) + XML;
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
-                        parent.AVTransport.sv_LastChange = "Next";
-                        parent.AVTransport.sv_A_ARG_TYPE_InstanceID = (int)InstanceID;
+                        parent.AVTransport.LastChange = "Next";
+                        parent.AVTransport.A_ARG_TYPE_InstanceID = (int)InstanceID;
                         //return HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                     }
                     //return null;
                 }
                 #endregion
 
+                #region Set Play Mode
                 /// <summary>
                 /// Executes the SetPlayMode action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="newPlayMode">In value for the NewPlayMode action parameter. Default value of NORMAL.</param>
-                public void SetPlayMode(SonyAPI_Lib.SonyDevice parent, CurrentPlayModeEnum newPlayMode)
+                public void SetPlayMode(SonyDevice parent, CurrentPlayModeEnum newPlayMode)
                 {
                 //    object[] loIn = new object[2];
 
@@ -2992,13 +3295,15 @@ namespace SonyAPILib
                 //    InvokeAction(csAction_SetPlayMode, loIn);
 
                 }
+            #endregion
 
+                #region Get Current Transport Actions
                 /// <summary>
                 /// Executes the GetCurrentTransportActions action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <returns>Out value for the Actions action parameter.</returns>
-                public String GetCurrentTransportActions(SonyAPI_Lib.SonyDevice parent)
+                public String GetCurrentTransportActions(SonyAPILib.SonyDevice parent)
                 {
                 //    object[] loIn = new object[1];
 
@@ -3007,29 +3312,33 @@ namespace SonyAPILib
 
                     return"";
                 }
+            #endregion
 
+                #region Get Operation List
                 /// <summary>
                 /// Executes the XGetOperationList action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <returns>Out value for the OperationList action parameter.</returns>
-                public String XGetOperationList(SonyAPI_Lib.SonyDevice parent)
+                public String XGetOperationList(SonyDevice parent)
                 {
                 //    object[] loIn = new object[1];
 
-                 //   loIn[0] = aVTInstanceID;
+                    //   loIn[0] = aVTInstanceID;
                 //    object[] loOut = InvokeAction(csAction_XGetOperationList, loIn);
 
                     return "";
                 }
+            #endregion
 
+                #region Execute Operation
                 /// <summary>
                 /// Executes the XExecuteOperation action.
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="actionDirective">In value for the ActionDirective action parameter.</param>
                 /// <returns>Out value for the Result action parameter.</returns>
-                public String XExecuteOperation(SonyAPI_Lib.SonyDevice parent, String actionDirective)
+                public String XExecuteOperation(SonyDevice parent, String actionDirective)
                 {
                 //   object[] loIn = new object[2];
 
@@ -3039,17 +3348,10 @@ namespace SonyAPILib
 
                     return "";
                 }
-
                 #endregion
 
-                #region Public Properties
-                /// <summary>
-                /// Socket Return Code
-                /// </summary>
-                public int ReturnCode = 0;
+            #endregion
 
-
-                #endregion
             }
 
             #endregion
@@ -3098,7 +3400,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <remarks>Populates the following State Variables: Singer Capability and Transport Port</remarks>
-                public void XGetDeviceInfo(SonyAPI_Lib.SonyDevice parent)
+                public void XGetDeviceInfo(SonyAPILib.SonyDevice parent)
                 {
     //                object[] loIn = new object[0];
     //                object[] loOut = InvokeAction(csAction_XGetDeviceInfo, loIn);
@@ -3111,7 +3413,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <remarks>Populates the Following State Variables: Party State, Party Mode, Party Song, Session ID, Number of Listeners, Listener List, Singer UUID and Singer Session ID</remarks>
-                public void XGetState(SonyAPI_Lib.SonyDevice parent)
+                public void XGetState(SonyAPILib.SonyDevice parent)
                 {
     //                object[] loIn = new object[0];
     //                object[] loOut = InvokeAction(csAction_XGetState, loIn);
@@ -3132,7 +3434,7 @@ namespace SonyAPILib
                 /// <param name="partyMode">In value for the PartyMode action parameter.</param>
                 /// <param name="listenerList">In value for the ListenerList action parameter.</param>
                 /// <returns>Out value for the SingerSessionID action parameter.</returns>
-                public UInt32 XStart(SonyAPI_Lib.SonyDevice parent, String partyMode, String listenerList)
+                public UInt32 XStart(SonyAPILib.SonyDevice parent, String partyMode, String listenerList)
                 {
     //                object[] loIn = new object[2];
     //                loIn[0] = partyMode;
@@ -3147,7 +3449,7 @@ namespace SonyAPILib
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
                 /// <param name="listenerList">In value for the ListenerList action parameter.</param>
-                public void XEntry(SonyAPI_Lib.SonyDevice parent, UInt32 singerSessionID, String listenerList)
+                public void XEntry(SonyAPILib.SonyDevice parent, UInt32 singerSessionID, String listenerList)
                 {
     //                object[] loIn = new object[2];
     //                loIn[0] = singerSessionID;
@@ -3161,7 +3463,7 @@ namespace SonyAPILib
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
                 /// <param name="listenerList">In value for the ListenerList action parameter.</param>
-                public void XLeave(SonyAPI_Lib.SonyDevice parent, UInt32 singerSessionID, String listenerList)
+                public void XLeave(SonyAPILib.SonyDevice parent, UInt32 singerSessionID, String listenerList)
                 {
     //                object[] loIn = new object[2];
     //                loIn[0] = singerSessionID;
@@ -3174,7 +3476,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
-                public void XAbort(SonyAPI_Lib.SonyDevice parent, UInt32 singerSessionID)
+                public void XAbort(SonyAPILib.SonyDevice parent, UInt32 singerSessionID)
                 {
     //                object[] loIn = new object[1];
     //                loIn[0] = singerSessionID;
@@ -3189,7 +3491,7 @@ namespace SonyAPILib
                 /// <param name="singerUUID">In value for the SingerUUID action parameter.</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
                 /// <returns>Out value for the ListenerSessionID action parameter.</returns>
-                public UInt32 XInvite(SonyAPI_Lib.SonyDevice parent, String partyMode, String singerUUID, UInt32 singerSessionID)
+                public UInt32 XInvite(SonyAPILib.SonyDevice parent, String partyMode, String singerUUID, UInt32 singerSessionID)
                 {
     //                object[] loIn = new object[3];
     //                loIn[0] = partyMode;
@@ -3204,7 +3506,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="listenerSessionID">In value for the ListenerSessionID action parameter.</param>
-                public void XExit(SonyAPI_Lib.SonyDevice parent, UInt32 listenerSessionID)
+                public void XExit(SonyAPILib.SonyDevice parent, UInt32 listenerSessionID)
                 {
     //                object[] loIn = new object[1];
     //                loIn[0] = listenerSessionID;
@@ -3218,9 +3520,73 @@ namespace SonyAPILib
                 /// Socket Return Code
                 /// </summary>
                 public int ReturnCode = 0;
+                /// <summary>
+                /// Gets or Sets the Service Type
+                /// </summary>
+                public string Type { get; set; }
+                /// <summary>
+                /// Gets of Sets the Friendly Service Identifier
+                /// </summary>
+                public string ServiceIdentifier { get; set; }
+                /// <summary>
+                /// Gets or sets the Service ID
+                /// </summary>
+                public string ServiceID { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Control URL
+                /// </summary>
+                public string ControlUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Event URL
+                /// </summary>
+                public string EventSubUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service SCPD URL
+                /// </summary>
+                public string ScpdUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Last Change.
+                /// </summary>
+                public string LastChange { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Singer Capability.
+                /// </summary>
+                public int SingerCapability { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Transport Port.
+                /// </summary>
+                public int TransportPort { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Party State.
+                /// </summary>
+                public string PartyState { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Party Mode.
+                /// </summary>
+                public string PartyMode { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Party Song.
+                /// </summary>
+                public string PartySong { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Session ID.
+                /// </summary>
+                public int SessionID { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Number of Listeners.
+                /// </summary>
+                public int NumberOfListeners { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the ListenersList
+                /// </summary>
+                public string ListenersList { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the UUID.
+                /// </summary>
+                public string Uuid { get; set; }
 
                 #endregion
-            }
+        }
 
             #endregion
 
@@ -3232,77 +3598,112 @@ namespace SonyAPILib
             [Serializable]
             public partial class IRCC1
             {
-            
+
+                #region Public Properties
+                /// <summary>
+                /// Gets or Sets the Service Type
+                /// </summary>
+                public string Type { get; set; }
+                /// <summary>
+                /// Gets of Sets the Friendly Service Identifier
+                /// </summary>
+                public string ServiceIdentifier { get; set; }
+                /// <summary>
+                /// Gets or sets the Service ID
+                /// </summary>
+                public string ServiceID { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Control URL
+                /// </summary>
+                public string ControlUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service Event URL
+                /// </summary>
+                public string EventSubURL { get; set; }
+                /// <summary>
+                /// Gets or Sets the Service SCPD URL
+                /// </summary>
+                public string ScpdUrl { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Last Change.
+                /// </summary>
+                public string LastChange { get; set; }
+                /// <summary>
+                /// Gets or Sets the State Variable for the Current Status
+                /// </summary>
+                public string CurrentStatus { get; set; }
+                #endregion
+
                 #region Public Constants
 
-                /// <summary>
-                /// Gets the service type identifier for the IRCC1 service.
-                /// </summary>
-                public const string ServiceType = "urn:schemas-sony-com:service:IRCC:1";
+            /// <summary>
+            /// Gets the service type identifier for the IRCC1 service.
+            /// </summary>
+            public const string ServiceType = "urn:schemas-sony-com:service:IRCC:1";
 
                 #endregion
 
                 #region Public Methods
 
-                #region XSendIRCC
+                #region Send IRCC
                 /// <summary>
                 /// Executes the XSendIRCC action.
                 /// </summary>
-                /// <param name="parent">The Parent Device to use.</param>
-                /// <param name="irccCode">In value for the IRCCCode action parameter.</param>
-                public string XSendIRCC(SonyDevice parent, String irccCode)
+                /// <param name="Parent">The Parent Device to use.</param>
+                /// <param name="CommandString">In value for the IRCCCode action parameter.</param>
+                public string SendIRCC(SonyDevice Parent, String CommandString)
                 {
-                    if (parent.IRCC.controlURL != null & parent.Registered == true)
+                    if (Parent.Ircc.ControlUrl != null & Parent.Registered == true)
                     {
-                        _Log.writetolog("IRCC Recieved XSendIRCC Command: " + irccCode, false);
+                        _Log.AddMessage("SendIrcc Command String: " + CommandString, false);
                         string response = "";
                         StringBuilder body = new StringBuilder("<?xml version=\"1.0\"?>");
                         body.Append("<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">");
                         body.Append("<s:Body>");
                         body.Append("<u:X_SendIRCC xmlns:u=\"urn:schemas-sony-com:service:IRCC:1\">");
-                        body.Append("<IRCCCode>" + irccCode + "</IRCCCode>");
+                        body.Append("<IRCCCode>" + CommandString + "</IRCCCode>");
                         body.Append("</u:X_SendIRCC>");
                         body.Append("</s:Body>");
                         body.Append("</s:Envelope>");
-                        _Log.writetolog("Sending IRCC Command: " + irccCode, true);
-                        string Url = parent.IRCC.controlURL;
+                        _Log.AddMessage("Sending IRCC Command String: " + CommandString, true);
+                        string Url = Parent.Ircc.ControlUrl;
                         string Parameters = body.ToString();
-                        _Log.writetolog("Creating HttpWebRequest to URL: " + Url, true);
+                        _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, true);
                         HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
-                        _Log.writetolog("Sending the following parameter: " + Parameters.ToString(), true);
+                        _Log.AddMessage("Sending the following parameter: " + Parameters.ToString(), true);
                         byte[] bytes = System.Text.Encoding.UTF8.GetBytes(Parameters);
                         req.KeepAlive = true;
                         req.Method = "POST";
                         req.ContentType = "text/xml; charset=utf-8";
                         req.ContentLength = bytes.Length;
-                        _Log.writetolog("Setting Header Information: " + req.Host.ToString(), false);
-                        if (parent.Device_Port != 80)
+                        _Log.AddMessage("Setting Header Information: " + req.Host.ToString(), false);
+                        if (Parent.Port != 80)
                         {
-                            req.Host = parent.Device_IP_Address + ":" + parent.Device_Port;
+                            req.Host = Parent.IPAddress + ":" + Parent.Port;
                         }
                         else
                         {
-                            req.Host = parent.Device_IP_Address;
+                            req.Host = Parent.IPAddress;
                         }
-                        _Log.writetolog("Header Host: " + req.Host.ToString(), false);
+                        _Log.AddMessage("Header Host: " + req.Host.ToString(), false);
                         req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
-                        _Log.writetolog("Setting Header User Agent: " + req.UserAgent, false);
-                        if (parent.Actionlist.RegisterMode == 3)
+                        _Log.AddMessage("Setting Header User Agent: " + req.UserAgent, false);
+                        if (Parent.Actionlist.RegisterMode == 3)
                         {
-                            _Log.writetolog("Processing Auth Cookie", false);
+                            _Log.AddMessage("Processing Auth Cookie", false);
                             req.CookieContainer = new CookieContainer();
-                            List<SonyCookie> bal = JsonConvert.DeserializeObject<List<SonyCookie>>(parent.Cookie);
-                            req.CookieContainer.Add(new Uri(@"http://" + parent.Device_IP_Address + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
-                            _Log.writetolog("Cookie Container Count: " + req.CookieContainer.Count.ToString(), false);
-                            _Log.writetolog("Setting Header Cookie: auth=" + bal[0].Value, false);
+                            List<SonyCookie> bal = JsonConvert.DeserializeObject<List<SonyCookie>>(Parent.Cookie);
+                            req.CookieContainer.Add(new Uri(@"http://" + Parent.IPAddress + bal[0].Path), new Cookie(bal[0].Name, bal[0].Value));
+                            _Log.AddMessage("Cookie Container Count: " + req.CookieContainer.Count.ToString(), false);
+                            _Log.AddMessage("Setting Header Cookie: auth=" + bal[0].Value, false);
                         }
                         else
                         {
-                            _Log.writetolog("Setting Header X-CERS-DEVICE-ID: TVSideView-" + parent.Server_Macaddress, false);
-                            req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + parent.Server_Macaddress);
+                            _Log.AddMessage("Setting Header X-CERS-DEVICE-ID: TVSideView-" + Parent.ServerMacAddress, false);
+                            req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + Parent.ServerMacAddress);
                         }
                         req.Headers.Add("SOAPAction", "\"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC\"");
-                        if (parent.Actionlist.RegisterMode != 3)
+                        if (Parent.Actionlist.RegisterMode != 3)
                         {
                             req.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                             req.Headers.Add("Accept-Encoding", "gzip, deflate");
@@ -3311,91 +3712,91 @@ namespace SonyAPILib
                         {
                             req.Headers.Add("Accept-Encoding", "gzip");
                         }
-                        _Log.writetolog("Sending WebRequest", false);
+                        _Log.AddMessage("Sending WebRequest", false);
                         try
                         {
                             System.IO.Stream os = req.GetRequestStream();
                             // Post data and close connection
                             os.Write(bytes, 0, bytes.Length);
-                            _Log.writetolog("Sending WebRequest Complete", false);
+                            _Log.AddMessage("Sending WebRequest Complete", false);
                             // build response object if any
-                            _Log.writetolog("Creating Web Request Response", false);
+                            _Log.AddMessage("Creating Web Request Response", false);
                             System.Net.HttpWebResponse resp = req.GetResponse() as HttpWebResponse;
                             Stream respData = resp.GetResponseStream();
                             StreamReader sr = new StreamReader(respData);
                             response = sr.ReadToEnd();
-                            _Log.writetolog("Response returned: " + response, false);
+                            _Log.AddMessage("Response returned: " + response, false);
                             os.Close();
                             sr.Close();
                             respData.Close();
                             if (response != "")
                             {
-                                _Log.writetolog("Command WAS sent Successfully", true);
+                                _Log.AddMessage("Command WAS sent Successfully", true);
                                 Thread.Sleep(1000);
                             }
                             else
                             {
-                                _Log.writetolog("Command was NOT sent successfully", true);
+                                _Log.AddMessage("Command was NOT sent successfully", true);
                             }
-                            parent.IRCC.sv_LastChange = response;
+                            Parent.Ircc.LastChange = response;
                         }
                         catch
                         {
-                            _Log.writetolog("Error communicating with device", true);
+                            _Log.AddMessage("Error communicating with device", true);
                         }
                         return response;
                     }
-                    if (parent.IRCC.controlURL == null)
+                    if (Parent.Ircc.ControlUrl == null)
                     {
-                        _Log.writetolog("ERROR: controlURL for IRCC Service is NULL", true);
+                        _Log.AddMessage("ERROR: controlURL for IRCC Service is NULL", true);
                     }
                     else
                     {
-                        _Log.writetolog("ERROR: Device Registration is FALSE", true);
+                        _Log.AddMessage("ERROR: Device Registration is FALSE", true);
                     }
-                    _Log.writetolog("Or, this device is not compatiable with this Service!", false);
+                    _Log.AddMessage("Or, this device is not compatiable with this Service!", false);
                     return "Error";
                 }
 
                 #endregion
 
-                #region XGetStatus
+                #region GetStatus
                 /// <summary>
                 /// Executes the XGetStatus action.
                 /// </summary>
-                /// <param name="parent">Parent Device object to get the Status from.</param>
-                public string XGetStatus(SonyDevice parent)
+                /// <param name="Parent">Parent Device object to get the Status from.</param>
+                public string GetStatus(SonyDevice Parent)
                 {
                     string retstatus = "";
-                    if (parent.Actionlist.RegisterMode != 3)
+                    if (Parent.Actionlist.RegisterMode != 3)
                     {
-                        if (parent.Actionlist.getStatus != null)
+                        if (Parent.Actionlist.StatusUrl != null)
                         {
                             try
                             {
-                                _Log.writetolog("Checking Status of Device " + parent.Name, false);
+                                _Log.AddMessage("Checking Status of Device " + Parent.Name, false);
                                 string cstatus;
                                 int x;
                                 //cstatus = HttpGet(parent.Actionlist.getStatus);
-                                String Url = parent.Actionlist.getStatus;
-                                _Log.writetolog("Creating HttpWebRequest to URL: " + Url, true);
+                                String Url = Parent.Actionlist.StatusUrl;
+                                _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, true);
                                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
                                 req.KeepAlive = true;
                                 // Set our default header Info
-                                _Log.writetolog("Setting Header Information: " + req.Host.ToString(), false);
-                                req.Host = parent.Device_IP_Address + ":" + parent.Device_Port;
+                                _Log.AddMessage("Setting Header Information: " + req.Host.ToString(), false);
+                                req.Host = Parent.IPAddress + ":" + Parent.Port;
                                 req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
                                 req.Headers.Add("X-CERS-DEVICE-INFO", "Android4.03/TVSideViewForAndroid2.7.1/EVO");
-                                req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + parent.Server_Macaddress);
+                                req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + Parent.ServerMacAddress);
                                 req.Headers.Add("Accept-Encoding", "gzip");
                                 try
                                 {
-                                    _Log.writetolog("Creating Web Request Response", false);
+                                    _Log.AddMessage("Creating Web Request Response", false);
                                     System.Net.WebResponse resp = req.GetResponse();
-                                    _Log.writetolog("Executing StreamReader", false);
+                                    _Log.AddMessage("Executing StreamReader", false);
                                     System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
                                     cstatus = sr.ReadToEnd().Trim();
-                                    _Log.writetolog("Response returned: " + cstatus, false);
+                                    _Log.AddMessage("Response returned: " + cstatus, false);
                                     sr.Close();
                                     resp.Close();
                                     cstatus = cstatus.Replace("/n", "");
@@ -3409,24 +3810,24 @@ namespace SonyAPILib
                                     x = cstatus.IndexOf("\"");
                                     string sval = cstatus.Substring(0, x);
                                     retstatus = sname + ":" + sval;
-                                    _Log.writetolog("Device returned a Status of: " + retstatus, true);
+                                    _Log.AddMessage("Device returned a Status of: " + retstatus, true);
                                 }
                                 catch (Exception e)
                                 {
-                                    _Log.writetolog("There was an error during the Web Request or Response! " + e.ToString(), true);
+                                    _Log.AddMessage("There was an error during the Web Request or Response! " + e.ToString(), true);
                                 }
                             }
                             catch (Exception ex)
                             {
-                                _Log.writetolog("Checking Device Status for " + parent.Name + " Failed!", true);
-                                _Log.writetolog(ex.ToString(), true);
+                                _Log.AddMessage("Checking Device Status for " + Parent.Name + " Failed!", true);
+                                _Log.AddMessage(ex.ToString(), true);
                                 retstatus = "";
                             }
                         }
                         else
                         {
-                            _Log.writetolog("ERROR: getStatusUrl is NULL", true);
-                            _Log.writetolog("This device is not compatiable with this Service!", false);
+                            _Log.AddMessage("ERROR: getStatusUrl is NULL", true);
+                            _Log.AddMessage("This device is not compatiable with this Service!", false);
                             return "Error";
                         }
                     }
@@ -3434,8 +3835,8 @@ namespace SonyAPILib
                     {
                         try
                         {
-                            _Log.writetolog("Checking Status of Device " + parent.Name, false);
-                            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + parent.Device_IP_Address + @"/sony/system");
+                            _Log.AddMessage("Checking Status of Device " + Parent.Name, false);
+                            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + Parent.IPAddress + @"/sony/system");
                             httpWebRequest.ContentType = "application/json";
                             httpWebRequest.Method = "POST";
                             SonyCommandList dataSet = new SonyCommandList();
@@ -3454,15 +3855,15 @@ namespace SonyAPILib
                             first = first.Replace("{", "");
                             first = first.Replace("\"", "");
                             retstatus = first;
-                            _Log.writetolog("Device returned a Status of: " + retstatus, true);
+                            _Log.AddMessage("Device returned a Status of: " + retstatus, true);
                         }
                         catch (Exception ex)
                         {
-                            _Log.writetolog("Check Status Failed: " + ex, true);
+                            _Log.AddMessage("Check Status Failed: " + ex, true);
                         }
                     }
-                    parent.IRCC.sv_LastChange = retstatus;
-                    parent.IRCC.sv_CurrentStatus = retstatus;
+                    Parent.Ircc.LastChange = retstatus;
+                    Parent.Ircc.CurrentStatus = retstatus;
                     return retstatus;
                 }
 

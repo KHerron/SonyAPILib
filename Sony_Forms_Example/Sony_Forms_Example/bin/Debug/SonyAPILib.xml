@@ -4,487 +4,487 @@
         <name>SonyAPILib</name>
     </assembly>
     <members>
-        <member name="T:SonyAPILib.ircc">
+        <member name="T:SonyAPILib.Ircc">
             <summary>
             IRCC:1 Service Description class
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.serviceType">
+        <member name="P:SonyAPILib.Ircc.Type">
             <summary>
             Gets or Sets the Service Type
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.friendlyServiceIdentifier">
+        <member name="P:SonyAPILib.Ircc.ServiceIdentifier">
             <summary>
             Gets of Sets the Friendly Service Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.serviceID">
+        <member name="P:SonyAPILib.Ircc.ServiceID">
             <summary>
             Gets or sets the Service ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.controlURL">
+        <member name="P:SonyAPILib.Ircc.ControlUrl">
             <summary>
             Gets or Sets the Service Control URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.eventSubURL">
+        <member name="P:SonyAPILib.Ircc.EventSubURL">
             <summary>
             Gets or Sets the Service Event URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.SCPDURL">
+        <member name="P:SonyAPILib.Ircc.ScpdUrl">
             <summary>
             Gets or Sets the Service SCPD URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.sv_LastChange">
+        <member name="P:SonyAPILib.Ircc.LastChange">
             <summary>
             Gets or Sets the State Variable for the Last Change.
             </summary>
         </member>
-        <member name="P:SonyAPILib.ircc.sv_CurrentStatus">
+        <member name="P:SonyAPILib.Ircc.CurrentStatus">
             <summary>
             Gets or Sets the State Variable for the Current Status
             </summary>
         </member>
-        <member name="T:SonyAPILib.avtransport">
+        <member name="T:SonyAPILib.AVTransport">
             <summary>
             AVTransport:1 Service Description class
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.serviceType">
+        <member name="P:SonyAPILib.AVTransport.Type">
             <summary>
             Gets or Sets the Service Type
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.friendlyServiceIdentifier">
+        <member name="P:SonyAPILib.AVTransport.ServiceIdentifier">
             <summary>
             Gets of Sets the Friendly Service Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.serviceID">
+        <member name="P:SonyAPILib.AVTransport.ServiceID">
             <summary>
             Gets or sets the Service ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.controlURL">
+        <member name="P:SonyAPILib.AVTransport.ControlUrl">
             <summary>
             Gets or Sets the Service Control URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.eventSubURL">
+        <member name="P:SonyAPILib.AVTransport.EventSubUrl">
             <summary>
             Gets or Sets the Service Event URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.SCPDURL">
+        <member name="P:SonyAPILib.AVTransport.ScpdUrl">
             <summary>
             Gets or Sets the Service SCPD URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_LastChange">
+        <member name="P:SonyAPILib.AVTransport.LastChange">
             <summary>
             Gets or Sets the Service Last Change variable
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_TransportState">
+        <member name="P:SonyAPILib.AVTransport.TransportState">
             <summary>
             Gets or Sets the State Variable for the Transport State.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_TransportStatus">
+        <member name="P:SonyAPILib.AVTransport.TransportStatus">
             <summary>
             Gets or Sets the State Variable for the Transport Status.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_PlayBackStorageMedium">
+        <member name="P:SonyAPILib.AVTransport.PlayBackStorageMedium">
             <summary>
             Gets or Sets the State Variable for the Playback Storage Medium.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_RecordStorageMedium">
+        <member name="P:SonyAPILib.AVTransport.RecordStorageMedium">
             <summary>
             Gets or Sets the State Variable for the Record Storage Medium.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_PossiblePlaybackStorageMedia">
+        <member name="P:SonyAPILib.AVTransport.PossiblePlaybackStorageMedia">
             <summary>
             Gets or Sets the State Variable for the Possible Playback Storage Medium.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_PossibleRecordStorageMedia">
+        <member name="P:SonyAPILib.AVTransport.PossibleRecordStorageMedia">
             <summary>
             Gets or Sets the State Variable for the Possible Record Storage Medium.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentPlayMode">
+        <member name="P:SonyAPILib.AVTransport.CurrentPlayMode">
             <summary>
             Gets or Sets the State Variable for the Current PLay Maode.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_TransportPlaySpeed">
+        <member name="P:SonyAPILib.AVTransport.TransportPlaySpeed">
             <summary>
             Gets or Sets the State Variable for the Transport Play Speed.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_RecordMediumWriteStatus">
+        <member name="P:SonyAPILib.AVTransport.RecordMediumWriteStatus">
             <summary>
             Gets or Sets the State Variable for the Record Medium Write Status.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentRecordQualityMode">
+        <member name="P:SonyAPILib.AVTransport.CurrentRecordQualityMode">
             <summary>
             Gets or Sets the State Variable for the Current Record Quality Mode.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_PossibleRecordQualityModes">
+        <member name="P:SonyAPILib.AVTransport.PossibleRecordQualityModes">
             <summary>
             Gets or Sets the State Variable for the Possible Record Quality Modes.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_NumberOfTracks">
+        <member name="P:SonyAPILib.AVTransport.NumberOfTracks">
             <summary>
             Gets or Sets the State Variable for the Number of Tracks.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentTrack">
+        <member name="P:SonyAPILib.AVTransport.CurrentTrack">
             <summary>
             Gets or Sets the State Variable for the Current Track.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentTrackDuration">
+        <member name="P:SonyAPILib.AVTransport.CurrentTrackDuration">
             <summary>
             Gets or Sets the State Variable for the Current Track Duration.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentTrackMetaData">
+        <member name="P:SonyAPILib.AVTransport.CurrentTrackMetaData">
             <summary>
             Gets or Sets the State Variable for the Current Track Meta Data.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentTrackURI">
+        <member name="P:SonyAPILib.AVTransport.CurrentTrackURI">
             <summary>
             Gets or Sets the State Variable for the Current Track URI.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_AVTransportURI">
+        <member name="P:SonyAPILib.AVTransport.AVTransportURI">
             <summary>
             Gets or Sets the State Variable for the AVTransport URI.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_AVTransportURIMetaData">
+        <member name="P:SonyAPILib.AVTransport.AVTransportURIMetaData">
             <summary>
             Gets or Sets the State Variable for the AVTransport URI Meta Data.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_NextAVTransportURI">
+        <member name="P:SonyAPILib.AVTransport.NextAVTransportURI">
             <summary>
             Gets or Sets the State Variable for the Next AVTransport URI.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_NextAVTransportURIMetaData">
+        <member name="P:SonyAPILib.AVTransport.NextAVTransportURIMetaData">
             <summary>
             Gets or Sets the State Variable for the Next AVTransport URI Meta Data.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_RelativeTimePosition">
+        <member name="P:SonyAPILib.AVTransport.RelativeTimePosition">
             <summary>
             Gets or Sets the State Variable for the Relative Time Position.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_AbsoluteTimePosition">
+        <member name="P:SonyAPILib.AVTransport.AbsoluteTimePosition">
             <summary>
             Gets or Sets the State Variable for the Absolute Time Position.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_RelativeCounterPosition">
+        <member name="P:SonyAPILib.AVTransport.RelativeCounterPosition">
             <summary>
             Gets or Sets the State Variable for the Relative Counter Position.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_AbsoluteCounterPosition">
+        <member name="P:SonyAPILib.AVTransport.AbsoluteCounterPosition">
             <summary>
             Gets or Sets the State Variable for the Absolute Counter POsition.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_CurrentTransportActions">
+        <member name="P:SonyAPILib.AVTransport.CurrentTransportActions">
             <summary>
             Gets or Sets the State Variable for the Current Transport Actions.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_X_DLNA_RelativeBytePosition">
+        <member name="P:SonyAPILib.AVTransport.X_DLNA_RelativeBytePosition">
             <summary>
             Gets or Sets the State Variable for the Relative Byte Position.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_X_DLNA_AbsoluteBytePosition">
+        <member name="P:SonyAPILib.AVTransport.X_DLNA_AbsoluteBytePosition">
             <summary>
             Gets or Sets the State Variable for the Absolute Byte Position.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_X_DLNA_CurrentTrackSize">
+        <member name="P:SonyAPILib.AVTransport.X_DLNA_CurrentTrackSize">
             <summary>
             Gets or Sets the State Variable for the Current Track Size.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_A_ARG_TYPE_SeekMode">
+        <member name="P:SonyAPILib.AVTransport.A_ARG_TYPE_SeekMode">
             <summary>
             Gets or Sets the State Variable for the Seek Mode.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_A_ARG_TYPE_SeekTarget">
+        <member name="P:SonyAPILib.AVTransport.A_ARG_TYPE_SeekTarget">
             <summary>
             Gets or Sets the State Variable for the Seek Target.
             </summary>
         </member>
-        <member name="P:SonyAPILib.avtransport.sv_A_ARG_TYPE_InstanceID">
+        <member name="P:SonyAPILib.AVTransport.A_ARG_TYPE_InstanceID">
             <summary>
             Gets or Sets the State Variable for the Instance ID.
             </summary>
         </member>
-        <member name="T:SonyAPILib.renderingcontrol">
+        <member name="T:SonyAPILib.RenderingControl">
             <summary>
-            Re4nderingControl:1 Service Description class
+            RenderingControl:1 Service Description class
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.serviceType">
+        <member name="P:SonyAPILib.RenderingControl.Type">
             <summary>
             Gets or Sets the Service Type
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.friendlyServiceIdentifier">
+        <member name="P:SonyAPILib.RenderingControl.ServiceIdentifier">
             <summary>
             Gets of Sets the Friendly Service Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.serviceID">
+        <member name="P:SonyAPILib.RenderingControl.ServiceID">
             <summary>
             Gets or sets the Service ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.controlURL">
+        <member name="P:SonyAPILib.RenderingControl.ControlUrl">
             <summary>
             Gets or Sets the Service Control URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.eventSubURL">
+        <member name="P:SonyAPILib.RenderingControl.EventSubUrl">
             <summary>
             Gets or Sets the Service Event URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.SCPDURL">
+        <member name="P:SonyAPILib.RenderingControl.ScpdUrl">
             <summary>
             Gets or Sets the Service SCPD URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.sv_LastChange">
+        <member name="P:SonyAPILib.RenderingControl.LastChange">
             <summary>
             Gets or Sets the State Variable for the Last Change.
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.sv_PresetNameList">
+        <member name="P:SonyAPILib.RenderingControl.PresetNameList">
             <summary>
             Gets or Sets the State Variable for the Preset Name List.
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.sv_Mute">
+        <member name="P:SonyAPILib.RenderingControl.MuteState">
             <summary>
             Gets or Sets the State Variable for the Mute State.
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.sv_Volume">
+        <member name="P:SonyAPILib.RenderingControl.VolumeState">
             <summary>
             Gets or Sets the State Variable for the Volume state.
             </summary>
         </member>
-        <member name="F:SonyAPILib.renderingcontrol.sv_Channel">
+        <member name="F:SonyAPILib.RenderingControl.ChannelState">
             <summary>
             Gets or Sets the State Variable for the Channel(Master).
             </summary>
         </member>
-        <member name="F:SonyAPILib.renderingcontrol.sv_InstanceID">
+        <member name="F:SonyAPILib.RenderingControl.InstanceID">
             <summary>
             Gets or Sets the State Variable for the Instance ID (0).
             </summary>
         </member>
-        <member name="P:SonyAPILib.renderingcontrol.sv_PresetName">
+        <member name="P:SonyAPILib.RenderingControl.PresetName">
             <summary>
             Gets or Sets the State Variable for the Preset Name.
             </summary>
         </member>
-        <member name="T:SonyAPILib.connectionmanager">
+        <member name="T:SonyAPILib.ConnectionManager">
             <summary>
             ConnectionManager:1 Service Description class
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.serviceType">
+        <member name="P:SonyAPILib.ConnectionManager.Type">
             <summary>
             Gets or Sets the Service Type
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.friendlyServiceIdentifier">
+        <member name="P:SonyAPILib.ConnectionManager.ServiceIdentifier">
             <summary>
             Gets of Sets the Friendly Service Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.serviceID">
+        <member name="P:SonyAPILib.ConnectionManager.ServiceID">
             <summary>
             Gets or sets the Service ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.controlURL">
+        <member name="P:SonyAPILib.ConnectionManager.ControlUrl">
             <summary>
             Gets or Sets the Service Control URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.eventSubURL">
+        <member name="P:SonyAPILib.ConnectionManager.EventSubUrl">
             <summary>
             Gets or Sets the Service Event URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.SCPDURL">
+        <member name="P:SonyAPILib.ConnectionManager.ScpdUrl">
             <summary>
             Gets or Sets the Service SCPD URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_LastChange">
+        <member name="P:SonyAPILib.ConnectionManager.LastChange">
             <summary>
             Gets or Sets the State Variable for the Last Change.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ConnectionID">
+        <member name="P:SonyAPILib.ConnectionManager.ConnectionID">
             <summary>
             Gets or Sets the State Variable for the Connection Id.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ConnectionStatus">
+        <member name="P:SonyAPILib.ConnectionManager.sv_ConnectionStatus">
             <summary>
             Gets or Sets the State Variable for the Connection Status.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ConnectionManager">
+        <member name="P:SonyAPILib.ConnectionManager.Manager">
             <summary>
             Gets or Sets the State Variable for the Connection Manager.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_Direction">
+        <member name="P:SonyAPILib.ConnectionManager.Direction">
             <summary>
             Gets or Sets the State Variable for the Direction.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_RcsID">
+        <member name="P:SonyAPILib.ConnectionManager.RcsID">
             <summary>
             Gets or Sets the State Variable for the RcsID.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_AVTransportID">
+        <member name="P:SonyAPILib.ConnectionManager.AVTransportID">
             <summary>
             Gets or Sets the State Variable for the Transport ID.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_PeerConnectionID">
+        <member name="P:SonyAPILib.ConnectionManager.PeerConnectionID">
             <summary>
             Gets or Sets the State Variable for the Peer Connection ID.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ProtocolInfo">
+        <member name="P:SonyAPILib.ConnectionManager.ProtocolInfo">
             <summary>
             Gets or Sets the State Variable for the Proticol Information.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ProtocolSink">
+        <member name="P:SonyAPILib.ConnectionManager.ProtocolSink">
             <summary>
             Gets or Sets the State Variable for the Proticol Sink.
             </summary>
         </member>
-        <member name="P:SonyAPILib.connectionmanager.sv_ProticolSource">
+        <member name="P:SonyAPILib.ConnectionManager.ProticolSource">
             <summary>
             Gets or Sets the State Variable for the Proticol Source.
             </summary>
         </member>
-        <member name="T:SonyAPILib.party">
+        <member name="T:SonyAPILib.Party">
             <summary>
             Party:1 Service Description class
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.serviceType">
+        <member name="P:SonyAPILib.Party.Type">
             <summary>
             Gets or Sets the Service Type
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.friendlyServiceIdentifier">
+        <member name="P:SonyAPILib.Party.ServiceIdentifier">
             <summary>
             Gets of Sets the Friendly Service Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.serviceID">
+        <member name="P:SonyAPILib.Party.ServiceID">
             <summary>
             Gets or sets the Service ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.controlURL">
+        <member name="P:SonyAPILib.Party.ControlUrl">
             <summary>
             Gets or Sets the Service Control URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.eventSubURL">
+        <member name="P:SonyAPILib.Party.EventSubUrl">
             <summary>
             Gets or Sets the Service Event URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.SCPDURL">
+        <member name="P:SonyAPILib.Party.ScpdUrl">
             <summary>
             Gets or Sets the Service SCPD URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_LastChange">
+        <member name="P:SonyAPILib.Party.LastChange">
             <summary>
             Gets or Sets the State Variable for the Last Change.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_SingerCapability">
+        <member name="P:SonyAPILib.Party.SingerCapability">
             <summary>
             Gets or Sets the State Variable for the Singer Capability.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_TransportPort">
+        <member name="P:SonyAPILib.Party.TransportPort">
             <summary>
             Gets or Sets the State Variable for the Transport Port.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_PartyState">
+        <member name="P:SonyAPILib.Party.PartyState">
             <summary>
             Gets or Sets the State Variable for the Party State.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_PartyMode">
+        <member name="P:SonyAPILib.Party.PartyMode">
             <summary>
             Gets or Sets the State Variable for the Party Mode.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_PartySong">
+        <member name="P:SonyAPILib.Party.PartySong">
             <summary>
             Gets or Sets the State Variable for the Party Song.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_SessionID">
+        <member name="P:SonyAPILib.Party.SessionID">
             <summary>
             Gets or Sets the State Variable for the Session ID.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_NumberOfListeners">
+        <member name="P:SonyAPILib.Party.NumberOfListeners">
             <summary>
             Gets or Sets the State Variable for the Number of Listeners.
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_ListenersList">
+        <member name="P:SonyAPILib.Party.ListenersList">
             <summary>
             Gets or Sets the State Variable for the ListenersList
             </summary>
         </member>
-        <member name="P:SonyAPILib.party.sv_UUID">
+        <member name="P:SonyAPILib.Party.Uuid">
             <summary>
             Gets or Sets the State Variable for the UUID.
             </summary>
@@ -504,316 +504,316 @@
             Gets or Sets the Registration URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ActionList.getSystemInformation">
+        <member name="P:SonyAPILib.ActionList.SystemInformationUrl">
             <summary>
             Gets or Sets the System Information URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ActionList.getRemoteCommandList">
+        <member name="P:SonyAPILib.ActionList.RemoteCommandListUrl">
             <summary>
             Gets or Sets the Remote Commandlist URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ActionList.getStatus">
+        <member name="P:SonyAPILib.ActionList.StatusUrl">
             <summary>
             Gets or Sets the GetStatus URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ActionList.getText">
+        <member name="P:SonyAPILib.ActionList.GetTextUrl">
             <summary>
             Gets or Sets the GetText URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.ActionList.sendText">
+        <member name="P:SonyAPILib.ActionList.SendTextUrl">
             <summary>
             Gets or Sets the SendText URL
             </summary>
         </member>
-        <member name="T:SonyAPILib.deviceService">
+        <member name="T:SonyAPILib.DeviceService">
             <summary>
             Basic Service Description class
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.serviceType">
+        <member name="P:SonyAPILib.DeviceService.Type">
             <summary>
             Gets or Sets the Service Type
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.friendlyServiceIdentifier">
+        <member name="P:SonyAPILib.DeviceService.ServiceIdentifier">
             <summary>
             Gets of Sets the Friendly Service Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.serviceID">
+        <member name="P:SonyAPILib.DeviceService.ServiceID">
             <summary>
             Gets or sets the Service ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.controlURL">
+        <member name="P:SonyAPILib.DeviceService.ControlUrl">
             <summary>
             Gets or Sets the Service Control URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.eventSubURL">
+        <member name="P:SonyAPILib.DeviceService.EventSubUrl">
             <summary>
             Gets or Sets the Service Event URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.SCPDURL">
+        <member name="P:SonyAPILib.DeviceService.ScpdUrl">
             <summary>
             Gets or Sets the Service SCPD URL
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.sv_LastChange">
+        <member name="P:SonyAPILib.DeviceService.LastChange">
             <summary>
             Gets or Sets the State Variable for the Last Change.
             </summary>
         </member>
-        <member name="P:SonyAPILib.deviceService.sv_CurrentStatus">
+        <member name="P:SonyAPILib.DeviceService.CurrentStatus">
             <summary>
             Gets or Sets the State Variable for the Current Status
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib">
+        <member name="T:SonyAPILib.SonyAPILib">
             <summary>
             Sony API Library
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.LOG">
+        <member name="P:SonyAPILib.SonyAPILib.Log">
             <summary>
             Gets or Sets the API Logging Object
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Locator">
+        <member name="P:SonyAPILib.SonyAPILib.Locator">
             <summary>
             Gets or Sets the Sony_API Object
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.ircc1">
+        <member name="F:SonyAPILib.SonyAPILib.Ircc">
             <summary>
             Represents the IRCC1 Service
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.avtransport1">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport">
             <summary>
             Represents the AVTransport1 Service
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.connectionmanager1">
+        <member name="F:SonyAPILib.SonyAPILib.ConnectionManager">
             <summary>
             Represents the ConnectionManager Service
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.renderingcontrol1">
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl">
             <summary>
             Represents the RenderingControl Service
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.party1">
+        <member name="F:SonyAPILib.SonyAPILib.Party">
             <summary>
             Represents the Party Service
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib._Log">
+        <member name="F:SonyAPILib.SonyAPILib._Log">
             <summary>
             API Logging Object
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib._Locator">
+        <member name="F:SonyAPILib.SonyAPILib._Locator">
             <summary>
             API Object
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.Locate">
+        <member name="T:SonyAPILib.SonyAPILib.Locate">
             <summary>
             Class used to Discover Sony devices with the IRCC service via a LAN connection
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.Locate.dataSet">
+        <member name="F:SonyAPILib.SonyAPILib.Locate.dataSet">
             <summary>
             Contains the a Dataset of the Device's Command List
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.Locate.actionListUrl">
+        <member name="P:SonyAPILib.SonyAPILib.Locate.ActionListUrl">
             <summary>
             Variable for storing the devices Action List URL used in API Class and Discovery.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Locate.locateDevices">
+        <member name="M:SonyAPILib.SonyAPILib.Locate.LocateDevices">
             <summary>
             Execute an SSDP Scan to locate any UPnP/DLNA devices on the network
             </summary>
             <returns>A list containing the full URL to each device's Description.xml file</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Locate.DeviceLoad(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.Locate.DeviceLoad(System.String)">
             <summary>
             Loads a device from a file
             </summary>
             <param name="path">The FULL path to the Device XML file</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Locate.DeviceSave(System.String,SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.Locate.DeviceSave(System.String,SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Saves a device to a file
             </summary>
             <param name="path">Full path including File Name: c://temp/device.xml</param>
             <param name="dev">The Device Object to save.</param>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.SonyDevice">
+        <member name="T:SonyAPILib.SonyAPILib.SonyDevice">
             <summary>
             Sony Device Object used to Register and Control via Lan connection
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Name">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Name">
             <summary>
             Gets or Sets the Sony Device Object Name
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Manufacture">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Manufacture">
             <summary>
             Gets or Sets the Sony Device Manufacture
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelName">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.ModelName">
             <summary>
             Gets or Sets the Sony Device Model Name
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelDescription">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.ModelDescription">
             <summary>
             Gets or Sets the Sony Device Model Description
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.ModelNumber">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.ModelNumber">
             <summary>
             Gets or Sets the Sony Device Model Number
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.UDN">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Udn">
             <summary>
             Gets or Sets the Sony Device Unique Identifier Number
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.DeviceType">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Type">
             <summary>
             Gets or Sets the Sony Device type Identifier
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_IP_Address">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.IPAddress">
             <summary>
             Gets or Sets the Sony Device Object's IP Address
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Macaddress">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.MacAddress">
             <summary>
             Gets or Sets the Sony Device Object's MAC Address
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Device_Port">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Port">
             <summary>
             Gets or Sets the Sony Device Object's Port number
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Commands">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Commands">
             <summary>
             Gets or Sets the Sony Device Object's List of Commands
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Macaddress">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.ServerMacAddress">
             <summary>
-            Gets or Sets the Mac Address of he controlling device
+            Gets or Sets the Mac Address of The controlling device (Server)
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Server_Name">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.ServerName">
             <summary>
-            Gets or Sets the Name of he controlling device
+            Gets or Sets the Name of the controlling device (Server)
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Cookie">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Cookie">
             <summary>
             Gets or Sets the Sony Device Gen 3 Object's Authintication Cookie
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Registered">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.Registered">
             <summary>
             Gets or Sets the status of registration
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.Actionlist_Url">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.ActionListUrl">
             <summary>
             This will contain the retrieved X_CERS_ActionList_URL used in registration and other commands.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.Actionlist">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.Actionlist">
             <summary>
             This will contain the retrieved ActionList objects.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.dataSet">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.DataSet">
             <summary>
             List of Device Commands
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.pincode">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.PinCode">
             <summary>
             Default PIN code used with Gen3 devices
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.allcookies">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.AllCookies">
             <summary>
             Cookie container for Gen3 Devices
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.RenderingControl">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.RenderingControl">
             <summary>
             Gets or Sets the RenderingControl Service if it exist
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.ConnectionManager">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.ConnectionManager">
             <summary>
             Gets or Sets the ConnectionManager Service if it exist
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.AVTransport">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.AVTransport">
             <summary>
             Gets or Sets the AVTransport Service if it exist
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.Party">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.Party">
             <summary>
             Gets or Sets the Party Service if it exist
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.SonyDevice.IRCC">
+        <member name="F:SonyAPILib.SonyAPILib.SonyDevice.Ircc">
             <summary>
             Gets or Sets the IRCC Service if it exist
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyDevice.DocumentURL">
+        <member name="P:SonyAPILib.SonyAPILib.SonyDevice.DocumentUrl">
             <summary>
             Gets or Sets the Devices Document URL
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.register">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.Register">
             <summary>
             Sends the Registration command to the selected device
             </summary>
             <returns>Returns a bool True or False</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.sendAuth(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.SendAuth(System.String)">
             <summary>
             Sends the Authorization PIN code to the Gen3 Device
             </summary>
-            <param name="pincode"></param>
+            <param name="PinCode"></param>
             <returns>True or False</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.get_remote_command_list">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetRemoteCommandList">
             <summary>
-            This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3 JSON Command List.
+            This method will retrieve Gen1 and Gen2 XML IRCC Command List or Gen3+ JSON Command List.
             </summary>
             <returns>Returns a string containing the contents of the returned XML Command List for your Use</returns>
             <remarks>This method will also populate the SonyDevice.Commands object list with the retrieved command list</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.HttpPost(System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.HttpPost(System.String,System.String)">
             <summary>
             Executes the HTTP Post command
             </summary>
@@ -821,95 +821,95 @@
             <param name="Parameters">Additional parameters</param>
             <returns></returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkReg">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.CheckReg">
             <summary>
             This method Checks the current Status of the device Registration
             </summary>
             <returns>Returns a Bool True or False</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkStatus">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.CheckStatus">
             <summary>
             This method Gets the current Status of the device
             </summary>
             <returns>Returns the device response as a string</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getRegistrationMode">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetRegistrationMode">
             <summary>
             Gets the Registration Mode from the ActionList.
             Or uses Gen 3 if no action list is found.
             </summary>
             <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getIRCCcommandString(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetCommandString(System.String)">
             <summary>
             This method is used to find the Device Command Value based on the Command Name from the SonyDevice.Commands object list.
             </summary>
-            <param name="cmdname">A valid command name found in the SonyDevice.Commands object list. (ie: "ChannelUp")</param>
+            <param name="CmdName">A valid command name found in the SonyDevice.Commands object list. (ie: "ChannelUp")</param>
             <returns>Returns the command value for the matched command name. ie: "AAAAAQAAAAEAAAAQAw==". or returns an empty string if no match is found</returns>
             <remarks>This can be used with send_ircc("AAAAAQAAAAEAAAAQAw==")
              like this: send_ircc(getIRCCcommandString("ChannelUp")
             </remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.send_text(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.SendText(System.String)">
             <summary>
             This method send Inputed Text via an HTTP GET command
             </summary>
-            <param name="sendtext">A string containing the text to send to the device</param>
+            <param name="SendText">A string containing the text to send to the device</param>
             <returns>Returns the device response as a string</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.get_text">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetText">
             <summary>
             This method Gets Text
             </summary>
             <returns>Returns the device response as a string</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_1">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.hdmi_1">
             <summary>
             Sends a mdf command for input HDMI 1
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_2">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.hdmi_2">
             <summary>
             Sends a mdf command for input HDMI 2
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_3">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.hdmi_3">
             <summary>
             Sends a mdf command for input HDMI 3
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.hdmi_4">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.hdmi_4">
             <summary>
             Sends a mdf command for input HDMI 4
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.volume_up">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.VolumeUp">
             <summary>
             Sends IRCC value for Volume Up
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.volume_down">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.VolumeDown">
             <summary>
             Sends IRCC value for Volume Down
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.channel_up">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.ChannelUp">
             <summary>
             Sends IRCC value for Channel Up
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.channel_down">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.ChannelDown">
             <summary>
             Sends IRCC value for Channel Down
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.channel_set(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.ChannelSet(System.String)">
             <summary>
             This public method can be used to tune to a complete channel.
             </summary>
             <param name="channel">A string containing a valid complete channel. (ie. 47.1)</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.checkFullPath(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.CheckFullPath(System.String)">
             <summary>
             If Param is NOT full path, returns the Full path. 
             Example: /cers/IRCC is Not a full path, will return: HTTP://192.168.0.xxx:8080/cers/IRCC
@@ -917,219 +917,220 @@
             <param name="cpath"> Path to check</param>
             <returns></returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getServerMac">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetServerMac">
             <summary>
             getControlMac retrieves the MAC address from the static method GetMacAddress().
             </summary>
             <returns>A string containing a processed MAC address. 
             For example: Actual Mac 01:02:03:04:05:06 returns 01-02-03-04-05-06</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.GetMacAddress">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetMacAddress">
             <summary>
             Static method used to obtain your NIC MAC address.
             </summary>
             <returns>A string containing the MAC address of the fastest NIC found in your system.</returns>
             <remarks>Should not be used publically. Use the getControlMac() method instead.</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.getDeviceMac(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.GetDeviceMac(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Method used to retrieve Gen3 Devices Mac Address
             </summary>
+            <param name="mDev">The SonyDevice to obtain the Mac Address From</param>
             <returns></returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.buildFromDocument(System.Uri)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.BuildFromDocument(System.Uri)">
             <summary>
             Builds a SonyDevice object based on the devices Description document URL.
             </summary>
             <param name="dPath">A URI containg the URL to the device's Description XML file.</param>
             <returns>A Fully built and populated Sony Device</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.buildFromDocument(System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.BuildFromDocument(System.String,System.String)">
             <summary>
             Builds a SonyDevice object based on the devices Description document text.
             </summary>
-            <param name="dDoc">A string containg the Description XML.</param>
-            <param name="fPath">A string containg the Full Path to the device's Description XML file.</param>
+            <param name="Doc">A string containg the Description XML.</param>
+            <param name="Path">A string containg the Full Path to the device's Description XML file.</param>
             <returns>A Fully built and populated Sony Device</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.SonyDevice.WOL">
+        <member name="M:SonyAPILib.SonyAPILib.SonyDevice.WOL">
             <summary>
             Sends the device a "Wake-On-Lan" command
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.APILogging">
+        <member name="T:SonyAPILib.SonyAPILib.APILogging">
             <summary>
             Sony Device Logging Class
             Very Basic Logging System to txt file.
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Enable">
+        <member name="P:SonyAPILib.SonyAPILib.APILogging.Enable">
             <summary>
             Gets or Sets Enabling cerDevice API Logging
             True - Turns Loggin On
             False - Turns Loggin Off
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Level">
+        <member name="P:SonyAPILib.SonyAPILib.APILogging.Level">
             <summary>
             Gets or Sets Enabling cerDevice API Logging Level
             Basic - for only basic entries
             All - for all entries
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Path">
+        <member name="P:SonyAPILib.SonyAPILib.APILogging.Path">
             <summary>
             Gets or Sets the cerDevice API logging path
             Destination Folder MUST exist.
             Must be Full Path. ex: c:\programdata\sony\
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.APILogging.Name">
+        <member name="P:SonyAPILib.SonyAPILib.APILogging.Name">
             <summary>
             Gets or Sets the cerDevice API logging file name
             Must be a .txt file
             default is cerDevice_LOG.txt
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.writetolog(System.String,System.Boolean)">
+        <member name="M:SonyAPILib.SonyAPILib.APILogging.AddMessage(System.String,System.Boolean)">
             <summary>
             This method writes the log entries to the specified file location.
             </summary>
             <param name="message">This is the Text message to be added to the log file</param>
             <param name="oride">Set to true to ALWAYS log this message. Otherwise set to false</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.APILogging.clearLog(System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.APILogging.ClearLog(System.String)">
             <summary>
             This method is used to Clear the current log and start a new.
             </summary>
             <param name="newName">Default is Null. If NOT Null, Log file is copied to newName before it is Cleared!</param>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCommandList">
+        <member name="T:SonyAPILib.SonyAPILib.SonyCommandList">
             <summary>
             Gets or Sets the Sony Command List Object
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommandList.id">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCommandList.id">
             <summary>
             Gets or Sets the Devices Command List ID
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommandList.result">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCommandList.result">
             <summary>
             Gets or Sets the Devices Command List Results
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCommands">
+        <member name="T:SonyAPILib.SonyAPILib.SonyCommands">
             <summary>
             Gets or Sets the Sony Device Command
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommands.name">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCommands.name">
             <summary>
             Gets or Sets the Devices Command Name
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCommands.value">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCommands.value">
             <summary>
             Gets or Sets the Devices Command Value
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.SonyOption">
+        <member name="T:SonyAPILib.SonyAPILib.SonyOption">
             <summary>
             Gets or Sets the Sony Option object
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyOption.option">
+        <member name="P:SonyAPILib.SonyAPILib.SonyOption.option">
             <summary>
             Gets or Sets the Devices Option Name
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyOption.value">
+        <member name="P:SonyAPILib.SonyAPILib.SonyOption.value">
             <summary>
             Gets or Sets the Devices Option Value
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.SonyCookie">
+        <member name="T:SonyAPILib.SonyAPILib.SonyCookie">
             <summary>
             Gets or Sets the Sony Device Cookie Container Object
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Comment">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Comment">
             <summary>
             Gets or Sets the Cookie Comment
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.CommentUri">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.CommentUri">
             <summary>
             Gets or Sets the Cookie Comment URI
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.HttpOnly">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.HttpOnly">
             <summary>
             Gets or Sets Cookie for HTTP Only
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Discard">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Discard">
             <summary>
             gets or Sets the Cookie Discard
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Domain">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Domain">
             <summary>
             gets or Sets the Cookie Domain
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Expired">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Expired">
             <summary>
             Gets or Sets the Cookie Expired
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Expires">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Expires">
             <summary>
             Gets or Sets the Cookies Expiration
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Name">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Name">
             <summary>
             Gets or Sets the Cookie Name
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Path">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Path">
             <summary>
             Gets or Sets the Cookie Path
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Port">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Port">
             <summary>
             Gets or Sets the Cookie Port
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Secure">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Secure">
             <summary>
             Gets or Sets the Is Cookie Secure
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.TimeStamp">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.TimeStamp">
             <summary>
             Gets or Sets the Cookie Time Stamp
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Value">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Value">
             <summary>
             Gets or Sets the Cookie Value
             </summary>
         </member>
-        <member name="P:SonyAPILib.SonyAPI_Lib.SonyCookie.Version">
+        <member name="P:SonyAPILib.SonyAPILib.SonyCookie.Version">
             <summary>
             Gets or Sets the Cookie Version
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.HelperDLNA">
+        <member name="T:SonyAPILib.SonyAPILib.HelperDLNA">
             <summary>
             DLNA Helper Communication class
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.HelperDLNA.MakeRequest(System.String,System.String,System.Int32,System.String,System.String,System.Int32)">
+        <member name="M:SonyAPILib.SonyAPILib.HelperDLNA.MakeRequest(System.String,System.String,System.Int32,System.String,System.String,System.Int32)">
             <summary>
             Makes a new request to the device for sending SOAP.
             </summary>
@@ -1141,7 +1142,7 @@
             <param name="Port"></param>
             <returns></returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.HelperDLNA.MakeSocket(System.String,System.Int32)">
+        <member name="M:SonyAPILib.SonyAPILib.HelperDLNA.MakeSocket(System.String,System.Int32)">
             <summary>
             Creates a new Socket for communications
             </summary>
@@ -1149,7 +1150,7 @@
             <param name="port"></param>
             <returns></returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.HelperDLNA.ReadSocket(System.Net.Sockets.Socket,System.Boolean,System.Int32@)">
+        <member name="M:SonyAPILib.SonyAPILib.HelperDLNA.ReadSocket(System.Net.Sockets.Socket,System.Boolean,System.Int32@)">
             <summary>
             reads the Sockets response information
             </summary>
@@ -1158,309 +1159,654 @@
             <param name="ReturnCode"></param>
             <returns></returns>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.RenderingControl1">
+        <member name="T:SonyAPILib.SonyAPILib.RenderingControl1">
             <summary>
             Service class for the RenderingControl1 (urn:schemas-upnp-org:service:RenderingControl:1) service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.RenderingControl1.ServiceType">
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl1.ServiceType">
             <summary>
             Gets the service type identifier for the RenderingControl1 service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.RenderingControl1.InstanceID">
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl1.InstanceID">
             <summary>
             Gets the service instanceID for the RenderingControl1 service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.RenderingControl1.Channel">
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl1.Channel">
             <summary>
             Gets the service type identifier for the RenderingControl1 service.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.RenderingControl1.ListPresets(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.RenderingControl1.ListPresets(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the ListPresets action.
             </summary>
             <param name="parent">Parent Device object to get the Information from.</param>
             <returns>Out value for the CurrentPresetNameList action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.RenderingControl1.SelectPreset(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.RenderingControl1.SelectPreset(SonyAPILib.SonyAPILib.SonyDevice,System.String)">
             <summary>
             Executes the SelectPreset action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <param name="presetName">In value for the PresetName action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.RenderingControl1.GetMute(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.RenderingControl1.GetMute(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetMute action.
             </summary>
             <param name="parent">Parent Device object to get the Status from.</param>
             <returns>Boolean value for the CurrentMute action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.RenderingControl1.SetMute(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Boolean)">
+        <member name="M:SonyAPILib.SonyAPILib.RenderingControl1.SetMute(SonyAPILib.SonyAPILib.SonyDevice,System.Boolean)">
             <summary>
             Executes the SetMute action.
             </summary>
             <param name="parent">Parent Device object to get the Status from.</param>
             <param name="desiredMute">In value for the DesiredMute action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.RenderingControl1.GetVolume(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.RenderingControl1.GetVolume(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetVolume action.
             </summary>
             <param name="parent">Parent Device object to get the Status from.</param>
             <returns>Out value for the CurrentVolume action parameter. With range of 0 to 100. Increment of 1.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.RenderingControl1.SetVolume(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32)">
+        <member name="M:SonyAPILib.SonyAPILib.RenderingControl1.SetVolume(SonyAPILib.SonyAPILib.SonyDevice,System.Int32)">
             <summary>
             Executes the SetVolume action.
             </summary>
             <param name="parent">Parent Device object to Set Volume on.</param>
             <param name="desiredVolume">In value for the DesiredVolume action parameter. With range of 0 to 100. Increment of 1.</param>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.RenderingControl1.ReturnCode">
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl1.ReturnCode">
             <summary>
             Socket Return Code
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.ConnectionManager1">
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.Type">
+            <summary>
+            Gets or Sets the Service Type
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.ServiceIdentifier">
+            <summary>
+            Gets of Sets the Friendly Service Identifier
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.ServiceID">
+            <summary>
+            Gets or sets the Service ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.ControlUrl">
+            <summary>
+            Gets or Sets the Service Control URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.EventSubUrl">
+            <summary>
+            Gets or Sets the Service Event URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.ScpdUrl">
+            <summary>
+            Gets or Sets the Service SCPD URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.LastChange">
+            <summary>
+            Gets or Sets the State Variable for the Last Change.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.PresetNameList">
+            <summary>
+            Gets or Sets the State Variable for the Preset Name List.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.MuteState">
+            <summary>
+            Gets or Sets the State Variable for the Mute State.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.VolumeState">
+            <summary>
+            Gets or Sets the State Variable for the Volume state.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl1.ChannelState">
+            <summary>
+            Gets or Sets the State Variable for the Channel(Master).
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.RenderingControl1.PresetName">
+            <summary>
+            Gets or Sets the State Variable for the Preset Name.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPILib.RenderingControl1.InstanceId">
+            <summary>
+            Gets or Sets the State Variable for the Instance ID (0).
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPILib.ConnectionManager1">
             <summary>
             Service class for the ConnectionManager1 (urn:schemas-upnp-org:service:ConnectionManager:1) service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.ConnectionManager1.ServiceType">
+        <member name="F:SonyAPILib.SonyAPILib.ConnectionManager1.ServiceType">
             <summary>
             Gets the service type identifier for the ConnectionManager1 service.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.ConnectionManager1.GetProtocolInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.ConnectionManager1.GetProtocolInfo(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetProtocolInfo action.
             </summary>
             <param name="parent">Parent Device object to get the Status from.</param>
             <remarks>Populates the following State Variables: Sink and Source</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.ConnectionManager1.GetCurrentConnectionIDs(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.ConnectionManager1.GetCurrentConnectionIDs(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetCurrentConnectionIDs action.
             </summary>
             <param name="parent">Parent Device object to get the Status from.</param>
             <returns>Out value for the ConnectionIDs action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.ConnectionManager1.GetCurrentConnectionInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.ConnectionManager1.GetCurrentConnectionInfo(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetCurrentConnectionInfo action.
             </summary>
             <param name="parent">Parent Device object to get the Status from.</param>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.ConnectionManager1.ReturnCode">
+        <member name="F:SonyAPILib.SonyAPILib.ConnectionManager1.ReturnCode">
             <summary>
             Socket Return Code
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1">
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.Type">
+            <summary>
+            Gets or Sets the Service Type
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ServiceIdentifier">
+            <summary>
+            Gets of Sets the Friendly Service Identifier
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ServiceID">
+            <summary>
+            Gets or sets the Service ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ControlUrl">
+            <summary>
+            Gets or Sets the Service Control URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.EventSubUrl">
+            <summary>
+            Gets or Sets the Service Event URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ScpdUrl">
+            <summary>
+            Gets or Sets the Service SCPD URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.LastChange">
+            <summary>
+            Gets or Sets the State Variable for the Last Change.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ConnectionID">
+            <summary>
+            Gets or Sets the State Variable for the Connection Id.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.sv_ConnectionStatus">
+            <summary>
+            Gets or Sets the State Variable for the Connection Status.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.Manager">
+            <summary>
+            Gets or Sets the State Variable for the Connection Manager.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.Direction">
+            <summary>
+            Gets or Sets the State Variable for the Direction.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.RcsID">
+            <summary>
+            Gets or Sets the State Variable for the RcsID.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.AVTransportID">
+            <summary>
+            Gets or Sets the State Variable for the Transport ID.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.PeerConnectionID">
+            <summary>
+            Gets or Sets the State Variable for the Peer Connection ID.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ProtocolInfo">
+            <summary>
+            Gets or Sets the State Variable for the Proticol Information.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ProtocolSink">
+            <summary>
+            Gets or Sets the State Variable for the Proticol Sink.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.ConnectionManager1.ProticolSource">
+            <summary>
+            Gets or Sets the State Variable for the Proticol Source.
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1">
             <summary>
             Service class for the AVTransport1 (urn:schemas-upnp-org:service:AVTransport:1) service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.ServiceType">
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.Type">
+            <summary>
+            Gets or Sets the Service Type
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.ServiceIdentifier">
+            <summary>
+            Gets of Sets the Friendly Service Identifier
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.ServiceID">
+            <summary>
+            Gets or sets the Service ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.ControlUrl">
+            <summary>
+            Gets or Sets the Service Control URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.EventSubUrl">
+            <summary>
+            Gets or Sets the Service Event URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.ScpdUrl">
+            <summary>
+            Gets or Sets the Service SCPD URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.LastChange">
+            <summary>
+            Gets or Sets the Service Last Change variable
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.TransportState">
+            <summary>
+            Gets or Sets the State Variable for the Transport State.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.TransportStatus">
+            <summary>
+            Gets or Sets the State Variable for the Transport Status.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.PlayBackStorageMedium">
+            <summary>
+            Gets or Sets the State Variable for the Playback Storage Medium.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.RecordStorageMedium">
+            <summary>
+            Gets or Sets the State Variable for the Record Storage Medium.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.PossiblePlaybackStorageMedia">
+            <summary>
+            Gets or Sets the State Variable for the Possible Playback Storage Medium.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.PossibleRecordStorageMedia">
+            <summary>
+            Gets or Sets the State Variable for the Possible Record Storage Medium.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayMode">
+            <summary>
+            Gets or Sets the State Variable for the Current PLay Maode.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.TransportPlaySpeed">
+            <summary>
+            Gets or Sets the State Variable for the Transport Play Speed.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.RecordMediumWriteStatus">
+            <summary>
+            Gets or Sets the State Variable for the Record Medium Write Status.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentRecordQualityMode">
+            <summary>
+            Gets or Sets the State Variable for the Current Record Quality Mode.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.PossibleRecordQualityModes">
+            <summary>
+            Gets or Sets the State Variable for the Possible Record Quality Modes.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.NumberOfTracks">
+            <summary>
+            Gets or Sets the State Variable for the Number of Tracks.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentTrack">
+            <summary>
+            Gets or Sets the State Variable for the Current Track.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentTrackDuration">
+            <summary>
+            Gets or Sets the State Variable for the Current Track Duration.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentTrackMetaData">
+            <summary>
+            Gets or Sets the State Variable for the Current Track Meta Data.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentTrackURI">
+            <summary>
+            Gets or Sets the State Variable for the Current Track URI.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.AVTransportURI">
+            <summary>
+            Gets or Sets the State Variable for the AVTransport URI.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.AVTransportURIMetaData">
+            <summary>
+            Gets or Sets the State Variable for the AVTransport URI Meta Data.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.NextAVTransportURI">
+            <summary>
+            Gets or Sets the State Variable for the Next AVTransport URI.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.NextAVTransportURIMetaData">
+            <summary>
+            Gets or Sets the State Variable for the Next AVTransport URI Meta Data.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.RelativeTimePosition">
+            <summary>
+            Gets or Sets the State Variable for the Relative Time Position.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.AbsoluteTimePosition">
+            <summary>
+            Gets or Sets the State Variable for the Absolute Time Position.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.RelativeCounterPosition">
+            <summary>
+            Gets or Sets the State Variable for the Relative Counter Position.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.AbsoluteCounterPosition">
+            <summary>
+            Gets or Sets the State Variable for the Absolute Counter POsition.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.CurrentTransportActions">
+            <summary>
+            Gets or Sets the State Variable for the Current Transport Actions.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.X_DLNA_RelativeBytePosition">
+            <summary>
+            Gets or Sets the State Variable for the Relative Byte Position.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.X_DLNA_AbsoluteBytePosition">
+            <summary>
+            Gets or Sets the State Variable for the Absolute Byte Position.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.X_DLNA_CurrentTrackSize">
+            <summary>
+            Gets or Sets the State Variable for the Current Track Size.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.A_ARG_TYPE_SeekMode">
+            <summary>
+            Gets or Sets the State Variable for the Seek Mode.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.A_ARG_TYPE_SeekTarget">
+            <summary>
+            Gets or Sets the State Variable for the Seek Target.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.AVTransport1.A_ARG_TYPE_InstanceID">
+            <summary>
+            Gets or Sets the State Variable for the Instance ID.
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.ReturnCode">
+            <summary>
+            Socket Return Code
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.ServiceType">
             <summary>
             Gets the service type identifier for the AVTransport1 service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.InstanceID">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.InstanceID">
             <summary>
             Gets the service instanceID for the RenderingControl1 service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.Channel">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.Channel">
             <summary>
             Gets the service type identifier for the RenderingControl1 service.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum">
             <summary>
             Gets the enumeration type to hold a value for the TransportState state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum.STOPPED">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum.STOPPED">
             <summary>
             Gets the TransportState state var 'STOPPED' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum.PLAYING">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum.PLAYING">
             <summary>
             Gets the TransportState state var 'PLAYING' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum.PAUSEDPLAYBACK">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum.PAUSEDPLAYBACK">
             <summary>
             Gets the TransportState state var 'PAUSEDPLAYBACK' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum.TRANSITIONING">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum.TRANSITIONING">
             <summary>
             Gets the TransportState state var 'TRANSITIONING' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum.NOMEDIAPRESENT">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum.NOMEDIAPRESENT">
             <summary>
             Gets the TransportState state var 'NOMEDIAPRESENT' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStateEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStateEnum._Unknown">
             <summary>
             Value describing an invalid or unknown TransportState value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStatusEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.TransportStatusEnum">
             <summary>
             Gets the enumeration type to hold a value for the TransportStatus state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStatusEnum.OK">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStatusEnum.OK">
             <summary>
             Gets the TransportStatus state var 'OK' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStatusEnum.ERROROCCURRED">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStatusEnum.ERROROCCURRED">
             <summary>
             Gets the TransportStatus state var 'ERROROCCURRED' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportStatusEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportStatusEnum._Unknown">
             <summary>
             Value describing an invalid or unknown TransportStatus value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.PlaybackStorageMediumEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.PlaybackStorageMediumEnum">
             <summary>
             Gets the enumeration type to hold a value for the PlaybackStorageMedium state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.PlaybackStorageMediumEnum.NETWORK">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.PlaybackStorageMediumEnum.NETWORK">
             <summary>
             Gets the PlaybackStorageMedium state var 'NETWORK' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.PlaybackStorageMediumEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.PlaybackStorageMediumEnum._Unknown">
             <summary>
             Value describing an invalid or unknown PlaybackStorageMedium value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.RecordStorageMediumEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.RecordStorageMediumEnum">
             <summary>
             Gets the enumeration type to hold a value for the RecordStorageMedium state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.RecordStorageMediumEnum.NOTIMPLEMENTED">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.RecordStorageMediumEnum.NOTIMPLEMENTED">
             <summary>
             Gets the RecordStorageMedium state var 'NOTIMPLEMENTED' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.RecordStorageMediumEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.RecordStorageMediumEnum._Unknown">
             <summary>
             Value describing an invalid or unknown RecordStorageMedium value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum">
             <summary>
             Gets the enumeration type to hold a value for the CurrentPlayMode state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum.NORMAL">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum.NORMAL">
             <summary>
             Gets the CurrentPlayMode state var 'NORMAL' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum.RANDOM">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum.RANDOM">
             <summary>
             Gets the CurrentPlayMode state var 'RANDOM' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum.REPEATONE">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum.REPEATONE">
             <summary>
             Gets the CurrentPlayMode state var 'REPEATONE' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum.REPEATALL">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum.REPEATALL">
             <summary>
             Gets the CurrentPlayMode state var 'REPEATALL' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum._Unknown">
             <summary>
             Value describing an invalid or unknown CurrentPlayMode value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportPlaySpeedEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.TransportPlaySpeedEnum">
             <summary>
             Gets the enumeration type to hold a value for the TransportPlaySpeed state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportPlaySpeedEnum._1">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportPlaySpeedEnum._1">
             <summary>
             Gets the TransportPlaySpeed state var '_1' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.TransportPlaySpeedEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.TransportPlaySpeedEnum._Unknown">
             <summary>
             Value describing an invalid or unknown TransportPlaySpeed value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.RecordMediumWriteStatusEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.RecordMediumWriteStatusEnum">
             <summary>
             Gets the enumeration type to hold a value for the RecordMediumWriteStatus state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.RecordMediumWriteStatusEnum.NOTIMPLEMENTED">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.RecordMediumWriteStatusEnum.NOTIMPLEMENTED">
             <summary>
             Gets the RecordMediumWriteStatus state var 'NOTIMPLEMENTED' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.RecordMediumWriteStatusEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.RecordMediumWriteStatusEnum._Unknown">
             <summary>
             Value describing an invalid or unknown RecordMediumWriteStatus value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentRecordQualityModeEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.CurrentRecordQualityModeEnum">
             <summary>
             Gets the enumeration type to hold a value for the CurrentRecordQualityMode state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentRecordQualityModeEnum.NOTIMPLEMENTED">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentRecordQualityModeEnum.NOTIMPLEMENTED">
             <summary>
             Gets the CurrentRecordQualityMode state var 'NOTIMPLEMENTED' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentRecordQualityModeEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.CurrentRecordQualityModeEnum._Unknown">
             <summary>
             Value describing an invalid or unknown CurrentRecordQualityMode value.
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.AVTransport1.AARGTYPESeekModeEnum">
+        <member name="T:SonyAPILib.SonyAPILib.AVTransport1.AARGTYPESeekModeEnum">
             <summary>
             Gets the enumeration type to hold a value for the AARGTYPESeekMode state variable.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.AARGTYPESeekModeEnum.TRACKNR">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.AARGTYPESeekModeEnum.TRACKNR">
             <summary>
             Gets the AARGTYPESeekMode state var 'TRACKNR' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.AARGTYPESeekModeEnum.RELTIME">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.AARGTYPESeekModeEnum.RELTIME">
             <summary>
             Gets the AARGTYPESeekMode state var 'RELTIME' value.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.AARGTYPESeekModeEnum._Unknown">
+        <member name="F:SonyAPILib.SonyAPILib.AVTransport1.AARGTYPESeekModeEnum._Unknown">
             <summary>
             Value describing an invalid or unknown AARGTYPESeekMode value.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetAVTransportURI(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.SetAVTransportURI(SonyAPILib.SonyAPILib.SonyDevice,System.String,System.String)">
             <summary>
             Executes the SetAVTransportURI action.
             </summary>
@@ -1468,7 +1814,7 @@
             <param name="currentURI">In value for the CurrentURI action parameter.</param>
             <param name="currentURIMetaData">In value for the CurrentURIMetaData action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetNextAVTransportURI(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.SetNextAVTransportURI(SonyAPILib.SonyAPILib.SonyDevice,System.String,System.String)">
             <summary>
             Executes the SetNextAVTransportURI action.
             </summary>
@@ -1476,61 +1822,61 @@
             <param name="nextURI">In value for the NextURI action parameter.</param>
             <param name="nextURIMetaData">In value for the NextURIMetaData action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetMediaInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.GetMediaInfo(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetMediaInfo action.
             </summary>
             <param name="parent">The Device object to execute the request on.</param>
             <remarks>Populates the following State Variable: Number of Tracks, Track Duration, Track Meta Data, Track URI, Next URI, Next URI Meta Data, Record Medium and Current Record Write Status.</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetTransportInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.GetTransportInfo(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetTransportInfo action.
             </summary>
             <param name="parent">The Parent Device object to execute this action on.</param>
             <remarks>Populates the following State Variables: Current Transport State, Current Transport Status, Current Play Speed</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetPosition(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.GetPosition(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetPositionInfo action.
             </summary>
             <param name="parent">The Parent Device object to execute this action on.</param>
             <remarks>Populates the following State Variables: Curent Track, Track Duration, Track Meta Data, Track URI, Relative Time, Absolute Time, Relative Counter and Absolute Counter.</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetDeviceCapabilities(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.GetDeviceCapabilities(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetDeviceCapabilities action.
             </summary>
             <param name="parent">The Parent Device object to execute this action on.</param>
             <remarks>Populates the following State Variables: PlayBack Medium, Record Medium and Available Record Quality Modes</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetTransportSettings(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.GetTransportSettings(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetTransportSettings action.
             </summary>
             <param name="parent">The Parent Device object to execute this action on.</param>
             <remarks>Populates the following State Variables: Current Play Mode, Record Quality Mode</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Stop(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.Stop(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the Stop action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Play(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.Play(SonyAPILib.SonyAPILib.SonyDevice,System.Int32)">
             <summary>
             Executes the Play action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <param name="speed">In value for the Speed action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Pause(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.Pause(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the Pause action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Seek(SonyAPILib.SonyAPI_Lib.SonyDevice,System.Int32,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.Seek(SonyAPILib.SonyAPILib.SonyDevice,System.Int32,System.String)">
             <summary>
             Executes the Seek action.
             </summary>
@@ -1538,40 +1884,40 @@
             <param name="unit">In value for the Unit action parameter.</param>
             <param name="target">In value for the Target action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Next(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.Next(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the Next action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.Previous(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.Previous(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the Previous action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.SetPlayMode(SonyAPILib.SonyAPI_Lib.SonyDevice,SonyAPILib.SonyAPI_Lib.AVTransport1.CurrentPlayModeEnum)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.SetPlayMode(SonyAPILib.SonyAPILib.SonyDevice,SonyAPILib.SonyAPILib.AVTransport1.CurrentPlayModeEnum)">
             <summary>
             Executes the SetPlayMode action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <param name="newPlayMode">In value for the NewPlayMode action parameter. Default value of NORMAL.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.GetCurrentTransportActions(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.GetCurrentTransportActions(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the GetCurrentTransportActions action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <returns>Out value for the Actions action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.XGetOperationList(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.XGetOperationList(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the XGetOperationList action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <returns>Out value for the OperationList action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.AVTransport1.XExecuteOperation(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.AVTransport1.XExecuteOperation(SonyAPILib.SonyAPILib.SonyDevice,System.String)">
             <summary>
             Executes the XExecuteOperation action.
             </summary>
@@ -1579,36 +1925,31 @@
             <param name="actionDirective">In value for the ActionDirective action parameter.</param>
             <returns>Out value for the Result action parameter.</returns>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.AVTransport1.ReturnCode">
-            <summary>
-            Socket Return Code
-            </summary>
-        </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.Party1">
+        <member name="T:SonyAPILib.SonyAPILib.Party1">
             <summary>
             Service class for the Party1 (urn:schemas-sony-com:service:Party:1) service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.Party1.ServiceType">
+        <member name="F:SonyAPILib.SonyAPILib.Party1.ServiceType">
             <summary>
             Gets the service type identifier for the Party1 service.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XGetDeviceInfo(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XGetDeviceInfo(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the XGetDeviceInfo action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <remarks>Populates the following State Variables: Singer Capability and Transport Port</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XGetState(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XGetState(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the XGetState action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <remarks>Populates the Following State Variables: Party State, Party Mode, Party Song, Session ID, Number of Listeners, Listener List, Singer UUID and Singer Session ID</remarks>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XStart(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XStart(SonyAPILib.SonyAPILib.SonyDevice,System.String,System.String)">
             <summary>
             Executes the XStart action.
             </summary>
@@ -1617,7 +1958,7 @@
             <param name="listenerList">In value for the ListenerList action parameter.</param>
             <returns>Out value for the SingerSessionID action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XEntry(SonyAPILib.SonyAPI_Lib.SonyDevice,System.UInt32,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XEntry(SonyAPILib.SonyAPILib.SonyDevice,System.UInt32,System.String)">
             <summary>
             Executes the XEntry action.
             </summary>
@@ -1625,7 +1966,7 @@
             <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
             <param name="listenerList">In value for the ListenerList action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XLeave(SonyAPILib.SonyAPI_Lib.SonyDevice,System.UInt32,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XLeave(SonyAPILib.SonyAPILib.SonyDevice,System.UInt32,System.String)">
             <summary>
             Executes the XLeave action.
             </summary>
@@ -1633,14 +1974,14 @@
             <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
             <param name="listenerList">In value for the ListenerList action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XAbort(SonyAPILib.SonyAPI_Lib.SonyDevice,System.UInt32)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XAbort(SonyAPILib.SonyAPILib.SonyDevice,System.UInt32)">
             <summary>
             Executes the XAbort action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XInvite(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String,System.String,System.UInt32)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XInvite(SonyAPILib.SonyAPILib.SonyDevice,System.String,System.String,System.UInt32)">
             <summary>
             Executes the XInvite action.
             </summary>
@@ -1650,40 +1991,160 @@
             <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
             <returns>Out value for the ListenerSessionID action parameter.</returns>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.Party1.XExit(SonyAPILib.SonyAPI_Lib.SonyDevice,System.UInt32)">
+        <member name="M:SonyAPILib.SonyAPILib.Party1.XExit(SonyAPILib.SonyAPILib.SonyDevice,System.UInt32)">
             <summary>
             Executes the XExit action.
             </summary>
             <param name="parent">The Device object to execute the request on</param>
             <param name="listenerSessionID">In value for the ListenerSessionID action parameter.</param>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.Party1.ReturnCode">
+        <member name="F:SonyAPILib.SonyAPILib.Party1.ReturnCode">
             <summary>
             Socket Return Code
             </summary>
         </member>
-        <member name="T:SonyAPILib.SonyAPI_Lib.IRCC1">
+        <member name="P:SonyAPILib.SonyAPILib.Party1.Type">
+            <summary>
+            Gets or Sets the Service Type
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.ServiceIdentifier">
+            <summary>
+            Gets of Sets the Friendly Service Identifier
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.ServiceID">
+            <summary>
+            Gets or sets the Service ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.ControlUrl">
+            <summary>
+            Gets or Sets the Service Control URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.EventSubUrl">
+            <summary>
+            Gets or Sets the Service Event URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.ScpdUrl">
+            <summary>
+            Gets or Sets the Service SCPD URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.LastChange">
+            <summary>
+            Gets or Sets the State Variable for the Last Change.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.SingerCapability">
+            <summary>
+            Gets or Sets the State Variable for the Singer Capability.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.TransportPort">
+            <summary>
+            Gets or Sets the State Variable for the Transport Port.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.PartyState">
+            <summary>
+            Gets or Sets the State Variable for the Party State.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.PartyMode">
+            <summary>
+            Gets or Sets the State Variable for the Party Mode.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.PartySong">
+            <summary>
+            Gets or Sets the State Variable for the Party Song.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.SessionID">
+            <summary>
+            Gets or Sets the State Variable for the Session ID.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.NumberOfListeners">
+            <summary>
+            Gets or Sets the State Variable for the Number of Listeners.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.ListenersList">
+            <summary>
+            Gets or Sets the State Variable for the ListenersList
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.Party1.Uuid">
+            <summary>
+            Gets or Sets the State Variable for the UUID.
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.SonyAPILib.IRCC1">
             <summary>
             Service class for the IRCC1 (urn:schemas-sony-com:service:IRCC:1) service.
             </summary>
         </member>
-        <member name="F:SonyAPILib.SonyAPI_Lib.IRCC1.ServiceType">
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.Type">
+            <summary>
+            Gets or Sets the Service Type
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.ServiceIdentifier">
+            <summary>
+            Gets of Sets the Friendly Service Identifier
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.ServiceID">
+            <summary>
+            Gets or sets the Service ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.ControlUrl">
+            <summary>
+            Gets or Sets the Service Control URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.EventSubURL">
+            <summary>
+            Gets or Sets the Service Event URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.ScpdUrl">
+            <summary>
+            Gets or Sets the Service SCPD URL
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.LastChange">
+            <summary>
+            Gets or Sets the State Variable for the Last Change.
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.SonyAPILib.IRCC1.CurrentStatus">
+            <summary>
+            Gets or Sets the State Variable for the Current Status
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.SonyAPILib.IRCC1.ServiceType">
             <summary>
             Gets the service type identifier for the IRCC1 service.
             </summary>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.IRCC1.XSendIRCC(SonyAPILib.SonyAPI_Lib.SonyDevice,System.String)">
+        <member name="M:SonyAPILib.SonyAPILib.IRCC1.SendIRCC(SonyAPILib.SonyAPILib.SonyDevice,System.String)">
             <summary>
             Executes the XSendIRCC action.
             </summary>
-            <param name="parent">The Parent Device to use.</param>
-            <param name="irccCode">In value for the IRCCCode action parameter.</param>
+            <param name="Parent">The Parent Device to use.</param>
+            <param name="CommandString">In value for the IRCCCode action parameter.</param>
         </member>
-        <member name="M:SonyAPILib.SonyAPI_Lib.IRCC1.XGetStatus(SonyAPILib.SonyAPI_Lib.SonyDevice)">
+        <member name="M:SonyAPILib.SonyAPILib.IRCC1.GetStatus(SonyAPILib.SonyAPILib.SonyDevice)">
             <summary>
             Executes the XGetStatus action.
             </summary>
-            <param name="parent">Parent Device object to get the Status from.</param>
+            <param name="Parent">Parent Device object to get the Status from.</param>
         </member>
         <member name="T:SonyAPILib.SSDP">
             <summary>

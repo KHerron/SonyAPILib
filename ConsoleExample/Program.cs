@@ -19,12 +19,12 @@ namespace ConsoleExample
         [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("SonyAPILib v5.2 by: Kirk Herron");
+            Console.WriteLine("SonyAPILib v5.3 by: Kirk Herron");
             Console.WriteLine("Starting Console Example Program");
             Console.WriteLine("================================");
-            
+
             // 1st we create a new instance of the SonyAPILib
-            SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
+            SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
 
             // Now create new instances of the UPnP/DLNA services
             //SonyAPI_Lib.IRCC1 ircc1 = new SonyAPI_Lib.IRCC1();  // Only required if you plan to use this service
@@ -36,29 +36,29 @@ namespace ConsoleExample
             #region Set Logging
             // Next Set the API logging information.
             // Enable Logging: default is set to FALSE.
-            mySonyLib.LOG.Enable = true;
+            mySonyLib.Log.Enable = true;
 
             // Set Logging Level. 
             // Set to "Basic" to only Log Minimum information
             // Set to "All" for all Logging information
             // Default is set to "Basic"
-            mySonyLib.LOG.Level = "All";
+            mySonyLib.Log.Level = "All";
 
             // Set where the logging file will be saved.
             // Folder will be created if it does not exist!
             // Set to Null to use Default
             // Default is set to C:\ProgramData\Sony
-            mySonyLib.LOG.Path = null;
+            mySonyLib.Log.Path = null;
 
             // Set the name of the Logging file.
             // Default is set to SonyAPILib_LOG.txt
-            mySonyLib.LOG.Name = "SonyAPILib_LOG.txt";
+            mySonyLib.Log.Name = "SonyAPILib_LOG.txt";
 
             // Clears the existing log file and starts a new one
             // Send Null as the param to just clear the file and start a new one
             // Enter a new File name as the param, and log file will be copied to new name before it is cleared.
             // Example: mySonyLib.LOG.clearlog(datestamp + "_Old_Sony_Log_File.txt");
-            mySonyLib.LOG.clearLog(null);
+            mySonyLib.Log.ClearLog(null);
             #endregion
 
             #region Device Locator
@@ -68,7 +68,7 @@ namespace ConsoleExample
             // Each returned object will contain the full URL to the devices Description.xml file
 
             Console.WriteLine("Searching for Devices...");
-            List<string> foundDevices = mySonyLib.Locator.locateDevices();
+            List<string> foundDevices = mySonyLib.Locator.LocateDevices();
             #endregion
 
             // foundDevices.Count will return the number of devices found
@@ -97,7 +97,7 @@ namespace ConsoleExample
                 cki = Console.ReadLine();
 
                 // 1st create a new Device Object
-                SonyAPI_Lib.SonyDevice mySonyDevice = new SonyAPI_Lib.SonyDevice();
+                SonyAPILib.SonyAPILib.SonyDevice mySonyDevice = new SonyAPILib.SonyAPILib.SonyDevice();
 
                 // Here you can save the device information to a database or text file.
                 // This will allow you to Initialize a device WITHOUT having to run the sonyDiscover() method every time.
@@ -122,10 +122,10 @@ namespace ConsoleExample
                 Console.WriteLine(foundDevices[Convert.ToInt16(cki)].ToString() + ": Building Device....");
                 
                 // Set the devices DocumentUrl property first
-                mySonyDevice.DocumentURL = foundDevices[Convert.ToInt16(cki)].ToString();
+                mySonyDevice.DocumentUrl = foundDevices[Convert.ToInt16(cki)].ToString();
 
                 // Then build the device from the document
-                mySonyDevice.buildFromDocument(new Uri(mySonyDevice.DocumentURL));
+                mySonyDevice.BuildFromDocument(new Uri(mySonyDevice.DocumentUrl));
 
                 #endregion
 
@@ -139,8 +139,8 @@ namespace ConsoleExample
                 //Also, this method requires the device to be registered on Generation 1 and 2 devices.
                 Console.WriteLine(mySonyDevice.Name + ": Checking Device Status....");
                 // Without a response: mySonyLib.ircc1.XGetStatus(mySonyDevice);
-                string status = mySonyLib.ircc1.XGetStatus(mySonyDevice);
-                // Use the Device State Variable: if (mySonyDevice.IRCC.sv_CurrentStatus == "" | mySonyDevice.IRCC.sv_CurrentStatus == null)
+                string status = mySonyDevice.Ircc.GetStatus(mySonyDevice);
+                // Use the Device State Variable: if (mySonyDevice.Ircc.CurrentStatus == "" | mySonyDevice.Ircc.CurrentStatus == null)
                 if (status == "" | status == null)
                 {
                     // NO Response!!
@@ -168,7 +168,7 @@ namespace ConsoleExample
                     Console.WriteLine(mySonyDevice.Name + ": Performing Registration....");
                     Console.WriteLine("Before continuing, you may need to set the device to Registration Mode,");
                     Console.WriteLine("Confirm Registration or enter the Registration PIN code.");
-                    Console.WriteLine("Go to the device and perfrom any step, or be ready to before ehitting enter below!");
+                    Console.WriteLine("Go to the device and perfrom any step, and be ready before hitting enter below!");
                     Console.WriteLine("=====================================");
                     Console.WriteLine("Hit any key to continue");
                     Console.ReadKey();
@@ -187,7 +187,7 @@ namespace ConsoleExample
                     // Returns true if successful
                     // Returns false if not successful 
 
-                    mySonyReg = mySonyDevice.register();
+                    mySonyReg = mySonyDevice.Register();
 
                     // Check if register returned false
                     if (mySonyDevice.Registered == false)
@@ -200,7 +200,7 @@ namespace ConsoleExample
                             ckii = Console.ReadLine();
                             // Send PIN code to TV to create Autorization cookie
                             Console.WriteLine("Sending Authitication PIN Code.");
-                            mySonyReg = mySonyDevice.sendAuth(ckii);
+                            mySonyReg = mySonyDevice.SendAuth(ckii);
                         }
                     }
                 }
@@ -224,14 +224,14 @@ namespace ConsoleExample
 
                     Console.WriteLine("Device Information");
                     Console.WriteLine("Mame: " + mySonyDevice.Name);
-                    Console.WriteLine("Mac Address: " + mySonyDevice.Device_Macaddress);
-                    Console.WriteLine("IP Address: " + mySonyDevice.Device_IP_Address);
-                    Console.WriteLine("Port: " + mySonyDevice.Device_Port);
+                    Console.WriteLine("Mac Address: " + mySonyDevice.MacAddress);
+                    Console.WriteLine("IP Address: " + mySonyDevice.IPAddress);
+                    Console.WriteLine("Port: " + mySonyDevice.Port);
                     Console.WriteLine("Registration Mode: " + mySonyDevice.Actionlist.RegisterMode);
                     Console.WriteLine("Registration: " + mySonyDevice.Registered.ToString());
-                    Console.WriteLine("Server Name: " + mySonyDevice.Server_Name);
-                    Console.WriteLine("Server Mac: " + mySonyDevice.Server_Macaddress);
-                    Console.WriteLine("Action List URL: " + mySonyDevice.Actionlist_Url);
+                    Console.WriteLine("Server Name: " + mySonyDevice.ServerName);
+                    Console.WriteLine("Server Mac: " + mySonyDevice.ServerMacAddress);
+                    Console.WriteLine("Action List URL: " + mySonyDevice.ActionListUrl);
                     Console.WriteLine("---------------------------------");
                     Console.WriteLine("");
                 }
@@ -251,7 +251,7 @@ namespace ConsoleExample
                 // This method will populate the Commands list in the SonyDevice object when executed.
                 // This Methed also returnes a string that contains the contents of the Devices Command List XML file for your own use.
                 Console.WriteLine(mySonyDevice.Name + ": Retrieving Remote Command List");
-                string CmdList = mySonyDevice.get_remote_command_list();
+                string CmdList = mySonyDevice.GetRemoteCommandList();
 
                 // TODO: Parse this information as your application requires.
                 // convert to an XMLDocument or dataset for your own use
@@ -274,16 +274,16 @@ namespace ConsoleExample
                 #endregion
 
                 // Get the IRCC command value by searching the command name
-                #region getIRCCcommandString
-                // The next method is used to search for an IRCC_Command that matches the param.
+                #region GetCommandString
+                // The next method is used to search for an IRCC Command String that matches the param.
 
                 // param is a string containing the command name to search for.
                 // Returns a string containing the command's value (If Successful)
-                // Returna a Null if the search command is not found in the devices IRCC command list
+                // Returns a Null if the search command is not found in the devices IRCC command list
 
-                // This example will search for the command "ChannelUp"
+                // This example will search for the command "VolumeUp"
                 Console.WriteLine(mySonyDevice.Name + ": Retrieving Command Value for: VolumeUp");
-                string irccCmd = mySonyDevice.getIRCCcommandString("VolumeUp");
+                string irccCmd = mySonyDevice.GetCommandString("VolumeUp");
 
                 //Check if command was found
                 if (irccCmd == "")
@@ -311,14 +311,14 @@ namespace ConsoleExample
                 #region Example 1
                 // This first example will send a "VolumeUp" command value to the device
                 // it asumes we already know the value to send to the device.
-                // We will use the irccCmd we retrieved above in the getIRCCCommandString method.
+                // We will use the Command String we retrieved above in the GetCommandString method.
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command Value " + irccCmd + " to device");
-               
+
                 //renderingcontrol1.SetMute(mySonyDevice, true);
                 //renderingcontrol1.SetMute(mySonyDevice, false);
                 //connectionmanager1.GetProtocolInfo(mySonyDevice);
-
-                string results = mySonyLib.ircc1.XSendIRCC(mySonyDevice,irccCmd);
+                string results = mySonyDevice.Ircc.SendIRCC(mySonyDevice, irccCmd);
+                //string results = mySonyLib.Ircc.SendIRCC(mySonyDevice,irccCmd);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -334,8 +334,9 @@ namespace ConsoleExample
                 // The next example will use the getIRCCcommandString("CommandName") method to get the command value for "VolumeDown".
                 // Then send it to the device
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeDown to device");
-                String mycommand = mySonyDevice.getIRCCcommandString("VolumeDown");
-                results = mySonyLib.ircc1.XSendIRCC(mySonyDevice,mycommand);
+                String mycommand = mySonyDevice.GetCommandString("VolumeDown");
+                //results = mySonyLib.Ircc.SendIRCC(mySonyDevice,mycommand);
+                results = mySonyDevice.Ircc.SendIRCC(mySonyDevice, mycommand);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -350,7 +351,8 @@ namespace ConsoleExample
                 #region Example 3
                 // The next example will use a combination of both examples above for the command "VolumeUp".
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeUp to device again");
-                mySonyLib.ircc1.XSendIRCC(mySonyDevice, mySonyDevice.getIRCCcommandString("VolumeUp"));
+                mySonyDevice.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString("VolumeUp"));
+                //mySonyLib.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString("VolumeUp"));
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -368,14 +370,15 @@ namespace ConsoleExample
                 Console.WriteLine("Here are the Commands: Hit any key to Continue.");
                 Console.WriteLine("---------------------------------");                
                 Console.ReadKey();
-                foreach (SonyAPI_Lib.SonyCommands cmd in mySonyDevice.Commands)
+                foreach (SonyAPILib.SonyAPILib.SonyCommands cmd in mySonyDevice.Commands)
                 {
                     Console.WriteLine(cmd.name);
                 }
                 Console.WriteLine("---------------------------------");
                 Console.WriteLine("Enter a command from the list above.");
                 cki = Console.ReadLine();
-                results = mySonyLib.ircc1.XSendIRCC(mySonyDevice, mySonyDevice.getIRCCcommandString(cki));
+                //results = mySonyLib.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString(cki));
+                results = mySonyDevice.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString(cki));
                 #endregion
 
                 #region Example 6
@@ -384,7 +387,7 @@ namespace ConsoleExample
                 Console.WriteLine("This can be Pandora, Youtube or any search where you enter TEXT.");
                 Console.WriteLine("Now, enter the text here to send.");
                 cki = Console.ReadLine();
-                results = mySonyDevice.send_text(cki);
+                results = mySonyDevice.SendText(cki);
                 Console.WriteLine("---------------------------------");
                 #endregion
 

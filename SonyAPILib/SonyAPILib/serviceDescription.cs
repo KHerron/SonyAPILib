@@ -12,40 +12,41 @@ namespace SonyAPILib
     /// </summary>
 
     [Serializable]
-    public class ircc
+    public class Ircc
     {
         /// <summary>
         /// Gets or Sets the Service Type
         /// </summary>
-        public string serviceType { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// Gets of Sets the Friendly Service Identifier
         /// </summary>
-        public string friendlyServiceIdentifier { get; set; }
+        public string ServiceIdentifier { get; set; }
         /// <summary>
         /// Gets or sets the Service ID
         /// </summary>
-        public string serviceID { get; set; }
+        public string ServiceID { get; set; }
         /// <summary>
         /// Gets or Sets the Service Control URL
         /// </summary>
-        public string controlURL { get; set; }
+        public string ControlUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Event URL
         /// </summary>
-        public string eventSubURL { get; set; }
+        public string EventSubURL { get; set; }
         /// <summary>
         /// Gets or Sets the Service SCPD URL
         /// </summary>
-        public string SCPDURL { get; set; }
+        public string ScpdUrl { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Last Change.
         /// </summary>
-        public string sv_LastChange { get; set; }
+        public string LastChange { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Status
         /// </summary>
-        public string sv_CurrentStatus { get; set; }
+        public string CurrentStatus { get; set; }
+
     }
     #endregion
 
@@ -54,222 +55,222 @@ namespace SonyAPILib
     /// AVTransport:1 Service Description class
     /// </summary>
     [Serializable]
-    public class avtransport
+    public class AVTransport
     {
         /// <summary>
         /// Gets or Sets the Service Type
         /// </summary>
-        public string serviceType { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// Gets of Sets the Friendly Service Identifier
         /// </summary>
-        public string friendlyServiceIdentifier { get; set; }
+        public string ServiceIdentifier { get; set; }
         /// <summary>
         /// Gets or sets the Service ID
         /// </summary>
-        public string serviceID { get; set; }
+        public string ServiceID { get; set; }
         /// <summary>
         /// Gets or Sets the Service Control URL
         /// </summary>
-        public string controlURL { get; set; }
+        public string ControlUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Event URL
         /// </summary>
-        public string eventSubURL { get; set; }
+        public string EventSubUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service SCPD URL
         /// </summary>
-        public string SCPDURL { get; set; }
+        public string ScpdUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Last Change variable
         /// </summary>
-        public string sv_LastChange { get; set; }
+        public string LastChange { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Transport State.
         /// </summary>
-        public string sv_TransportState { get; set; }
+        public string TransportState { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Transport Status.
         /// </summary>
-        public string sv_TransportStatus { get; set; }
+        public string TransportStatus { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Playback Storage Medium.
         /// </summary>
-        public string sv_PlayBackStorageMedium { get; set; }
+        public string PlayBackStorageMedium { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Record Storage Medium.
         /// </summary>
-        public string sv_RecordStorageMedium { get; set; }
+        public string RecordStorageMedium { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Possible Playback Storage Medium.
         /// </summary>
-        public string sv_PossiblePlaybackStorageMedia { get; set; }
+        public string PossiblePlaybackStorageMedia { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Possible Record Storage Medium.
         /// </summary>
-        public string sv_PossibleRecordStorageMedia { get; set; }
+        public string PossibleRecordStorageMedia { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current PLay Maode.
         /// </summary>
-        public string sv_CurrentPlayMode { get; set; }
+        public string CurrentPlayMode { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Transport Play Speed.
         /// </summary>
-        public int sv_TransportPlaySpeed { get; set; }
+        public int TransportPlaySpeed { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Record Medium Write Status.
         /// </summary>
-        public string sv_RecordMediumWriteStatus { get; set; }
+        public string RecordMediumWriteStatus { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Record Quality Mode.
         /// </summary>
-        public string sv_CurrentRecordQualityMode { get; set; }
+        public string CurrentRecordQualityMode { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Possible Record Quality Modes.
         /// </summary>
-        public string sv_PossibleRecordQualityModes { get; set; }
+        public string PossibleRecordQualityModes { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Number of Tracks.
         /// </summary>
-        public int sv_NumberOfTracks { get; set; }
+        public int NumberOfTracks { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Track.
         /// </summary>
-        public int sv_CurrentTrack { get; set; }
+        public int CurrentTrack { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Track Duration.
         /// </summary>
-        public string sv_CurrentTrackDuration { get; set; }
+        public string CurrentTrackDuration { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Track Meta Data.
         /// </summary>
-        public string sv_CurrentTrackMetaData { get; set; }
+        public string CurrentTrackMetaData { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Track URI.
         /// </summary>
-        public string sv_CurrentTrackURI { get; set; }
+        public string CurrentTrackURI { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the AVTransport URI.
         /// </summary>
-        public string sv_AVTransportURI { get; set; }
+        public string AVTransportURI { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the AVTransport URI Meta Data.
         /// </summary>
-        public string sv_AVTransportURIMetaData { get; set; }
+        public string AVTransportURIMetaData { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Next AVTransport URI.
         /// </summary>
-        public string sv_NextAVTransportURI { get; set; }
+        public string NextAVTransportURI { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Next AVTransport URI Meta Data.
         /// </summary>
-        public string sv_NextAVTransportURIMetaData { get; set; }
+        public string NextAVTransportURIMetaData { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Relative Time Position.
         /// </summary>
-        public string sv_RelativeTimePosition { get; set; }
+        public string RelativeTimePosition { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Absolute Time Position.
         /// </summary>
-        public string sv_AbsoluteTimePosition { get; set; }
+        public string AbsoluteTimePosition { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Relative Counter Position.
         /// </summary>
-        public string sv_RelativeCounterPosition { get; set; }
+        public string RelativeCounterPosition { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Absolute Counter POsition.
         /// </summary>
-        public string sv_AbsoluteCounterPosition { get; set; }
+        public string AbsoluteCounterPosition { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Transport Actions.
         /// </summary>
-        public string sv_CurrentTransportActions { get; set; }
+        public string CurrentTransportActions { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Relative Byte Position.
         /// </summary>
-        public string sv_X_DLNA_RelativeBytePosition { get; set; }
+        public string X_DLNA_RelativeBytePosition { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Absolute Byte Position.
         /// </summary>
-        public string sv_X_DLNA_AbsoluteBytePosition { get; set; }
+        public string X_DLNA_AbsoluteBytePosition { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Track Size.
         /// </summary>
-        public string sv_X_DLNA_CurrentTrackSize { get; set; }
+        public string X_DLNA_CurrentTrackSize { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Seek Mode.
         /// </summary>
-        public string sv_A_ARG_TYPE_SeekMode { get; set; }
+        public string A_ARG_TYPE_SeekMode { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Seek Target.
         /// </summary>
-        public string sv_A_ARG_TYPE_SeekTarget { get; set; }
+        public string A_ARG_TYPE_SeekTarget { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Instance ID.
         /// </summary>
-        public int sv_A_ARG_TYPE_InstanceID { get; set; }
+        public int A_ARG_TYPE_InstanceID { get; set; }
     }
     #endregion
 
     #region Rendering Control
     /// <summary>
-    /// Re4nderingControl:1 Service Description class
+    /// RenderingControl:1 Service Description class
     /// </summary>
     [Serializable]
-    public class renderingcontrol
+    public class RenderingControl
     {
         /// <summary>
         /// Gets or Sets the Service Type
         /// </summary>
-        public string serviceType { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// Gets of Sets the Friendly Service Identifier
         /// </summary>
-        public string friendlyServiceIdentifier { get; set; }
+        public string ServiceIdentifier { get; set; }
         /// <summary>
         /// Gets or sets the Service ID
         /// </summary>
-        public string serviceID { get; set; }
+        public string ServiceID { get; set; }
         /// <summary>
         /// Gets or Sets the Service Control URL
         /// </summary>
-        public string controlURL { get; set; }
+        public string ControlUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Event URL
         /// </summary>
-        public string eventSubURL { get; set; }
+        public string EventSubUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service SCPD URL
         /// </summary>
-        public string SCPDURL { get; set; }
+        public string ScpdUrl { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Last Change.
         /// </summary>
-        public string sv_LastChange { get; set; }
+        public string LastChange { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Preset Name List.
         /// </summary>
-        public string sv_PresetNameList { get; set; }
+        public string PresetNameList { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Mute State.
         /// </summary>
-        public Boolean sv_Mute { get; set; }
+        public Boolean MuteState { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Volume state.
         /// </summary>
-        public int sv_Volume { get; set; }
+        public int VolumeState { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Channel(Master).
         /// </summary>
-        public string sv_Channel = "Master";
+        public string ChannelState = "Master";
         /// <summary>
         /// Gets or Sets the State Variable for the Instance ID (0).
         /// </summary>
-        public int sv_InstanceID = 0;
+        public int InstanceID = 0;
         /// <summary>
         /// Gets or Sets the State Variable for the Preset Name.
         /// </summary>
-        public string sv_PresetName { get; set; }
+        public string PresetName { get; set; }
     }
     #endregion
 
@@ -278,40 +279,40 @@ namespace SonyAPILib
     /// ConnectionManager:1 Service Description class
     /// </summary>
     [Serializable]
-    public class connectionmanager
+    public class ConnectionManager
     {
         /// <summary>
         /// Gets or Sets the Service Type
         /// </summary>
-        public string serviceType { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// Gets of Sets the Friendly Service Identifier
         /// </summary>
-        public string friendlyServiceIdentifier { get; set; }
+        public string ServiceIdentifier { get; set; }
         /// <summary>
         /// Gets or sets the Service ID
         /// </summary>
-        public string serviceID { get; set; }
+        public string ServiceID { get; set; }
         /// <summary>
         /// Gets or Sets the Service Control URL
         /// </summary>
-        public string controlURL { get; set; }
+        public string ControlUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Event URL
         /// </summary>
-        public string eventSubURL { get; set; }
+        public string EventSubUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service SCPD URL
         /// </summary>
-        public string SCPDURL { get; set; }
+        public string ScpdUrl { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Last Change.
         /// </summary>
-        public string sv_LastChange { get; set; }
+        public string LastChange { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Connection Id.
         /// </summary>
-        public int sv_ConnectionID { get; set; }
+        public int ConnectionID { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Connection Status.
         /// </summary>
@@ -319,35 +320,35 @@ namespace SonyAPILib
         /// <summary>
         /// Gets or Sets the State Variable for the Connection Manager.
         /// </summary>
-        public string sv_ConnectionManager { get; set; }
+        public string Manager { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Direction.
         /// </summary>
-        public string sv_Direction { get; set; }
+        public string Direction { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the RcsID.
         /// </summary>
-        public string sv_RcsID { get; set; }
+        public string RcsID { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Transport ID.
         /// </summary>
-        public int sv_AVTransportID { get; set; }
+        public int AVTransportID { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Peer Connection ID.
         /// </summary>
-        public int sv_PeerConnectionID { get; set; }
+        public int PeerConnectionID { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Proticol Information.
         /// </summary>
-        public string sv_ProtocolInfo { get; set; }
+        public string ProtocolInfo { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Proticol Sink.
         /// </summary>
-        public string sv_ProtocolSink { get; set; }
+        public string ProtocolSink { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Proticol Source.
         /// </summary>
-        public string sv_ProticolSource { get; set; }
+        public string ProticolSource { get; set; }
     }
     #endregion
 
@@ -356,72 +357,72 @@ namespace SonyAPILib
     /// Party:1 Service Description class
     /// </summary>
     [Serializable]
-    public class party
+    public class Party
     {
         /// <summary>
         /// Gets or Sets the Service Type
         /// </summary>
-        public string serviceType { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// Gets of Sets the Friendly Service Identifier
         /// </summary>
-        public string friendlyServiceIdentifier { get; set; }
+        public string ServiceIdentifier { get; set; }
         /// <summary>
         /// Gets or sets the Service ID
         /// </summary>
-        public string serviceID { get; set; }
+        public string ServiceID { get; set; }
         /// <summary>
         /// Gets or Sets the Service Control URL
         /// </summary>
-        public string controlURL { get; set; }
+        public string ControlUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Event URL
         /// </summary>
-        public string eventSubURL { get; set; }
+        public string EventSubUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service SCPD URL
         /// </summary>
-        public string SCPDURL { get; set; }
+        public string ScpdUrl { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Last Change.
         /// </summary>
-        public string sv_LastChange { get; set; }
+        public string LastChange { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Singer Capability.
         /// </summary>
-        public int sv_SingerCapability { get; set; }
+        public int SingerCapability { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Transport Port.
         /// </summary>
-        public int sv_TransportPort { get; set; }
+        public int TransportPort { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Party State.
         /// </summary>
-        public string sv_PartyState { get; set; }
+        public string PartyState { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Party Mode.
         /// </summary>
-        public string sv_PartyMode { get; set; }
+        public string PartyMode { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Party Song.
         /// </summary>
-        public string sv_PartySong { get; set; }
+        public string PartySong { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Session ID.
         /// </summary>
-        public int sv_SessionID { get; set; }
+        public int SessionID { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Number of Listeners.
         /// </summary>
-        public int sv_NumberOfListeners { get; set; }
+        public int NumberOfListeners { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the ListenersList
         /// </summary>
-        public string sv_ListenersList { get; set; }
+        public string ListenersList { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the UUID.
         /// </summary>
-        public string sv_UUID { get; set; }
+        public string Uuid { get; set; }
     }
     #endregion
 
@@ -444,23 +445,23 @@ namespace SonyAPILib
         /// <summary>
         /// Gets or Sets the System Information URL
         /// </summary>
-        public string getSystemInformation { get; set; }
+        public string SystemInformationUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Remote Commandlist URL
         /// </summary>
-        public string getRemoteCommandList { get; set; }
+        public string RemoteCommandListUrl { get; set; }
         /// <summary>
         /// Gets or Sets the GetStatus URL
         /// </summary>
-        public string getStatus { get; set; }
+        public string StatusUrl { get; set; }
         /// <summary>
         /// Gets or Sets the GetText URL
         /// </summary>
-        public string getText { get; set; }
+        public string GetTextUrl { get; set; }
         /// <summary>
         /// Gets or Sets the SendText URL
         /// </summary>
-        public string sendText { get; set; }
+        public string SendTextUrl { get; set; }
     }
     #endregion
 
@@ -470,40 +471,40 @@ namespace SonyAPILib
     /// </summary>
      
     [Serializable]
-    public class deviceService
+    public class DeviceService
     {
         /// <summary>
         /// Gets or Sets the Service Type
         /// </summary>
-        public string serviceType { get; set; }
+        public string Type { get; set; }
         /// <summary>
         /// Gets of Sets the Friendly Service Identifier
         /// </summary>
-        public string friendlyServiceIdentifier { get; set; }
+        public string ServiceIdentifier { get; set; }
         /// <summary>
         /// Gets or sets the Service ID
         /// </summary>
-        public string serviceID { get; set; }
+        public string ServiceID { get; set; }
         /// <summary>
         /// Gets or Sets the Service Control URL
         /// </summary>
-        public string controlURL { get; set; }
+        public string ControlUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service Event URL
         /// </summary>
-        public string eventSubURL { get; set; }
+        public string EventSubUrl { get; set; }
         /// <summary>
         /// Gets or Sets the Service SCPD URL
         /// </summary>
-        public string SCPDURL { get; set; }
+        public string ScpdUrl { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Last Change.
         /// </summary>
-        public string sv_LastChange { get; set; }
+        public string LastChange { get; set; }
         /// <summary>
         /// Gets or Sets the State Variable for the Current Status
         /// </summary>
-        public string sv_CurrentStatus { get; set; }
+        public string CurrentStatus { get; set; }
     }
     #endregion
 

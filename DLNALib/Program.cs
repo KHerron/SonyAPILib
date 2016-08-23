@@ -14,7 +14,7 @@ namespace DLNALib
         static void Main(string[] args)
         {
             // 1st we create a new instance of the SonyAPILib
-            SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
+            SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
             
 
             #region No parameters
@@ -28,8 +28,8 @@ namespace DLNALib
             #region Logging
             if (args[args.Length - 1] == "/log")
             {
-                mySonyLib.LOG.Enable = true;
-                mySonyLib.LOG.Level = "All";
+                mySonyLib.Log.Enable = true;
+                mySonyLib.Log.Level = "All";
             }
             #endregion
 
@@ -50,7 +50,7 @@ namespace DLNALib
             #region WOL - Wake-On-Lan
             if (args[0] == "/WOL")
             {
-                SonyAPI_Lib.SonyDevice device = mySonyLib.Locator.DeviceLoad(args[1]);
+                SonyAPILib.SonyAPILib.SonyDevice device = mySonyLib.Locator.DeviceLoad(args[1]);
                 device.WOL();
             }
             #endregion
@@ -62,8 +62,8 @@ namespace DLNALib
                 {
                     string du = args[1];
                     string pa = args[2] + @"\";
-                    SonyAPI_Lib.SonyDevice nDev = new SonyAPI_Lib.SonyDevice();
-                    nDev.buildFromDocument(new Uri(du));
+                    SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                    nDev.BuildFromDocument(new Uri(du));
                     pa = pa + nDev.Name + ".xml";
                     Console.WriteLine("Saving Device: " + nDev.Name + ".xml to " + pa);
                     mySonyLib.Locator.DeviceSave(pa, nDev);
@@ -82,7 +82,7 @@ namespace DLNALib
                 try
                 {
                     Console.WriteLine("Locating Devices. Please wait.........");
-                    List<string> fdev = mySonyLib.Locator.locateDevices();
+                    List<string> fdev = mySonyLib.Locator.LocateDevices();
                     Console.WriteLine("Devices Found: " + fdev.Count);
                     if (fdev.Count > 0)
                     {
@@ -103,8 +103,8 @@ namespace DLNALib
                         foreach (string dv in fdev)
                         {
                             string pa = args[2] + @"\";
-                            SonyAPI_Lib.SonyDevice nDev = new SonyAPI_Lib.SonyDevice();
-                            nDev.buildFromDocument(new Uri(dv));
+                            SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                            nDev.BuildFromDocument(new Uri(dv));
                             pa = pa + nDev.Name + ".xml";
                             Console.WriteLine("Saving Device: " + nDev.Name + ".xml to " + pa);
                             mySonyLib.Locator.DeviceSave(pa, nDev);
@@ -127,7 +127,7 @@ namespace DLNALib
                 {
                     string devFile = "";
                     devFile = args[1];
-                    SonyAPI_Lib.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
+                    SonyAPILib.SonyAPILib.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
                     bool mySonyReg = false;
                     if (device.Registered == false)
                     {
@@ -138,7 +138,7 @@ namespace DLNALib
                         Console.WriteLine("=====================================");
                         Console.WriteLine("Hit enter to Continue....");
                         string c = Console.ReadLine();
-                        mySonyReg = device.register();
+                        mySonyReg = device.Register();
                         if (device.Registered == false)
                         {
                             if (device.Actionlist.RegisterMode == 3)
@@ -147,7 +147,7 @@ namespace DLNALib
                                 Console.WriteLine("Enter PIN Code.");
                                 ckii = Console.ReadLine();
                                 Console.WriteLine("Sending Authitication PIN Code.");
-                                mySonyReg = device.sendAuth(ckii);
+                                mySonyReg = device.SendAuth(ckii);
                             }
                         }
                     }
@@ -180,12 +180,12 @@ namespace DLNALib
                     devService = args[2];
                     devAction = args[3];
                     devP = args[4];
-                    SonyAPI_Lib.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
+                    SonyAPILib.SonyAPILib.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
                     if (devService == "IRCC")
                     {
                         if (devAction == "XSendIRCC")
                         {
-                            mySonyLib.ircc1.XSendIRCC(device, devP);
+                            mySonyLib.Ircc.SendIRCC(device, devP);
                         }
                     }
                     else if (devService == "AVTransport")
@@ -207,7 +207,7 @@ namespace DLNALib
                             {
                                 devP = null;
                             }
-                            mySonyLib.avtransport1.SetAVTransportURI(device, devP,devP2);
+                            mySonyLib.AVTransport.SetAVTransportURI(device, devP,devP2);
                         }
                         if (devAction == "SetNextAVTransportURI")
                         {
@@ -226,27 +226,27 @@ namespace DLNALib
                             {
                                 devP2 = null;
                             }
-                            mySonyLib.avtransport1.SetNextAVTransportURI(device, devP, devP2);
+                            mySonyLib.AVTransport.SetNextAVTransportURI(device, devP, devP2);
                         }
                         if (devAction == "Play")
                         {
-                            mySonyLib.avtransport1.Play(device, Convert.ToInt32(devP));
+                            mySonyLib.AVTransport.Play(device, Convert.ToInt32(devP));
                         }
                         if (devAction == "Stop")
                         {
-                            mySonyLib.avtransport1.Stop(device);
+                            mySonyLib.AVTransport.Stop(device);
                         }
                         if (devAction == "Pause")
                         {
-                            mySonyLib.avtransport1.Pause(device);
+                            mySonyLib.AVTransport.Pause(device);
                         }
                         if (devAction == "Next")
                         {
-                            mySonyLib.avtransport1.Next(device);
+                            mySonyLib.AVTransport.Next(device);
                         }
                         if (devAction == "Previous")
                         {
-                            mySonyLib.avtransport1.Previous(device);
+                            mySonyLib.AVTransport.Previous(device);
                         }
                     }
                     else if (devService == "ConnectionManager")
@@ -262,13 +262,13 @@ namespace DLNALib
                             {
                                 p1 = true;
                             }
-                            mySonyLib.renderingcontrol1.SetMute(device, p1);
+                            mySonyLib.RenderingControl.SetMute(device, p1);
                         }
                         if (devAction == "SetVolume")
                         {
                             int p1 = 0;
                             p1 = Convert.ToInt32(devP);
-                            mySonyLib.renderingcontrol1.SetVolume(device, p1);
+                            mySonyLib.RenderingControl.SetVolume(device, p1);
                         }
                     }
                     else if (devService == "Party")

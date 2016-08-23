@@ -18,7 +18,7 @@ namespace Sony_Forms_Example
         public Form1()
         {
             InitializeComponent();
-            Program.mySonyLib.LOG.Enable = false;  // This application will NOT use the API logging
+            Program.mySonyLib.Log.Enable = false;  // This application will NOT use the API logging
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -29,15 +29,15 @@ namespace Sony_Forms_Example
         private void button1_Click(object sender, EventArgs e)
         {
             //Program.fDev = Program.mySonyLib.Locator.findDevices(null);
-            List<string> fDevices = Program.mySonyLib.Locator.locateDevices();
+            List<string> fDevices = Program.mySonyLib.Locator.LocateDevices();
             //Program.fDev = Program.mySonyLib.Locator.locateDevices();
             if (fDevices.Count > 0)
             {
                 foreach (string doc in fDevices)
                 {
-                    SonyAPI_Lib.SonyDevice nDev = new SonyAPI_Lib.SonyDevice();
-                    nDev.DocumentURL = doc;
-                    nDev.buildFromDocument(new Uri(nDev.DocumentURL));
+                    SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                    nDev.DocumentUrl = doc;
+                    nDev.BuildFromDocument(new Uri(nDev.DocumentUrl));
                     Program.fDev.Add(nDev);
                 }
                 Form dRemote = new Form3();

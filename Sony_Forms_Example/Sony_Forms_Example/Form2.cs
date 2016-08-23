@@ -72,7 +72,7 @@ namespace Sony_Forms_Example
         private void Save_but_Click(object sender, EventArgs e)
         {
             dataGridView1.Refresh();
-            SonyAPI_Lib.SonyDevice sDev = new SonyAPI_Lib.SonyDevice();
+            SonyAPILib.SonyAPILib.SonyDevice sDev = new SonyAPILib.SonyAPILib.SonyDevice();
             if (dataGridView1.Rows.Count > 0)
             {
                 DataGridViewRow ro = dataGridView1.CurrentRow;
@@ -108,7 +108,7 @@ namespace Sony_Forms_Example
 
         private void Load_but_Click(object sender, EventArgs e)
         {
-            SonyAPI_Lib.SonyDevice sDev = new SonyAPI_Lib.SonyDevice();
+            SonyAPILib.SonyAPILib.SonyDevice sDev = new SonyAPILib.SonyAPILib.SonyDevice();
             DataGridViewRow ro = dataGridView1.CurrentRow;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
@@ -134,9 +134,9 @@ namespace Sony_Forms_Example
                     nr = (DataGridViewRow)dataGridView1.Rows[0].Clone();
                 }
                 nr.Cells[0].Value = sDev.Name;
-                nr.Cells[1].Value = sDev.Device_IP_Address;
+                nr.Cells[1].Value = sDev.IPAddress;
                 nr.Cells[2].Value = sDev.Actionlist.RegisterMode;
-                nr.Cells[3].Value = sDev.DocumentURL;
+                nr.Cells[3].Value = sDev.DocumentUrl;
                 dataGridView1.Rows.Add(nr);
                 dataGridView1.Refresh();
                 Program.fDev.Add(sDev);
@@ -160,15 +160,15 @@ namespace Sony_Forms_Example
             if (Program.fDev.Count > 0)
             {
                 int i = 0;
-                foreach (SonyAPI_Lib.SonyDevice d in Program.fDev)
+                foreach (SonyAPILib.SonyAPILib.SonyDevice d in Program.fDev)
                 {
                     dataGridView1.Refresh();
                     dataGridView1.Rows.Add();
                     dataGridView1.Refresh();
                     dataGridView1.Rows[i].Cells[0].Value = d.Name;
-                    dataGridView1.Rows[i].Cells[1].Value = d.Device_IP_Address;
+                    dataGridView1.Rows[i].Cells[1].Value = d.IPAddress;
                     dataGridView1.Rows[i].Cells[2].Value = d.Actionlist.RegisterMode.ToString();
-                    dataGridView1.Rows[i].Cells[3].Value = d.DocumentURL;
+                    dataGridView1.Rows[i].Cells[3].Value = d.DocumentUrl;
                     i++;
                 }
                 Delete_But.Enabled = true;
@@ -204,13 +204,13 @@ namespace Sony_Forms_Example
                     {
                         if (r.Cells[0].Value == null)
                         {
-                            SonyAPI_Lib.SonyDevice nDev = new SonyAPI_Lib.SonyDevice();
+                            SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
                             if (r.Cells[3].Value != null)
                             {
-                                nDev.DocumentURL = r.Cells[3].Value.ToString();
-                                nDev.buildFromDocument(new Uri(r.Cells[3].Value.ToString()));
+                                nDev.DocumentUrl = r.Cells[3].Value.ToString();
+                                nDev.BuildFromDocument(new Uri(r.Cells[3].Value.ToString()));
                                 r.Cells[0].Value = nDev.Name;
-                                r.Cells[1].Value = nDev.Device_IP_Address;
+                                r.Cells[1].Value = nDev.IPAddress;
                                 r.Cells[2].Value = nDev.Actionlist.RegisterMode;
                                 Program.fDev.Add(nDev);
                             }

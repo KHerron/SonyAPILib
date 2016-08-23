@@ -13,12 +13,12 @@ namespace Sony_Forms_Example
 {
     public partial class Form3 : Form
     {
-        public SonyAPI_Lib.SonyDevice curDev = new SonyAPI_Lib.SonyDevice();
+        public SonyAPILib.SonyAPILib.SonyDevice curDev = new SonyAPILib.SonyAPILib.SonyDevice();
         public string devType;
         public Form3()
         {
             InitializeComponent();
-            foreach (SonyAPI_Lib.SonyDevice d in Program.fDev)
+            foreach (SonyAPILib.SonyAPILib.SonyDevice d in Program.fDev)
             {
                 Device.Items.Add(d);
             }
@@ -39,21 +39,21 @@ namespace Sony_Forms_Example
             Commands.ValueMember = "Name";
         }
 
-        private void showDevice(SonyAPI_Lib.SonyDevice cDev)
+        private void showDevice(SonyAPILib.SonyAPILib.SonyDevice cDev)
         {
             devName.Text = cDev.Name;
-            devIP.Text = cDev.Device_IP_Address;
-            devPort.Text = cDev.Device_Port.ToString();
-            devMac.Text = cDev.Device_Macaddress;
+            devIP.Text = cDev.IPAddress;
+            devPort.Text = cDev.Port.ToString();
+            devMac.Text = cDev.MacAddress;
             devGen.Text = cDev.Actionlist.RegisterMode.ToString();
             devCommands.Text = cDev.Commands.Count().ToString();
-            devSName.Text = cDev.Server_Name;
-            devSMac.Text = cDev.Server_Macaddress;
+            devSName.Text = cDev.ServerName;
+            devSMac.Text = cDev.ServerMacAddress;
             devReg.Text = cDev.Registered.ToString();
             Commands.DataSource = cDev.Commands;
             Commands.DisplayMember = "Name";
             Commands.ValueMember = "Name";
-            string hCH = curDev.getIRCCcommandString("ChannelUp");
+            string hCH = curDev.GetCommandString("ChannelUp");
             if (hCH != "")
             {
                 devType = "TV";
@@ -100,8 +100,8 @@ namespace Sony_Forms_Example
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string cmd = curDev.getIRCCcommandString(Commands.Text);
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString(Commands.Text);
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -122,8 +122,8 @@ namespace Sony_Forms_Example
         private void Green_MouseDown(object sender, MouseEventArgs e)
         {
             Green.Image = Sony_Forms_Example.Properties.Resources.green_down;
-            string cmd = curDev.getIRCCcommandString("Green");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("Green");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void Green_MouseUp(object sender, MouseEventArgs e)
@@ -144,8 +144,8 @@ namespace Sony_Forms_Example
         private void VolUp_MouseDown(object sender, MouseEventArgs e)
         {
             VolUp.Image = Sony_Forms_Example.Properties.Resources.plus_down;
-            string cmd = curDev.getIRCCcommandString("VolumeUp");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("VolumeUp");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void VolUp_MouseUp(object sender, MouseEventArgs e)
@@ -161,8 +161,8 @@ namespace Sony_Forms_Example
         private void VolDown_MouseDown(object sender, MouseEventArgs e)
         {
             VolDown.Image = Sony_Forms_Example.Properties.Resources.minus_down;
-            string cmd = curDev.getIRCCcommandString("VolumeDown");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("VolumeDown");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void VolDown_MouseLeave(object sender, EventArgs e)
@@ -178,8 +178,8 @@ namespace Sony_Forms_Example
         private void ChanUp_MouseDown(object sender, MouseEventArgs e)
         {
             ChanUp.Image = Sony_Forms_Example.Properties.Resources.plus_down;
-            string cmd = curDev.getIRCCcommandString("ChannelUp");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("ChannelUp");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void ChanUp_MouseHover(object sender, EventArgs e)
@@ -200,8 +200,8 @@ namespace Sony_Forms_Example
         private void ChanDown_MouseDown(object sender, MouseEventArgs e)
         {
             ChanDown.Image = Sony_Forms_Example.Properties.Resources.minus_down;
-            string cmd = curDev.getIRCCcommandString("ChannelDown");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("ChannelDown");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void ChanDown_MouseHover(object sender, EventArgs e)
@@ -222,8 +222,8 @@ namespace Sony_Forms_Example
         private void Guide_MouseDown(object sender, MouseEventArgs e)
         {
             Guide.Image = Sony_Forms_Example.Properties.Resources.guide_down;
-            string cmd = curDev.getIRCCcommandString("Guide");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("Guide");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void Guide_MouseHover(object sender, EventArgs e)
@@ -244,8 +244,8 @@ namespace Sony_Forms_Example
         private void UP_MouseDown(object sender, MouseEventArgs e)
         {
             UPbut.Image = Sony_Forms_Example.Properties.Resources.arrowu_down;
-            string cmd = curDev.getIRCCcommandString("Up");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("Up");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void UP_MouseHover(object sender, EventArgs e)
@@ -266,8 +266,8 @@ namespace Sony_Forms_Example
         private void Home_MouseDown(object sender, MouseEventArgs e)
         {
             Home.Image = Sony_Forms_Example.Properties.Resources.home_down;
-            string cmd = curDev.getIRCCcommandString("Home");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("Home");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void Home_MouseHover(object sender, EventArgs e)
@@ -288,7 +288,7 @@ namespace Sony_Forms_Example
         private void Left_MouseDown(object sender, MouseEventArgs e)
         {
             Leftbut.Image = Sony_Forms_Example.Properties.Resources.arrowl_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Left"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Left"));
         }
 
         private void Left_MouseHover(object sender, EventArgs e)
@@ -309,7 +309,7 @@ namespace Sony_Forms_Example
         private void Confirm_MouseDown(object sender, MouseEventArgs e)
         {
             Confirm.Image = Sony_Forms_Example.Properties.Resources.confirm_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Confirm"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Confirm"));
         }
 
         private void Confirm_MouseHover(object sender, EventArgs e)
@@ -330,7 +330,7 @@ namespace Sony_Forms_Example
         private void Right_MouseDown(object sender, MouseEventArgs e)
         {
             Rightbut.Image = Sony_Forms_Example.Properties.Resources.arrowr_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Right"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Right"));
         }
 
         private void Right_MouseHover(object sender, EventArgs e)
@@ -351,7 +351,7 @@ namespace Sony_Forms_Example
         private void Return_MouseDown(object sender, MouseEventArgs e)
         {
             Return.Image = Sony_Forms_Example.Properties.Resources.return_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Return"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Return"));
         }
 
         private void Return_MouseHover(object sender, EventArgs e)
@@ -372,7 +372,7 @@ namespace Sony_Forms_Example
         private void Down_MouseDown(object sender, MouseEventArgs e)
         {
             Downbut.Image = Sony_Forms_Example.Properties.Resources.arrowd_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Down"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Down"));
         }
 
         private void Down_MouseHover(object sender, EventArgs e)
@@ -393,7 +393,7 @@ namespace Sony_Forms_Example
         private void Options_MouseDown(object sender, MouseEventArgs e)
         {
             Options.Image = Sony_Forms_Example.Properties.Resources.options_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Options"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Options"));
         }
 
         private void Options_MouseHover(object sender, EventArgs e)
@@ -414,7 +414,7 @@ namespace Sony_Forms_Example
         private void Display_MouseDown(object sender, MouseEventArgs e)
         {
             Display.Image = Sony_Forms_Example.Properties.Resources.display_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Display"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Display"));
         }
 
         private void Display_MouseHover(object sender, EventArgs e)
@@ -437,11 +437,11 @@ namespace Sony_Forms_Example
             Num1.Image = Sony_Forms_Example.Properties.Resources.num1_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num1"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num1"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num1"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num1"));
             }
         }
 
@@ -465,11 +465,11 @@ namespace Sony_Forms_Example
             Num2.Image = Sony_Forms_Example.Properties.Resources.num2_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num2"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num2"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num2"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num2"));
             }
         }
 
@@ -493,11 +493,11 @@ namespace Sony_Forms_Example
             Num3.Image = Sony_Forms_Example.Properties.Resources.num3_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num3"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num3"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num3"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num3"));
             }
         }
 
@@ -521,11 +521,11 @@ namespace Sony_Forms_Example
             Num4.Image = Sony_Forms_Example.Properties.Resources.num4_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num4"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num4"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num4"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num4"));
             }
         }
 
@@ -549,11 +549,11 @@ namespace Sony_Forms_Example
             Num5.Image = Sony_Forms_Example.Properties.Resources.num5_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num5"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num5"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num5"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num5"));
             }
         }
 
@@ -577,11 +577,11 @@ namespace Sony_Forms_Example
             Num6.Image = Sony_Forms_Example.Properties.Resources.num6_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num6"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num6"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num6"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num6"));
             }
         }
 
@@ -605,11 +605,11 @@ namespace Sony_Forms_Example
             Num7.Image = Sony_Forms_Example.Properties.Resources.num7_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num7"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num7"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num7"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num7"));
             }
         }
 
@@ -633,11 +633,11 @@ namespace Sony_Forms_Example
             Num8.Image = Sony_Forms_Example.Properties.Resources.num8_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num8"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num8"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num8"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num8"));
             }
         }
 
@@ -661,11 +661,11 @@ namespace Sony_Forms_Example
             Num9.Image = Sony_Forms_Example.Properties.Resources.num9_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num9"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num9"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num9"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num9"));
             }
         }
 
@@ -687,7 +687,7 @@ namespace Sony_Forms_Example
         private void Dot_MouseDown(object sender, MouseEventArgs e)
         {
             Dot.Image = Sony_Forms_Example.Properties.Resources.dot_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Dot"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Dot"));
         }
 
         private void Dot_MouseHover(object sender, EventArgs e)
@@ -710,11 +710,11 @@ namespace Sony_Forms_Example
             Num0.Image = Sony_Forms_Example.Properties.Resources.num0_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Num0"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Num0"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:Num0"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:Num0"));
             }
         }
 
@@ -736,7 +736,7 @@ namespace Sony_Forms_Example
         private void Enter_MouseDown(object sender, MouseEventArgs e)
         {
             Enterbut.Image = Sony_Forms_Example.Properties.Resources.enter_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Enter"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Enter"));
         }
 
         private void Enter_MouseHover(object sender, EventArgs e)
@@ -757,8 +757,8 @@ namespace Sony_Forms_Example
         private void Mute_MouseDown(object sender, MouseEventArgs e)
         {
             Mute.Image = Sony_Forms_Example.Properties.Resources.muting_down;
-            string cmd = curDev.getIRCCcommandString("Mute");
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, cmd);
+            string cmd = curDev.GetCommandString("Mute");
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, cmd);
         }
 
         private void Mute_MouseHover(object sender, EventArgs e)
@@ -779,7 +779,7 @@ namespace Sony_Forms_Example
         private void Input_MouseDown(object sender, MouseEventArgs e)
         {
             Input.Image = Sony_Forms_Example.Properties.Resources.input_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Input"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Input"));
         }
 
         private void Input_MouseHover(object sender, EventArgs e)
@@ -800,7 +800,7 @@ namespace Sony_Forms_Example
         private void Yellow_MouseDown(object sender, MouseEventArgs e)
         {
             Yellow.Image = Sony_Forms_Example.Properties.Resources.yellow_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Yellow"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Yellow"));
         }
 
         private void Yellow_MouseHover(object sender, EventArgs e)
@@ -821,7 +821,7 @@ namespace Sony_Forms_Example
         private void Blue_MouseDown(object sender, MouseEventArgs e)
         {
             Blue.Image = Sony_Forms_Example.Properties.Resources.blue_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Blue"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Blue"));
         }
 
         private void Blue_MouseHover(object sender, EventArgs e)
@@ -842,7 +842,7 @@ namespace Sony_Forms_Example
         private void Red_MouseDown(object sender, MouseEventArgs e)
         {
             Red.Image = Sony_Forms_Example.Properties.Resources.red_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Red"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Red"));
         }
 
         private void Red_MouseHover(object sender, EventArgs e)
@@ -863,7 +863,7 @@ namespace Sony_Forms_Example
         private void SkipBack_MouseDown(object sender, MouseEventArgs e)
         {
             SkipBack.Image = Sony_Forms_Example.Properties.Resources.skipbackwards_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Prev"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Prev"));
         }
 
         private void SkipBack_MouseHover(object sender, EventArgs e)
@@ -884,7 +884,7 @@ namespace Sony_Forms_Example
         private void SkipForw_MouseDown(object sender, MouseEventArgs e)
         {
             SkipForw.Image = Sony_Forms_Example.Properties.Resources.skipforward_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Next"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Next"));
         }
 
         private void SkipForw_MouseHover(object sender, EventArgs e)
@@ -907,11 +907,11 @@ namespace Sony_Forms_Example
             FastRew.Image = Sony_Forms_Example.Properties.Resources.fastbackwards_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Rewind"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Rewind"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:FR"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:FR"));
             }
         }
 
@@ -935,11 +935,11 @@ namespace Sony_Forms_Example
             FastForw.Image = Sony_Forms_Example.Properties.Resources.fastforward_down;
             if (devType == "TV")
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Forward"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Forward"));
             }
             else
             {
-                string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("STR:FF"));
+                string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("STR:FF"));
             }
         }
 
@@ -961,7 +961,7 @@ namespace Sony_Forms_Example
         private void Pause_MouseDown(object sender, MouseEventArgs e)
         {
             Pause.Image = Sony_Forms_Example.Properties.Resources.pause_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Pause"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Pause"));
         }
 
         private void Pause_MouseHover(object sender, EventArgs e)
@@ -982,7 +982,7 @@ namespace Sony_Forms_Example
         private void Play_MouseDown(object sender, MouseEventArgs e)
         {
             Play.Image = Sony_Forms_Example.Properties.Resources.play_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Play"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Play"));
         }
 
         private void Play_MouseHover(object sender, EventArgs e)
@@ -1003,7 +1003,7 @@ namespace Sony_Forms_Example
         private void Stop_MouseDown(object sender, MouseEventArgs e)
         {
             Stop.Image = Sony_Forms_Example.Properties.Resources.stop_down;
-            string rslts = Program.mySonyLib.ircc1.XSendIRCC(curDev, curDev.getIRCCcommandString("Stop"));
+            string rslts = Program.mySonyLib.Ircc.SendIRCC(curDev, curDev.GetCommandString("Stop"));
         }
 
         private void Stop_MouseHover(object sender, EventArgs e)
@@ -1023,7 +1023,7 @@ namespace Sony_Forms_Example
 
         private void regButton_Click(object sender, EventArgs e)
         {
-            bool devReg = curDev.register();
+            bool devReg = curDev.Register();
             if (curDev.Registered == false)
             {
                 //Check if Generaton 3. If yes, prompt for pin code
@@ -1032,7 +1032,7 @@ namespace Sony_Forms_Example
                     Form4 ePin = new Form4();
                     ePin.ShowDialog();
                     string Pin = ePin.PinCode.Text;
-                    devReg = curDev.sendAuth(Pin);
+                    devReg = curDev.SendAuth(Pin);
                     ePin.Dispose();
                 }
             }

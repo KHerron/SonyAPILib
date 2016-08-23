@@ -1,17 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonyAPILib", "SonyAPILib\SonyAPILib.csproj", "{1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleExample", "..\ConsoleExample\ConsoleExample.csproj", "{CDF415FE-CC29-47C1-89B7-8C9C780D9E64}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C} = {1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sony_Forms_Example", "..\Sony_Forms_Example\Sony_Forms_Example\Sony_Forms_Example.csproj", "{29924990-6F2A-4E19-A03A-90B8455B0A80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C} = {1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonyOff", "..\SonyOff\SonyOff\SonyOff.csproj", "{314EBC8B-92E7-4418-B612-6052C7E589EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C} = {1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLNALib", "..\DLNALib\DLNALib.csproj", "{2FD586FB-D667-4616-A2AE-F035587ED79E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C} = {1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLNA_Control_Panel", "..\DLNA_Control_Panel\DLNA_Control_Panel.csproj", "{5D391DED-E521-491A-8B61-FE67F3263612}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C} = {1C3E7C3E-04F1-4C64-9A8B-5967D7EED21C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

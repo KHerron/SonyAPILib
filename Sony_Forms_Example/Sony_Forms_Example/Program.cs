@@ -9,8 +9,8 @@ namespace Sony_Forms_Example
 {
     static class Program
     {
-        public static SonyAPI_Lib mySonyLib = new SonyAPI_Lib();
-        public static List<SonyAPI_Lib.SonyDevice> fDev = new List<SonyAPI_Lib.SonyDevice>();
+        public static SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
+        public static List<SonyAPILib.SonyAPILib.SonyDevice> fDev = new List<SonyAPILib.SonyAPILib.SonyDevice>();
         
         /// <summary>
         /// The main entry point for the application.
