@@ -521,31 +521,18 @@ namespace SonyAPILib
             #region HTTP GET command
             private string HttpGet(string Url)
             {
-<<<<<<< HEAD
                 int getPort = this.Port;
-=======
-                int getPort = this.Device_Port;
->>>>>>> origin/master
                 Uri getUri = new Uri(Url);
                 if(getUri.Port != getPort)
                 {
                     getPort = getUri.Port;
                 }
-<<<<<<< HEAD
                 _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, true);
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
                 req.KeepAlive = true;
                 // Set our default header Info
                 _Log.AddMessage("Setting Header Information: " + req.Host.ToString(), false);
                 req.Host = this.IPAddress + ":" + getPort.ToString();
-=======
-                _Log.writetolog("Creating HttpWebRequest to URL: " + Url, true);
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
-                req.KeepAlive = true;
-                // Set our default header Info
-                _Log.writetolog("Setting Header Information: " + req.Host.ToString(), false);
-                req.Host = this.Device_IP_Address + ":" + getPort.ToString();
->>>>>>> origin/master
                 req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
                 req.Headers.Add("X-CERS-DEVICE-INFO", "Android4.03/TVSideViewForAndroid2.7.1/EVO");
                 req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.ServerMacAddress);
