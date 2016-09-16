@@ -13,8 +13,6 @@ namespace Sony_Forms_Example
 {
     public partial class Form1 : Form
     {
-       
-
         public Form1()
         {
             InitializeComponent();
@@ -28,14 +26,12 @@ namespace Sony_Forms_Example
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //Program.fDev = Program.mySonyLib.Locator.findDevices(null);
             List<string> fDevices = Program.mySonyLib.Locator.LocateDevices();
-            //Program.fDev = Program.mySonyLib.Locator.locateDevices();
             if (fDevices.Count > 0)
             {
                 foreach (string doc in fDevices)
                 {
-                    SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                    APILibrary.SonyDevice nDev = new APILibrary.SonyDevice();
                     nDev.DocumentUrl = doc;
                     nDev.BuildFromDocument(new Uri(nDev.DocumentUrl));
                     Program.fDev.Add(nDev);
@@ -62,7 +58,5 @@ namespace Sony_Forms_Example
                 }
             }
         }
-
-
     }
 }

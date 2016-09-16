@@ -72,7 +72,7 @@ namespace Sony_Forms_Example
         private void Save_but_Click(object sender, EventArgs e)
         {
             dataGridView1.Refresh();
-            SonyAPILib.SonyAPILib.SonyDevice sDev = new SonyAPILib.SonyAPILib.SonyDevice();
+            APILibrary.SonyDevice sDev = new APILibrary.SonyDevice();
             if (dataGridView1.Rows.Count > 0)
             {
                 DataGridViewRow ro = dataGridView1.CurrentRow;
@@ -108,7 +108,7 @@ namespace Sony_Forms_Example
 
         private void Load_but_Click(object sender, EventArgs e)
         {
-            SonyAPILib.SonyAPILib.SonyDevice sDev = new SonyAPILib.SonyAPILib.SonyDevice();
+            APILibrary.SonyDevice sDev = new APILibrary.SonyDevice();
             DataGridViewRow ro = dataGridView1.CurrentRow;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
@@ -160,7 +160,7 @@ namespace Sony_Forms_Example
             if (Program.fDev.Count > 0)
             {
                 int i = 0;
-                foreach (SonyAPILib.SonyAPILib.SonyDevice d in Program.fDev)
+                foreach (APILibrary.SonyDevice d in Program.fDev)
                 {
                     dataGridView1.Refresh();
                     dataGridView1.Rows.Add();
@@ -204,7 +204,7 @@ namespace Sony_Forms_Example
                     {
                         if (r.Cells[0].Value == null)
                         {
-                            SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                            APILibrary.SonyDevice nDev = new APILibrary.SonyDevice();
                             if (r.Cells[3].Value != null)
                             {
                                 nDev.DocumentUrl = r.Cells[3].Value.ToString();

@@ -11,18 +11,20 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Text;
 using System.Net.Sockets;
+using System.Web;
 using System.Xml.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Threading;
 using System.Globalization;
+using System.Reflection;
 
 namespace SonyAPILib
 {
     /// <summary>
     /// Sony API Library
     /// </summary>
-    public class SonyAPILib
+    public class APILibrary
     {
         #region Library Varables
 
@@ -39,27 +41,27 @@ namespace SonyAPILib
         /// <summary>
         /// Represents the IRCC1 Service
         /// </summary>
-        public IRCC1 Ircc = new IRCC1();
+        //public IRCC1 Ircc = new IRCC1();
 
         /// <summary>
         /// Represents the AVTransport1 Service
         /// </summary>
-        public AVTransport1 AVTransport = new AVTransport1();
+        //public AVTransport1 AVTransport = new AVTransport1();
 
         /// <summary>
         /// Represents the ConnectionManager Service
         /// </summary>
-        public ConnectionManager1 ConnectionManager = new ConnectionManager1();
+        //public ConnectionManager1 ConnectionManager = new ConnectionManager1();
 
         /// <summary>
         /// Represents the RenderingControl Service
         /// </summary>
-        public RenderingControl1 RenderingControl = new RenderingControl1();
+        //public RenderingControl1 RenderingControl = new RenderingControl1();
 
         /// <summary>
         /// Represents the Party Service
         /// </summary>
-        public Party1 Party = new Party1();
+        //public Party1 Party = new Party1();
 
         /// <summary>
         /// API Logging Object
@@ -78,7 +80,7 @@ namespace SonyAPILib
         /// <summary>
         /// Class used to Discover Sony devices with the IRCC service via a LAN connection
         /// </summary>
-        public partial class Locate
+        public class Locate
         {
             // Sony Locate Variables
             #region Public Variables
@@ -92,8 +94,6 @@ namespace SonyAPILib
             /// Variable for storing the devices Action List URL used in API Class and Discovery.
             /// </summary>
             public string ActionListUrl { get; set; }
-
-            
 
             #endregion
 
@@ -126,12 +126,12 @@ namespace SonyAPILib
             /// Loads a device from a file
             /// </summary>
             /// <param name="path">The FULL path to the Device XML file</param>
-            public SonyAPILib.SonyDevice DeviceLoad(string path)
+            public APILibrary.SonyDevice DeviceLoad(string path)
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(SonyDevice));
-                SonyAPILib.SonyDevice sDev = new SonyAPILib.SonyDevice();
+                APILibrary.SonyDevice sDev = new APILibrary.SonyDevice();
                 TextReader reader = new StreamReader(path);
-
+                _Log.AddMessage("Loading API Device file: " + path, true);
                 //deserialize
                 sDev = (SonyDevice)deserializer.Deserialize(reader);
                 reader.Close();
@@ -149,13 +149,14 @@ namespace SonyAPILib
             /// <param name="dev">The Device Object to save.</param>
             public void DeviceSave(string path, SonyDevice dev)
             {
+                _Log.AddMessage("Saving API Device file for: " + dev.Name, true);
                 XmlSerializer serializer = new XmlSerializer(typeof(SonyDevice));
                 FileStream fs = new FileStream(path, FileMode.Create);
                 TextWriter writer = new StreamWriter(fs, new UTF8Encoding());
                 serializer.Serialize(writer, dev);
                 writer.Close();
-                string newPath1 = path.Substring(0, path.Length - 4);
-                string newPath2 = newPath1 + "_IRCC.xml";
+                //string newPath1 = path.Substring(0, path.Length - 4);
+                //string newPath2 = newPath1 + "_IRCC.xml";
             }
             #endregion
         }
@@ -306,8 +307,37 @@ namespace SonyAPILib
 
             #endregion
 
-            #region Events
+            #region Event Handler
+            /// <summary>
+            /// Peocesses Event Notification messages sent from the Event TCP Listener Server
+            /// </summary>
+            /// <param name="eObj">Event Object sent from server</param>
+            /// <remarks>
+            /// This method will fire every time the Event Server receives a message from this device
+            /// </remarks>
+            public void ProcessEventMessages(EventObject eObj)
+            {
+                string Service = eObj.ServiceID.ToString();
+                Service = Service.Substring(0, Service.Length - 2);
+                switch(Service)
+                {
+                    case "RenderingControl":
+                        RenderingControl.ProcessEventNotifications(this, eObj);
+                        break;
 
+                    case "AVTransport":
+                        AVTransport.ProcessEventNotifications(this, eObj);
+                        break;
+
+                    case "ConnectionManager":
+                        ConnectionManager.ProcessEventNotifications(this, eObj);
+                        break;
+
+                    case "Party":
+                        Party.ProcessEventNotifications(this, eObj);
+                        break;
+                }
+            }
             #endregion
 
             #region Register
@@ -527,7 +557,7 @@ namespace SonyAPILib
                 {
                     getPort = getUri.Port;
                 }
-                _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, true);
+                _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, false);
                 HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
                 req.KeepAlive = true;
                 // Set our default header Info
@@ -562,7 +592,7 @@ namespace SonyAPILib
             /// <summary>
             /// Executes the HTTP Post command
             /// </summary>
-            /// <param name="Url">URL of Device Command to send</param>
+            /// <param name="Url">URL to send POST to</param>
             /// <param name="Parameters">Additional parameters</param>
             /// <returns></returns>
             public string HttpPost(string Url, String Parameters)
@@ -1245,6 +1275,7 @@ namespace SonyAPILib
             /// <returns>A Fully built and populated Sony Device</returns>
             public void BuildFromDocument(string Doc, string Path)
             {
+                _Log.AddMessage("Building Device from Document: " + Path, true);
                 this.DocumentUrl = Path;
                 _Log.AddMessage("Document Found", false);
                 Uri d = new Uri(Path);
@@ -1331,7 +1362,7 @@ namespace SonyAPILib
                                 _Log.AddMessage("IRCC:1 Service discovered on this device", false);
                                 this.Ircc.ControlUrl = dServ.ControlUrl;
                                 this.Ircc.ScpdUrl = dServ.ScpdUrl;
-                                this.Ircc.EventSubURL = dServ.EventSubUrl;
+                                this.Ircc.EventSubUrl = dServ.EventSubUrl;
                                 this.Ircc.ServiceID = dServ.ServiceID;
                                 this.Ircc.ServiceIdentifier = dServ.ServiceIdentifier;
                                 this.Ircc.Type = dServ.Type;
@@ -1381,6 +1412,7 @@ namespace SonyAPILib
                 }
                 this.CheckReg();
                 this.GetRemoteCommandList();
+                _Log.AddMessage(this.Name + " was built successfully.", true);
             }
 
             #endregion
@@ -1440,11 +1472,11 @@ namespace SonyAPILib
         /// Sony Device Logging Class
         /// Very Basic Logging System to txt file.
         /// </summary>
-        public partial class APILogging
+        public class APILogging
         {
             #region Public Variables
             /// <summary>
-            /// Gets or Sets Enabling cerDevice API Logging
+            /// Gets or Sets Enable API Logging
             /// True - Turns Loggin On
             /// False - Turns Loggin Off
             /// </summary>
@@ -1811,7 +1843,7 @@ namespace SonyAPILib
             /// Service class for the RenderingControl1 (urn:schemas-upnp-org:service:RenderingControl:1) service.
             /// </summary>
             [Serializable]
-            public partial class RenderingControl1
+            public class RenderingControl1
             {
            
                 #region Public Constants
@@ -1824,7 +1856,7 @@ namespace SonyAPILib
                 /// <summary>
                 /// Gets the service instanceID for the RenderingControl1 service.
                 /// </summary>
-                public const int InstanceID = 0;
+                public const int InstanceId = 0;
 
                 /// <summary>
                 /// Gets the service type identifier for the RenderingControl1 service.
@@ -1839,8 +1871,33 @@ namespace SonyAPILib
                 #endregion
 
                 #region Event Handlers
+                /// <summary>
+                /// 
+                /// </summary>
+                /// <param name="EventObj"></param>
+                /// <param name="eDevice"></param>
+                public void ProcessEventNotifications(SonyDevice eDevice, EventObject EventObj)
+                {
+                    foreach (EventVariable eV in EventObj.StateVariables)
+                    {
+                        int sc = eV.name.ToString().IndexOf("::");
+                        string pName = eV.name.Substring(sc + 2);
+                        PropertyInfo pI = eDevice.RenderingControl.GetType().GetProperty(pName);
+                        if(pI.PropertyType == typeof(Boolean) | pI.PropertyType == typeof(bool))
+                        {
+                            if(eV.value == "0")
+                            {
+                            eV.value = "false";
+                            }
+                            else
+                            {
+                            eV.value = "true";
+                            }
+                        }
+                        pI.SetValue(eDevice.RenderingControl, Convert.ChangeType(eV.value,pI.PropertyType),null);
+                    }
 
-
+                }
                 #endregion
 
                 #region Event Callers
@@ -1901,7 +1958,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="presetName">In value for the PresetName action parameter.</param>
-                public void SelectPreset(SonyAPILib.SonyDevice parent, string presetName)
+                public void SelectPreset(APILibrary.SonyDevice parent, string presetName)
                 {
                 //    object[] loIn = new object[2];
 
@@ -1954,7 +2011,7 @@ namespace SonyAPILib
                             }
                         }
                         parent.RenderingControl.LastChange = "GetMute: " + ret.ToString();
-                        parent.RenderingControl.MuteState = ret;
+                        parent.RenderingControl.Mute = ret;
                         return ret;
                     }
                     return false;
@@ -1995,7 +2052,7 @@ namespace SonyAPILib
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         parent.RenderingControl.LastChange = "SetMute: " + desiredMute;
-                        parent.RenderingControl.MuteState = desiredMute;
+                        parent.RenderingControl.Mute = desiredMute;
                         parent.RenderingControl.ChannelState = "Master";
                     }
                 }
@@ -2042,7 +2099,7 @@ namespace SonyAPILib
                             }
                         }
                         parent.RenderingControl.LastChange = "GetVolume: " + ret.ToString();
-                        parent.RenderingControl.VolumeState = ret;
+                        parent.RenderingControl.Volume = ret;
                         parent.RenderingControl.ChannelState = "Master";
                         return ret;
                     }
@@ -2079,13 +2136,13 @@ namespace SonyAPILib
                         SocWeb.Send(UTF8Encoding.UTF8.GetBytes(Request), SocketFlags.None);
                         string GG = HelperDLNA.ReadSocket(SocWeb, true, ref this.ReturnCode);
                         parent.RenderingControl.LastChange = "SetVolume: " + desiredVolume;
-                        parent.RenderingControl.VolumeState = desiredVolume;
+                        parent.RenderingControl.Volume = desiredVolume;
                         parent.RenderingControl.ChannelState = "Master";
                     }
                 }
                 #endregion
 
-                #endregion
+            #endregion
 
                 #region Public Properties
                 /// <summary>
@@ -2127,11 +2184,11 @@ namespace SonyAPILib
                 /// <summary>
                 /// Gets or Sets the State Variable for the Mute State.
                 /// </summary>
-                public Boolean MuteState { get; set; }
+                public Boolean Mute { get; set; }
                 /// <summary>
                 /// Gets or Sets the State Variable for the Volume state.
                 /// </summary>
-                public int VolumeState { get; set; }
+                public int Volume { get; set; }
                 /// <summary>
                 /// Gets or Sets the State Variable for the Channel(Master).
                 /// </summary>
@@ -2143,9 +2200,13 @@ namespace SonyAPILib
                 /// <summary>
                 /// Gets or Sets the State Variable for the Instance ID (0).
                 /// </summary>
-                public int InstanceId = 0;
+                public int InstanceID  { get; set; }
+                /// <summary>
+                /// Bool value of Event Subscription Status (True/False)
+                /// </summary>
+                public bool Subscribed { get; set; }
                 #endregion
-        }
+            }
 
             #endregion
 
@@ -2155,7 +2216,7 @@ namespace SonyAPILib
             /// Service class for the ConnectionManager1 (urn:schemas-upnp-org:service:ConnectionManager:1) service.
             /// </summary>
             [Serializable]
-            public partial class ConnectionManager1
+            public class ConnectionManager1
             {
                 #region Public Constants
 
@@ -2164,34 +2225,60 @@ namespace SonyAPILib
                 /// </summary>
                 public const string ServiceType = "urn:schemas-upnp-org:service:ConnectionManager:1";
 
-                #endregion
+            #endregion
 
                 #region Initialisation
 
-                
+
 
                 #endregion
 
                 #region Event Handlers
-
-           
-                #endregion
-
-                #region Event Callers
-
-            
-
-                #endregion
-
-                #region Public Methods
-
-                #region Get Protocol Information
                 /// <summary>
-                /// Executes the GetProtocolInfo action.
+                /// 
                 /// </summary>
-                /// <param name="parent">Parent Device object to get the Status from.</param>
-                /// <remarks>Populates the following State Variables: Sink and Source</remarks>
-               public void GetProtocolInfo(SonyDevice parent)
+                /// <param name="EventObj"></param>
+                /// <param name="eDevice"></param>
+                public void ProcessEventNotifications(SonyDevice eDevice, EventObject EventObj)
+                {
+                    foreach (EventVariable eV in EventObj.StateVariables)
+                    {
+                        int sc = eV.name.ToString().IndexOf("::");
+                        string pName = eV.name.Substring(sc + 2);
+                        PropertyInfo pI = eDevice.ConnectionManager.GetType().GetProperty(pName);
+                        if (pI.PropertyType == typeof(Boolean) | pI.PropertyType == typeof(bool))
+                        {
+                            if (eV.value == "0")
+                            {
+                                eV.value = "false";
+                            }
+                            else
+                            {
+                                eV.value = "true";
+                            }
+                        }
+                        pI.SetValue(eDevice.ConnectionManager, Convert.ChangeType(eV.value, pI.PropertyType), null);
+                    }
+
+                }
+
+            #endregion
+
+            #region Event Callers
+
+
+
+            #endregion
+
+            #region Public Methods
+
+            #region Get Protocol Information
+            /// <summary>
+            /// Executes the GetProtocolInfo action.
+            /// </summary>
+            /// <param name="parent">Parent Device object to get the Status from.</param>
+            /// <remarks>Populates the following State Variables: Sink and Source</remarks>
+            public void GetProtocolInfo(SonyDevice parent)
                {
                    if (parent.ConnectionManager.ControlUrl != null)
                    {
@@ -2410,7 +2497,7 @@ namespace SonyAPILib
             /// Service class for the AVTransport1 (urn:schemas-upnp-org:service:AVTransport:1) service.
             /// </summary>
             [Serializable]
-            public partial class AVTransport1
+            public class AVTransport1
             {
 
                 #region Public Properties
@@ -2782,7 +2869,7 @@ namespace SonyAPILib
                     _Unknown
                 }
 
-                #endregion
+            #endregion
 
                 #region Initialisation
 
@@ -2790,28 +2877,51 @@ namespace SonyAPILib
                 #endregion
 
                 #region Event Handlers
-
-              
-
-
-                #endregion
-
-                #region Event Callers
-
-                
-
-                #endregion
-
-                #region Public Methods
-
-                #region Set AVTransport URI
                 /// <summary>
-                /// Executes the SetAVTransportURI action.
+                /// 
                 /// </summary>
-                /// <param name="parent">The Parent Device object to execute this action on.</param>
-                /// <param name="currentURI">In value for the CurrentURI action parameter.</param>
-                /// <param name="currentURIMetaData">In value for the CurrentURIMetaData action parameter.</param>
-                public string SetAVTransportURI(SonyDevice parent, String currentURI, String currentURIMetaData)
+                /// <param name="EventObj"></param>
+                /// <param name="eDevice"></param>
+                public void ProcessEventNotifications(SonyDevice eDevice, EventObject EventObj)
+                {
+                    foreach (EventVariable eV in EventObj.StateVariables)
+                    {
+                        int sc = eV.name.ToString().IndexOf("::");
+                        string pName = eV.name.Substring(sc + 2);
+                        PropertyInfo pI = eDevice.AVTransport.GetType().GetProperty(pName);
+                        if (pI.PropertyType == typeof(Boolean) | pI.PropertyType == typeof(bool))
+                        {
+                            if (eV.value == "0")
+                            {
+                                eV.value = "false";
+                            }
+                            else
+                            {
+                                eV.value = "true";
+                            }
+                        }
+                        pI.SetValue(eDevice.AVTransport, Convert.ChangeType(eV.value, pI.PropertyType), null);
+                    }
+
+                }
+                #endregion
+
+            #region Event Callers
+
+
+
+            #endregion
+
+            #region Public Methods
+
+            #region Set AVTransport URI
+            /// <summary>
+            /// Executes the SetAVTransportURI action.
+            /// </summary>
+            /// <param name="parent">The Parent Device object to execute this action on.</param>
+            /// <param name="currentURI">In value for the CurrentURI action parameter.</param>
+            /// <param name="currentURIMetaData">In value for the CurrentURIMetaData action parameter.</param>
+            public string SetAVTransportURI(SonyDevice parent, String currentURI, String currentURIMetaData)
                 {
                     if (parent.AVTransport.ControlUrl != null)
                     {
@@ -3223,7 +3333,7 @@ namespace SonyAPILib
             /// Executes the Next action.
             /// </summary>
             /// <param name="parent">The Device object to execute the request on</param>
-            public void Next(SonyAPILib.SonyDevice parent)
+            public void Next(APILibrary.SonyDevice parent)
                 {
                     if (parent.AVTransport.ControlUrl != null)
                     {
@@ -3303,7 +3413,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <returns>Out value for the Actions action parameter.</returns>
-                public String GetCurrentTransportActions(SonyAPILib.SonyDevice parent)
+                public String GetCurrentTransportActions(APILibrary.SonyDevice parent)
                 {
                 //    object[] loIn = new object[1];
 
@@ -3362,7 +3472,7 @@ namespace SonyAPILib
             /// Service class for the Party1 (urn:schemas-sony-com:service:Party:1) service.
             /// </summary>
             [Serializable]
-            public partial class Party1
+            public class Party1
             {
 
                 #region Public Constants
@@ -3372,35 +3482,61 @@ namespace SonyAPILib
                 /// </summary>
                 public const string ServiceType = "urn:schemas-sony-com:service:Party:1";
 
-                #endregion
+            #endregion
 
                 #region Initialisation
 
-                
+
 
                 #endregion
 
                 #region Event Handlers
-
-            
-
-
-                #endregion
-
-                #region Event Callers
-
-            
-
-                #endregion
-
-                #region Public Methods
-
                 /// <summary>
-                /// Executes the XGetDeviceInfo action.
+                /// 
                 /// </summary>
-                /// <param name="parent">The Device object to execute the request on</param>
-                /// <remarks>Populates the following State Variables: Singer Capability and Transport Port</remarks>
-                public void XGetDeviceInfo(SonyAPILib.SonyDevice parent)
+                /// <param name="EventObj"></param>
+                /// <param name="eDevice"></param>
+                public void ProcessEventNotifications(SonyDevice eDevice, EventObject EventObj)
+                {
+                    foreach (EventVariable eV in EventObj.StateVariables)
+                    {
+                        int sc = eV.name.ToString().IndexOf("::");
+                        string pName = eV.name.Substring(sc + 2);
+                        PropertyInfo pI = eDevice.Party.GetType().GetProperty(pName);
+                        if (pI.PropertyType == typeof(Boolean) | pI.PropertyType == typeof(bool))
+                        {
+                            if (eV.value == "0")
+                            {
+                                eV.value = "false";
+                            }
+                            else
+                            {
+                                eV.value = "true";
+                            }
+                        }
+                        pI.SetValue(eDevice.Party, Convert.ChangeType(eV.value, pI.PropertyType), null);
+                    }
+
+                }
+
+
+
+            #endregion
+
+            #region Event Callers
+
+
+
+            #endregion
+
+            #region Public Methods
+
+            /// <summary>
+            /// Executes the XGetDeviceInfo action.
+            /// </summary>
+            /// <param name="parent">The Device object to execute the request on</param>
+            /// <remarks>Populates the following State Variables: Singer Capability and Transport Port</remarks>
+            public void XGetDeviceInfo(APILibrary.SonyDevice parent)
                 {
     //                object[] loIn = new object[0];
     //                object[] loOut = InvokeAction(csAction_XGetDeviceInfo, loIn);
@@ -3413,7 +3549,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <remarks>Populates the Following State Variables: Party State, Party Mode, Party Song, Session ID, Number of Listeners, Listener List, Singer UUID and Singer Session ID</remarks>
-                public void XGetState(SonyAPILib.SonyDevice parent)
+                public void XGetState(APILibrary.SonyDevice parent)
                 {
     //                object[] loIn = new object[0];
     //                object[] loOut = InvokeAction(csAction_XGetState, loIn);
@@ -3434,7 +3570,7 @@ namespace SonyAPILib
                 /// <param name="partyMode">In value for the PartyMode action parameter.</param>
                 /// <param name="listenerList">In value for the ListenerList action parameter.</param>
                 /// <returns>Out value for the SingerSessionID action parameter.</returns>
-                public UInt32 XStart(SonyAPILib.SonyDevice parent, String partyMode, String listenerList)
+                public UInt32 XStart(APILibrary.SonyDevice parent, String partyMode, String listenerList)
                 {
     //                object[] loIn = new object[2];
     //                loIn[0] = partyMode;
@@ -3449,7 +3585,7 @@ namespace SonyAPILib
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
                 /// <param name="listenerList">In value for the ListenerList action parameter.</param>
-                public void XEntry(SonyAPILib.SonyDevice parent, UInt32 singerSessionID, String listenerList)
+                public void XEntry(APILibrary.SonyDevice parent, UInt32 singerSessionID, String listenerList)
                 {
     //                object[] loIn = new object[2];
     //                loIn[0] = singerSessionID;
@@ -3463,7 +3599,7 @@ namespace SonyAPILib
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
                 /// <param name="listenerList">In value for the ListenerList action parameter.</param>
-                public void XLeave(SonyAPILib.SonyDevice parent, UInt32 singerSessionID, String listenerList)
+                public void XLeave(APILibrary.SonyDevice parent, UInt32 singerSessionID, String listenerList)
                 {
     //                object[] loIn = new object[2];
     //                loIn[0] = singerSessionID;
@@ -3476,7 +3612,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
-                public void XAbort(SonyAPILib.SonyDevice parent, UInt32 singerSessionID)
+                public void XAbort(APILibrary.SonyDevice parent, UInt32 singerSessionID)
                 {
     //                object[] loIn = new object[1];
     //                loIn[0] = singerSessionID;
@@ -3491,7 +3627,7 @@ namespace SonyAPILib
                 /// <param name="singerUUID">In value for the SingerUUID action parameter.</param>
                 /// <param name="singerSessionID">In value for the SingerSessionID action parameter.</param>
                 /// <returns>Out value for the ListenerSessionID action parameter.</returns>
-                public UInt32 XInvite(SonyAPILib.SonyDevice parent, String partyMode, String singerUUID, UInt32 singerSessionID)
+                public UInt32 XInvite(APILibrary.SonyDevice parent, String partyMode, String singerUUID, UInt32 singerSessionID)
                 {
     //                object[] loIn = new object[3];
     //                loIn[0] = partyMode;
@@ -3506,7 +3642,7 @@ namespace SonyAPILib
                 /// </summary>
                 /// <param name="parent">The Device object to execute the request on</param>
                 /// <param name="listenerSessionID">In value for the ListenerSessionID action parameter.</param>
-                public void XExit(SonyAPILib.SonyDevice parent, UInt32 listenerSessionID)
+                public void XExit(APILibrary.SonyDevice parent, UInt32 listenerSessionID)
                 {
     //                object[] loIn = new object[1];
     //                loIn[0] = listenerSessionID;
@@ -3596,7 +3732,7 @@ namespace SonyAPILib
             /// Service class for the IRCC1 (urn:schemas-sony-com:service:IRCC:1) service.
             /// </summary>
             [Serializable]
-            public partial class IRCC1
+            public class IRCC1
             {
 
                 #region Public Properties
@@ -3619,7 +3755,7 @@ namespace SonyAPILib
                 /// <summary>
                 /// Gets or Sets the Service Event URL
                 /// </summary>
-                public string EventSubURL { get; set; }
+                public string EventSubUrl { get; set; }
                 /// <summary>
                 /// Gets or Sets the Service SCPD URL
                 /// </summary>
@@ -3872,12 +4008,565 @@ namespace SonyAPILib
                 #endregion
             }
 
-            #endregion
+        #endregion
 
             #region Content Directory
 
             #endregion
 
+        #endregion
+
+        #region Event Server
+        /// <summary>
+        /// Class for creating, starting and Stopping the Eventing Server.
+        /// </summary>
+        public class EventServer : INotifyPropertyChanged
+        {
+
+            #region Public Properties
+            /// <summary>
+            /// Represents if the Event Server Is connected
+            /// </summary>
+            public static ManualResetEvent connected = new ManualResetEvent(false);
+
+            /// <summary>
+            /// Gets or Sets the IP address of the TCP Listener Server.
+            /// </summary>
+            public string IpAddress { get; set; }
+
+            /// <summary>
+            /// Gets or Sets the Port of the TCP Listener Server
+            /// </summary>
+            public int Port { get; set; }
+            
+            /// <summary>
+            /// Represents the TCP Listener Server Status. (True/False)
+            /// </summary>
+            public bool IsRunning = false;
+
+            /// <summary>
+            /// Contains This servers Call Back URL
+            /// </summary>
+            public string CallBackUrl { get; set; }
+            
+            /// <summary>
+            /// String representation of the message received by the TCP Listener Server
+            /// </summary>
+            public string Output
+            {
+                get { return output; }
+                set
+                {
+                    if (value != output)
+                    {
+                        output = value;
+                        OnPropertyChanged("Output");
+                    }
+                }
+            }
+            #endregion
+
+            #region Private Properties
+            private string output = "";
+            private List<EventDevice> EventedDevices = new List<EventDevice>();
+            static TcpListener server;
+            private EventObject cEventObj;
+            private EventDevice sED = new EventDevice();
+            #endregion
+
+            #region Public Methods
+            /// <summary>
+            /// Event occurs when TCP Listener Server receives an Event Notification from the device
+            /// </summary>
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            /// <summary>
+            /// Server Object for receiving device Event and Property Changes
+            /// </summary>
+            public EventServer()
+            {
+            }
+
+            /// <summary>
+            /// Executes a START command on the TCP Listener Server
+            /// </summary>
+            public void Start()
+            {
+                server = new TcpListener(IPAddress.Parse(IpAddress), Port);
+                server.Start();
+
+                _Log.AddMessage("Event Server Started at: " + IpAddress + " on Port: " + Port, true);
+                new Thread(() =>
+                {
+                    while (true)
+                    {
+                        connected.Reset();
+                        server.BeginAcceptTcpClient(new AsyncCallback(AcceptCallback), server);
+                        connected.WaitOne();
+                    }
+                }).Start();
+                this.IsRunning = true;
+            }
+
+            /// <summary>
+            /// Executes a STOP command on the TCP Listener Server
+            /// </summary>
+            public void Stop()
+            {
+                EndAllSubscriptions();
+                connected.Reset();
+                server.Stop();
+                this.IsRunning = false;
+                _Log.AddMessage("Event Server at: " + IpAddress + " on Port: " + Port + " was STOPPED", true);
+            }
+
+            #region Event Subscription
+            /// <summary>
+            /// Sends the SUBSCRIBE information to the parent device for Event Handeling
+            /// </summary>
+            /// <param name="Parent">The Sony device to SUBSCRIBE to.</param>
+            /// <param name="ServiceIdent">The Sony device UPnP/DLNA ServiceIdentifier to SUBSCRIBE to.</param>
+            /// <param name="Duration">The number of seconds to keep subscription alive</param>
+            public void SubscribeToEvents(SonyDevice Parent, string ServiceIdent, int Duration)
+            {
+                if(this.IsRunning == false)
+                {
+                    _Log.AddMessage("Event Server is NOT running. Please start Server before Subscribing to Events", true);
+                    return;
+                }
+                string eventURL = GetEventUrl(Parent, ServiceIdent);
+                if(string.IsNullOrEmpty(eventURL))
+                {
+                    _Log.AddMessage("Cant not subscribe to service: " + ServiceIdent, true);
+                    return;
+                }
+                _Log.AddMessage("Sending Subscription Request to: " + eventURL, true);
+
+                Uri nHost = new Uri(eventURL);
+                IPEndPoint LocalEndPoint = new IPEndPoint(IPAddress.Any, 8093);
+                IPEndPoint DeviceEndPoint = new IPEndPoint(IPAddress.Parse(Parent.IPAddress), nHost.Port);
+                Socket TcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                TcpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                TcpSocket.Bind(LocalEndPoint);
+                string SearchString = "SUBSCRIBE " + eventURL +" HTTP/1.1\r\nHOST:" + Parent.IPAddress +":" + nHost.Port.ToString() + "\r\nNT:upnp:event\r\nCALLBACK: <" + CallBackUrl +"/" + ServiceIdent +">\r\nTIMEOUT:Second-" + Duration + "\r\n\r\n";
+                TcpSocket.Connect(DeviceEndPoint);
+                TcpSocket.SendTo(Encoding.UTF8.GetBytes(SearchString), SocketFlags.None, DeviceEndPoint);
+                bool Running = true;
+                byte[] ReceiveBuffer = new byte[4000];
+                int ReceivedBytes = 0;
+                while (Running)
+                {
+                    if (TcpSocket.Available > 0)
+                    {
+                        ReceivedBytes = TcpSocket.Receive(ReceiveBuffer, SocketFlags.None);
+                        if (ReceivedBytes > 0)
+                        {
+                            string Data = Encoding.UTF8.GetString(ReceiveBuffer, 0, ReceivedBytes);
+                            string resp = Data.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                            string[] respItem = resp.Split(' ');
+                            if (respItem[1] == "200" & respItem[2] == "OK")
+                            {
+                                _Log.AddMessage("Subscription request returned: " + respItem[1] + " " + respItem[2], true);
+                                int x, y;
+                                x = Data.IndexOf("SID");
+                                Data = Data.Substring(x, Data.Length - x);
+                                resp = Data.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                                respItem = resp.Split(' ');
+                                string sid = respItem[1];
+                                y = Data.IndexOf("TIMEOUT");
+                                Data = Data.Substring(y, Data.Length - y);
+                                resp = Data.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                                respItem = resp.Split(' ');
+                                string timo = respItem[1];
+                                x = Data.IndexOf("<?xml");
+                                _Log.AddMessage("SID issued: " + sid + " - Timeout: " + timo, false);
+                                EventDevice nEventedDevice = new EventDevice();
+                                nEventedDevice.Device = Parent;
+                                nEventedDevice.EventUrl = eventURL;
+                                nEventedDevice.ID = sid;
+                                nEventedDevice.Service = ServiceIdent;
+                                nEventedDevice.Timeout = timo;
+                                EventedDevices.Add(nEventedDevice);
+                                _Log.AddMessage("The Service: " + ServiceIdent + " for device: " + Parent.Name + " was added to the EventedDevices list.", false);
+                            }
+                            else
+                            {
+                                _Log.AddMessage("Subscription request returned" + respItem[1] + " " + respItem[2], true);
+                            }
+                            Running = false;
+                        }
+                    }
+                }
+                TcpSocket.Shutdown(SocketShutdown.Both);
+                TcpSocket.Disconnect(true);
+                TcpSocket.Close();
+                TcpSocket.Dispose();
+            }
+            #endregion
+
+            #region Event Un-Subscription
+            /// <summary>
+            /// Sends the UNSUBSCRIBE information to the parent device for Event Handeling
+            /// </summary>
+            /// <param name="deviceName">The Sony device name to send the UNSUBSCRIBE to.</param>
+            /// <param name="serviceIdent">The Sony device UPnP/DLNA ServiceIdentifier to UNSUBSCRIBE to.</param>
+            public void UnSubscribeToEvents(string deviceName, string serviceIdent)
+            {
+                
+                string eventURL = "";
+                EventDevice sED = new EventDevice();
+                if (this.IsRunning == false)
+                {
+                    _Log.AddMessage("Event Server is NOT running. Please start Server before Un-Subscribing to Events", true);
+                }
+                try
+                {
+                    sED = EventedDevices.Find(x => x.Device.Name == deviceName & x.Service == serviceIdent);
+                    eventURL = sED.EventUrl;
+                    if (string.IsNullOrEmpty(eventURL))
+                    {
+                        _Log.AddMessage("Cant not Unsubscribe to service: " + serviceIdent, true);
+                        return;
+                    }
+                }
+                catch
+                {
+                    _Log.AddMessage("The service: " + serviceIdent + " for device: " + deviceName + " is not currently Subscribed to the Event Server.", true);
+                    return;
+                }
+                _Log.AddMessage("Sending UnSubscription Request to: " + eventURL, true);
+
+                Uri nHost = new Uri(eventURL);
+                IPEndPoint LocalEndPoint = new IPEndPoint(IPAddress.Any, 8093);
+                IPEndPoint DeviceEndPoint = new IPEndPoint(IPAddress.Parse(sED.Device.IPAddress), nHost.Port);
+                Socket TcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                TcpSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                TcpSocket.Bind(LocalEndPoint);
+                string SearchString = "UNSUBSCRIBE " + eventURL + " HTTP/1.1\r\nHOST:" + sED.Device.IPAddress + ":" + nHost.Port.ToString() + "\r\nSID: " + sED.ID + "\r\n\r\n";
+                TcpSocket.Connect(DeviceEndPoint);
+                TcpSocket.SendTo(Encoding.UTF8.GetBytes(SearchString), SocketFlags.None, DeviceEndPoint);
+                bool Running = true;
+                byte[] ReceiveBuffer = new byte[4000];
+                int ReceivedBytes = 0;
+                while (Running)
+                {
+                    if (TcpSocket.Available > 0)
+                    {
+                        ReceivedBytes = TcpSocket.Receive(ReceiveBuffer, SocketFlags.None);
+                        if (ReceivedBytes > 0)
+                        {
+                            string Data = Encoding.UTF8.GetString(ReceiveBuffer, 0, ReceivedBytes);
+                            string resp = Data.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                            string[] respItem = resp.Split(' ');
+                            if (respItem[1] == "200" & respItem[2] == "OK")
+                            {
+                                _Log.AddMessage("Unsubscription request returned: " + respItem[1] + " " + respItem[2], true);
+                                EventedDevices.Remove(sED);
+                                _Log.AddMessage("The Service: " + sED.Service + " for device: " + sED.Device.Name + " was removed from the EventedDevices list.", false);
+                            }
+                            else
+                            {
+                                _Log.AddMessage("UnSubscription request returned" + respItem[1] + " " + respItem[2], true);
+                            }
+                            Running = false;
+                        }
+                    }
+                }
+                TcpSocket.Shutdown(SocketShutdown.Both);
+                TcpSocket.Disconnect(true);
+                TcpSocket.Close();
+                TcpSocket.Dispose();
+                
+            }
+            #endregion
+
+            #region Event Re-Subscription
+            /// <summary>
+            /// Sends the RESUBSCRIBE information to the parent device for Event Handeling
+            /// </summary>
+            /// <param name="DeviceName">The Sony device to send the RESUBSCRIBE to.</param>
+            /// <param name="ServiceIdent">The Sony device UPnP/DLNA ServiceIdentifier to RESUBSCRIBE to.</param>
+            public void ReSubscribeToEvents(string DeviceName, string ServiceIdent)
+            {
+                if (this.IsRunning == false)
+                {
+                    _Log.AddMessage("Event Server is NOT running. Please start Server before Re-Subscribing to Events", true);
+                }
+                string eventURL = "";
+                EventDevice sED = new EventDevice();
+                if (this.IsRunning == false)
+                {
+                    _Log.AddMessage("Event Server is NOT running. Please start Server before Re-Subscribing to Events", true);
+                }
+                try
+                {
+                    sED = EventedDevices.Find(x => x.Device.Name == DeviceName & x.Service == ServiceIdent);
+                    eventURL = sED.EventUrl;
+                    if (string.IsNullOrEmpty(eventURL))
+                    {
+                        _Log.AddMessage("Cant not Resubscribe to service: " + ServiceIdent, true);
+                        return;
+                    }
+                }
+                catch
+                {
+                    _Log.AddMessage("The service: " + ServiceIdent + " for device: " + DeviceName + " is not currently Subscribed to the Event Server.", true);
+                    return;
+                }
+                _Log.AddMessage("Sending ReSubscription Request to: " + eventURL, true);
+                int Duration = Convert.ToInt32(sED.Timeout.Substring(7));
+                Uri nHost = new Uri(eventURL);
+                IPEndPoint LocalEndPoint = new IPEndPoint(IPAddress.Any, 8093);
+                IPEndPoint DeviceEndPoint = new IPEndPoint(IPAddress.Parse(sED.Device.IPAddress), nHost.Port);
+                Socket TcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                TcpSocket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.ReuseAddress, true);
+                TcpSocket.Bind(LocalEndPoint);
+                string SearchString = "SUBSCRIBE " + eventURL + " HTTP/1.1\r\nHOST:" + sED.Device.IPAddress + ":" + nHost.Port.ToString() + "\r\nSID: " + sED.ID + "\r\nTIMEOUT:Second-" + Duration + " >\r\n\r\n";
+                if (TcpSocket.Connected == false)
+                {
+                    TcpSocket.Connect(DeviceEndPoint);
+                }
+                TcpSocket.SendTo(Encoding.UTF8.GetBytes(SearchString), SocketFlags.None, DeviceEndPoint);
+                bool Running = true;
+                byte[] ReceiveBuffer = new byte[4000];
+                int ReceivedBytes = 0;
+                while (Running)
+                {
+                    if (TcpSocket.Available > 0)
+                    {
+                        ReceivedBytes = TcpSocket.Receive(ReceiveBuffer, SocketFlags.None);
+                        if (ReceivedBytes > 0)
+                        {
+                            string Data = Encoding.UTF8.GetString(ReceiveBuffer, 0, ReceivedBytes);
+                            string resp = Data.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                            string[] respItem = resp.Split(' ');
+                            if (respItem[1] == "200" & respItem[2] == "OK")
+                            {
+                                _Log.AddMessage("Resubscription request returned: " + respItem[1] + " " + respItem[2], true);
+                                _Log.AddMessage("The Service: " + sED.Service + " for device: " + sED.Device.Name + " was renewed in the EventedDevices list.", false);
+                                _Log.AddMessage(Data, true);
+                            }
+                            else
+                            {
+                                _Log.AddMessage("Subscription request returned" + respItem[1] + " " + respItem[2], true);
+                            }
+                            Running = false;
+                        }
+                    }
+                }
+                TcpSocket.Shutdown(SocketShutdown.Both);
+                TcpSocket.Disconnect(true);
+                TcpSocket.Close();
+                TcpSocket.Dispose();
+            }
+            #endregion
+            #endregion
+
+            #region Private Methods
+            #region On Property Change
+            private void OnPropertyChanged(PropertyChangedEventArgs e)
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                if (handler != null)
+                    handler(this, e);
+            }
+
+
+            private void OnPropertyChanged(string propertyName)
+            {
+                OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+            }
+            #endregion
+
+            #region Accept Call Back
+            private void AcceptCallback(IAsyncResult ar)
+            {
+                TcpListener listener = (TcpListener)ar.AsyncState;
+                TcpClient client = listener.EndAcceptTcpClient(ar);
+
+                byte[] buffer = new byte[1024];
+                NetworkStream ns = client.GetStream();
+                if (ns.CanRead)
+                {
+                    ns.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(ReadCallback), new object[] { ns, buffer });
+                }
+
+                connected.Set();
+            }
+            #endregion
+
+            #region Read Call Back
+            private void ReadCallback(IAsyncResult ar)
+            {
+                NetworkStream ns = (NetworkStream)((ar.AsyncState as object[])[0]);
+                byte[] buffer = (byte[])((ar.AsyncState as object[])[1]);
+                int n = ns.EndRead(ar);
+                if (n > 0)
+                {
+                    //_Log.AddMessage(Encoding.ASCII.GetString(buffer, 0, n), true);
+                }
+                ns.BeginRead(buffer, 0, buffer.Length, new AsyncCallback(ReadCallback), new object[] { ns, buffer });
+                ProcessMessage(Encoding.ASCII.GetString(buffer, 0, n));
+            }
+            #endregion
+
+            #region Process Message
+            private void ProcessMessage(string msg)
+            {
+                string data = msg;
+                string resp = msg.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                string[] respItem = resp.Split(' ');
+                if (respItem[0] == "NOTIFY")
+                {
+                    cEventObj = new EventObject();
+                    cEventObj.ServiceID = respItem[1].Substring(1);
+                    int y;
+                    y = msg.IndexOf("NTS:");
+                    msg = msg.Substring(y, msg.Length - y);
+                    resp = msg.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                    respItem = resp.Split(' ');
+                    cEventObj.Action = respItem[1].Substring(5);
+                    y = msg.IndexOf("SID");
+                    msg = msg.Substring(y, msg.Length - y);
+                    resp = msg.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                    respItem = resp.Split(' ');
+                    cEventObj.Uid = respItem[1];
+                    y = msg.IndexOf("SEQ:");
+                    msg = msg.Substring(y, msg.Length - y);
+                    resp = msg.Split(new[] { '\r', '\n' }).FirstOrDefault();
+                    respItem = resp.Split(' ');
+                    cEventObj.Sequence = respItem[1];
+                    sED = new EventDevice();
+                    sED = EventedDevices.Find(x => x.ID == cEventObj.Uid);
+                    cEventObj.DeviceName = sED.Device.Name;
+                    _Log.AddMessage("Event Server received a Notification Message from " + sED.Device.Name, true);
+                    _Log.AddMessage(cEventObj.ServiceID + " Event Notification received.", false);
+                    _Log.AddMessage("Event type: " + cEventObj.Action, false);
+                }
+                else if (respItem[0] == "<?xml")
+                {
+                    sED = EventedDevices.Find(x => x.ID == cEventObj.Uid);
+                    msg = WebUtility.HtmlDecode(msg);
+                    _Log.AddMessage("XML CONTENT: \r\n" + msg, false);
+                    XDocument doc = XDocument.Parse(msg);
+                    foreach (XElement element in doc.Descendants("LastChange"))
+                    {
+                        foreach (XElement cEle in element.Descendants())
+                        {
+                            if (cEle.LastAttribute.ToString().Contains("val"))
+                            {
+                                int sc = cEle.Name.ToString().IndexOf("}");
+                                EventVariable eV = new EventVariable();
+                                eV.name = cEventObj.ServiceID + "::" + cEle.Name.ToString().Substring(sc + 1);
+                                string aVal = cEle.LastAttribute.ToString();
+                                aVal = aVal.Replace("val=", "");
+                                aVal = aVal.Replace("\"", "");
+                                eV.value = aVal;
+                                cEventObj.StateVariables.Add(eV);
+                            }
+                        }
+                    }
+                    foreach(EventVariable e in cEventObj.StateVariables)
+                    {
+                        _Log.AddMessage("State Variable " + e.name + " is now set to " + e.value, false);
+                    }
+                    sED.Device.ProcessEventMessages(cEventObj);
+                    Output = msg;
+                }
+            }
+            #endregion
+
+            #region End All Subscriptions
+            private void EndAllSubscriptions()
+            {
+                List<EventDevice> endALL = new List<EventDevice>();
+                foreach (EventDevice eD in EventedDevices)
+                {
+                    endALL.Add(eD);
+                }
+                    foreach (EventDevice eD in endALL)
+                {
+                    UnSubscribeToEvents(eD.Device.Name, eD.Service);
+                }
+            }
+            #endregion
+
+            #region Get Event Url from Parent Device
+            private string GetEventUrl(SonyDevice parent, string servIdent)
+            {
+                string eventURL = "";
+                switch (servIdent)
+                {
+                    case "IRCC:1":
+                        eventURL = parent.Ircc.EventSubUrl;
+                        break;
+
+                    case "RenderingControl:1":
+                        eventURL = parent.RenderingControl.EventSubUrl;
+                        break;
+
+                    case "ConnectionManager:1":
+                        eventURL = parent.ConnectionManager.EventSubUrl;
+                        break;
+
+                    case "AVTransport:1":
+                        eventURL = parent.AVTransport.EventSubUrl;
+                        break;
+
+                    case "Party:1":
+                        eventURL = parent.Party.EventSubUrl;
+                        break;
+                }
+                if(string.IsNullOrEmpty(eventURL))
+                {
+                    _Log.AddMessage("The Event URL for service " + servIdent + " is Empty!", true);
+                }
+                return eventURL;
+            }
+            #endregion
+            #endregion
+        }
+        
+        #region Subscribed Event Devices
+        public class EventDevice
+        {
+            public SonyDevice Device { get; set; }
+            public string Service { get; set; }
+            public string ID { get; set; }
+            public string Timeout { get; set; }
+            public string EventUrl { get; set; }
+        }
+        #endregion
+
+        #region EventObject
+        public class EventObject
+        {
+            public string DeviceName { get; set; }
+            public string ServiceID { get; set; }
+            public string Uid { get; set; }
+            public string Action { get; set; }
+            public string Sequence { get; set; }
+            public List<EventVariable> StateVariables = new List<EventVariable>();
+        }
+        #endregion
+
+        #region EventVeriables
+        [Serializable]
+        ///<summary>
+        /// Holds the State Variables for each Event Notification
+        /// </summary>
+        public class EventVariable
+        {
+            /// <summary>
+            /// Gets or Sets the Devices Command Name
+            /// </summary>
+            public string name { get; set; }
+            /// <summary>
+            /// Gets or Sets the Devices Command Value
+            /// </summary>
+            public string value { get; set; }
+        }
+        #endregion
         #endregion
     }
 }

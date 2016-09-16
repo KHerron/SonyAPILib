@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
 using SonyAPILib;
 
 
@@ -15,9 +9,9 @@ namespace DLNA_Control_Panel
 {
     public partial class Form1 : Form
     {
-        public static SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
-        public static List<SonyAPILib.SonyAPILib.SonyDevice> fDev = new List<SonyAPILib.SonyAPILib.SonyDevice>();
-        public static SonyAPILib.SonyAPILib.SonyDevice curDev = new SonyAPILib.SonyAPILib.SonyDevice();
+        public static APILibrary mySonyLib = new APILibrary();
+        public static List<APILibrary.SonyDevice> fDev = new List<APILibrary.SonyDevice>();
+        public static APILibrary.SonyDevice curDev = new APILibrary.SonyDevice();
         
         public Form1()
         {
@@ -151,7 +145,6 @@ namespace DLNA_Control_Panel
             devDocumentUrl.Text =  curDev.DocumentUrl;
             devRegMode.Text =  curDev.Actionlist.RegisterMode.ToString();
             devCookie.Text =  curDev.Cookie;
-
             UpdateIRCC();
             UpdateRenderingControl();
             UpdateAVTransport();
@@ -162,7 +155,7 @@ namespace DLNA_Control_Panel
             if ( curDev.Ircc.ControlUrl != null)
             {
                 irccservControl.Text =  curDev.Ircc.ControlUrl;
-                irccservEvent.Text =  curDev.Ircc.EventSubURL;
+                irccservEvent.Text =  curDev.Ircc.EventSubUrl;
                 irccservSCPD.Text =  curDev.Ircc.ScpdUrl;
                 irccservType.Text =  curDev.Ircc.Type;
                 irccservId.Text =  curDev.Ircc.ServiceID;
@@ -188,9 +181,9 @@ namespace DLNA_Control_Panel
                 rendservIdent.Text = curDev.RenderingControl.ServiceIdentifier;
                 rendservLastChange.Text = curDev.RenderingControl.LastChange;
                 rendservPreList.Text = curDev.RenderingControl.PresetNameList;
-                rendservMute.Text = curDev.RenderingControl.MuteState.ToString();
-                rendservVolume.Text = curDev.RenderingControl.VolumeState.ToString();
-                rendservInstId.Text = curDev.RenderingControl.InstanceId.ToString();
+                rendservMute.Text = curDev.RenderingControl.Mute.ToString();
+                rendservVolume.Text = curDev.RenderingControl.Volume.ToString();
+                rendservInstId.Text = curDev.RenderingControl.InstanceID.ToString();
                 rendservPreName.Text = curDev.RenderingControl.PresetName;
                 rendservChan.Text = curDev.RenderingControl.ChannelState;
             }
@@ -245,7 +238,7 @@ namespace DLNA_Control_Panel
         private void UpdateDeviceList()
         {
             devList.Items. Clear();
-            foreach (SonyAPILib.SonyAPILib.SonyDevice dev in fDev)
+            foreach (APILibrary.SonyDevice dev in fDev)
             {
                 devList.Items.Add(dev.Name);
             }
@@ -286,7 +279,7 @@ namespace DLNA_Control_Panel
             logEchgBut.Visible = true;
             LoggEnabled.Enabled = false;
             logEsetBut.Visible = false;
-             mySonyLib.Log.Enable = Convert.ToBoolean(LoggEnabled.Text);
+            mySonyLib.Log.Enable = Convert.ToBoolean(LoggEnabled.Text);
         }
 
         private void logLsetBut_Click(object sender, EventArgs e)
@@ -294,7 +287,7 @@ namespace DLNA_Control_Panel
             logLchgBut.Visible = true;
             LogLevel.Enabled = false;
             logLsetBut.Visible = false;
-             mySonyLib.Log.Level = LogLevel.Text;
+            mySonyLib.Log.Level = LogLevel.Text;
         }
 
         private void logNsetBut_Click(object sender, EventArgs e)
@@ -302,7 +295,7 @@ namespace DLNA_Control_Panel
             logNchgBut.Visible = true;
             LogName.Enabled = false;
             logNsetBut.Visible = false;
-             mySonyLib.Log.Name = LogName.Text;
+            mySonyLib.Log.Name = LogName.Text;
         }
 
         private void logPsetBut_Click(object sender, EventArgs e)
@@ -336,7 +329,7 @@ namespace DLNA_Control_Panel
         {
             if (irccservcmdValue.Text != "")
             {
-                mySonyLib.Ircc.SendIRCC(curDev, irccservcmdValue.Text);
+                curDev.Ircc.SendIRCC(curDev, irccservcmdValue.Text);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -350,7 +343,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.Ircc.GetStatus(curDev);
+                curDev.Ircc.GetStatus(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -364,7 +357,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.RenderingControl.ListPresets(curDev);
+                curDev.RenderingControl.ListPresets(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -383,7 +376,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.RenderingControl.GetMute(curDev);
+                curDev.RenderingControl.GetMute(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -399,7 +392,7 @@ namespace DLNA_Control_Panel
             {
                 if (rendsetMute.Text != "")
                 {
-                    mySonyLib.RenderingControl.SetMute(curDev, Convert.ToBoolean(rendsetMute.Text));
+                    curDev.RenderingControl.SetMute(curDev, Convert.ToBoolean(rendsetMute.Text));
                     UpdateLog(LogPath.Text, LogName.Text);
                     UpdateDevice();
                 }
@@ -420,7 +413,7 @@ namespace DLNA_Control_Panel
             {
                 if (rendservVolume.Text != "0")
                 {
-                    mySonyLib.RenderingControl.SetVolume(curDev, Convert.ToInt32(rendVolLevel.Text));
+                    curDev.RenderingControl.SetVolume(curDev, Convert.ToInt32(rendVolLevel.Text));
                     UpdateLog(LogPath.Text, LogName.Text);
                     UpdateDevice();
                 }
@@ -439,7 +432,7 @@ namespace DLNA_Control_Panel
         {
             if (curDev.Name != null)
             {
-                mySonyLib.RenderingControl.GetVolume(curDev);
+                curDev.RenderingControl.GetVolume(curDev);
                 UpdateLog(LogPath.Text, LogName.Text);
                 UpdateDevice();
             }
@@ -466,35 +459,35 @@ namespace DLNA_Control_Panel
 
         private void avtransGetPositionBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.AVTransport.GetPosition(curDev);
+            curDev.AVTransport.GetPosition(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtranGetMediaBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.AVTransport.GetMediaInfo(curDev);
+            curDev.AVTransport.GetMediaInfo(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtransGetTransportBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.AVTransport.GetTransportInfo(curDev);
+            curDev.AVTransport.GetTransportInfo(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtransCapabilitiesBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.AVTransport.GetDeviceCapabilities(curDev);
+            curDev.AVTransport.GetDeviceCapabilities(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }
 
         private void avtrasGetTransportSettingsBut_Click(object sender, EventArgs e)
         {
-            mySonyLib.AVTransport.GetTransportSettings(curDev);
+            curDev.AVTransport.GetTransportSettings(curDev);
             UpdateLog(LogPath.Text, LogName.Text);
             UpdateDevice();
         }

@@ -9,7 +9,7 @@ namespace SonyAPILib
 {
     //This class is used to broadcast a SSDP message using UDP on port 1900 and to then wait for any replies send back on the LAN
     /// <summary>
-    /// SSDP Clas for sending Broadcast for DLNA/UPnP devices available on the network.
+    /// SSDP Class for sending Broadcast for DLNA/UPnP devices available on the network.
     /// </summary>
     public static class SSDP
     {
@@ -97,7 +97,7 @@ namespace SonyAPILib
                 else
                     Thread.Sleep(100);
             }
-            if (NewServer.Length > 0) Servers.Add(NewServer.Trim());//Bank in our new servers nice and quick with minute risk of thread error due to not locking
+            if (NewServer.Length > 0) Servers.Add(NewServer.Trim());
             UdpSocket.Close();
             THSend = null;
             UdpSocket = null;

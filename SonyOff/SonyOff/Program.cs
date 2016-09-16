@@ -11,9 +11,9 @@ namespace SonyOff
     {
         static void Main(string[] args)
         {
-            SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();  // Create an Instance of the Library
+            APILibrary mySonyLib = new APILibrary();  // Create an Instance of the Library
             mySonyLib.Log.Enable = false;  // Set to NO logging
-            SonyAPILib.SonyAPILib.SonyDevice mySonyDev = new SonyAPILib.SonyAPILib.SonyDevice();  // Create a new instance of a Device Object
+            APILibrary.SonyDevice mySonyDev = new APILibrary.SonyDevice();  // Create a new instance of a Device Object
             
             // Now there are 2 ways you can complete the next part.
             // You can build the Device from the Device's Description Document

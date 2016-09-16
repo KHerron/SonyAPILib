@@ -14,7 +14,7 @@ namespace DLNALib
         static void Main(string[] args)
         {
             // 1st we create a new instance of the SonyAPILib
-            SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
+            APILibrary mySonyLib = new APILibrary();
             
 
             #region No parameters
@@ -50,7 +50,7 @@ namespace DLNALib
             #region WOL - Wake-On-Lan
             if (args[0] == "/WOL")
             {
-                SonyAPILib.SonyAPILib.SonyDevice device = mySonyLib.Locator.DeviceLoad(args[1]);
+                APILibrary.SonyDevice device = mySonyLib.Locator.DeviceLoad(args[1]);
                 device.WOL();
             }
             #endregion
@@ -62,7 +62,7 @@ namespace DLNALib
                 {
                     string du = args[1];
                     string pa = args[2] + @"\";
-                    SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                    APILibrary.SonyDevice nDev = new APILibrary.SonyDevice();
                     nDev.BuildFromDocument(new Uri(du));
                     pa = pa + nDev.Name + ".xml";
                     Console.WriteLine("Saving Device: " + nDev.Name + ".xml to " + pa);
@@ -103,7 +103,7 @@ namespace DLNALib
                         foreach (string dv in fdev)
                         {
                             string pa = args[2] + @"\";
-                            SonyAPILib.SonyAPILib.SonyDevice nDev = new SonyAPILib.SonyAPILib.SonyDevice();
+                            APILibrary.SonyDevice nDev = new APILibrary.SonyDevice();
                             nDev.BuildFromDocument(new Uri(dv));
                             pa = pa + nDev.Name + ".xml";
                             Console.WriteLine("Saving Device: " + nDev.Name + ".xml to " + pa);
@@ -127,7 +127,7 @@ namespace DLNALib
                 {
                     string devFile = "";
                     devFile = args[1];
-                    SonyAPILib.SonyAPILib.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
+                    APILibrary.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
                     bool mySonyReg = false;
                     if (device.Registered == false)
                     {
@@ -180,12 +180,12 @@ namespace DLNALib
                     devService = args[2];
                     devAction = args[3];
                     devP = args[4];
-                    SonyAPILib.SonyAPILib.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
+                    APILibrary.SonyDevice device = mySonyLib.Locator.DeviceLoad(devFile);
                     if (devService == "IRCC")
                     {
                         if (devAction == "XSendIRCC")
                         {
-                            mySonyLib.Ircc.SendIRCC(device, devP);
+                            device.Ircc.SendIRCC(device, devP);
                         }
                     }
                     else if (devService == "AVTransport")
@@ -207,7 +207,7 @@ namespace DLNALib
                             {
                                 devP = null;
                             }
-                            mySonyLib.AVTransport.SetAVTransportURI(device, devP,devP2);
+                            device.AVTransport.SetAVTransportURI(device, devP,devP2);
                         }
                         if (devAction == "SetNextAVTransportURI")
                         {
@@ -226,27 +226,27 @@ namespace DLNALib
                             {
                                 devP2 = null;
                             }
-                            mySonyLib.AVTransport.SetNextAVTransportURI(device, devP, devP2);
+                            device.AVTransport.SetNextAVTransportURI(device, devP, devP2);
                         }
                         if (devAction == "Play")
                         {
-                            mySonyLib.AVTransport.Play(device, Convert.ToInt32(devP));
+                            device.AVTransport.Play(device, Convert.ToInt32(devP));
                         }
                         if (devAction == "Stop")
                         {
-                            mySonyLib.AVTransport.Stop(device);
+                            device.AVTransport.Stop(device);
                         }
                         if (devAction == "Pause")
                         {
-                            mySonyLib.AVTransport.Pause(device);
+                            device.AVTransport.Pause(device);
                         }
                         if (devAction == "Next")
                         {
-                            mySonyLib.AVTransport.Next(device);
+                            device.AVTransport.Next(device);
                         }
                         if (devAction == "Previous")
                         {
-                            mySonyLib.AVTransport.Previous(device);
+                            device.AVTransport.Previous(device);
                         }
                     }
                     else if (devService == "ConnectionManager")
@@ -262,13 +262,13 @@ namespace DLNALib
                             {
                                 p1 = true;
                             }
-                            mySonyLib.RenderingControl.SetMute(device, p1);
+                            device.RenderingControl.SetMute(device, p1);
                         }
                         if (devAction == "SetVolume")
                         {
                             int p1 = 0;
                             p1 = Convert.ToInt32(devP);
-                            mySonyLib.RenderingControl.SetVolume(device, p1);
+                            device.RenderingControl.SetVolume(device, p1);
                         }
                     }
                     else if (devService == "Party")

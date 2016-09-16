@@ -24,7 +24,7 @@ namespace ConsoleExample
             Console.WriteLine("================================");
 
             // 1st we create a new instance of the SonyAPILib
-            SonyAPILib.SonyAPILib mySonyLib = new SonyAPILib.SonyAPILib();
+            APILibrary mySonyLib = new APILibrary();
 
             // Now create new instances of the UPnP/DLNA services
             //SonyAPI_Lib.IRCC1 ircc1 = new SonyAPI_Lib.IRCC1();  // Only required if you plan to use this service
@@ -97,7 +97,7 @@ namespace ConsoleExample
                 cki = Console.ReadLine();
 
                 // 1st create a new Device Object
-                SonyAPILib.SonyAPILib.SonyDevice mySonyDevice = new SonyAPILib.SonyAPILib.SonyDevice();
+               APILibrary.SonyDevice mySonyDevice = new APILibrary.SonyDevice();
 
                 // Here you can save the device information to a database or text file.
                 // This will allow you to Initialize a device WITHOUT having to run the sonyDiscover() method every time.
@@ -313,12 +313,7 @@ namespace ConsoleExample
                 // it asumes we already know the value to send to the device.
                 // We will use the Command String we retrieved above in the GetCommandString method.
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command Value " + irccCmd + " to device");
-
-                //renderingcontrol1.SetMute(mySonyDevice, true);
-                //renderingcontrol1.SetMute(mySonyDevice, false);
-                //connectionmanager1.GetProtocolInfo(mySonyDevice);
                 string results = mySonyDevice.Ircc.SendIRCC(mySonyDevice, irccCmd);
-                //string results = mySonyLib.Ircc.SendIRCC(mySonyDevice,irccCmd);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -335,7 +330,6 @@ namespace ConsoleExample
                 // Then send it to the device
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeDown to device");
                 String mycommand = mySonyDevice.GetCommandString("VolumeDown");
-                //results = mySonyLib.Ircc.SendIRCC(mySonyDevice,mycommand);
                 results = mySonyDevice.Ircc.SendIRCC(mySonyDevice, mycommand);
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
@@ -352,7 +346,6 @@ namespace ConsoleExample
                 // The next example will use a combination of both examples above for the command "VolumeUp".
                 Console.WriteLine(mySonyDevice.Name + ": Sending Command VolumeUp to device again");
                 mySonyDevice.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString("VolumeUp"));
-                //mySonyLib.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString("VolumeUp"));
                 System.Threading.Thread.Sleep(500);  // give the device time to react before sending another command
 
                 #region Console Output
@@ -370,14 +363,13 @@ namespace ConsoleExample
                 Console.WriteLine("Here are the Commands: Hit any key to Continue.");
                 Console.WriteLine("---------------------------------");                
                 Console.ReadKey();
-                foreach (SonyAPILib.SonyAPILib.SonyCommands cmd in mySonyDevice.Commands)
+                foreach (APILibrary.SonyCommands cmd in mySonyDevice.Commands)
                 {
                     Console.WriteLine(cmd.name);
                 }
                 Console.WriteLine("---------------------------------");
                 Console.WriteLine("Enter a command from the list above.");
                 cki = Console.ReadLine();
-                //results = mySonyLib.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString(cki));
                 results = mySonyDevice.Ircc.SendIRCC(mySonyDevice, mySonyDevice.GetCommandString(cki));
                 #endregion
 
