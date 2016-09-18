@@ -21,6 +21,7 @@ DLNAControlPanel - Sample Program that shows how to use all the services and rea
 DLNALib - This is a Command Line application the uses the SonyAPILib v5.2  
 Sony_Forms_Example - Sample program that shows how to use the Sony API Library in a Windows Forms application.  
 SonyOff - Another sample program that shows how to use the Sony API Library in a console.  
+EventingEaxample - A sample console application that demonstrates how to implement the Event Server
 
 SonyAPILib - The Sony API Library.
 
