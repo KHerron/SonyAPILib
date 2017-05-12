@@ -3,6 +3,7 @@ Sony API Library
 SonyAPILib.dll v5.3 written by: Kirk Herron
 
 Works with All Generations of Sony Devices!
+(As shown on the compatibility list below)
 
 SonyAPILib.dll is an API written in C# to help developers create applications that can locate, register and control DLNA devices that are equiped with a LAN or WiFi connection. These devices must also be running one of the following services:
 
