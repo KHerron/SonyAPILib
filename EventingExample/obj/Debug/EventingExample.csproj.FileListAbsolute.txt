@@ -6,4 +6,3 @@ F:\OSA Files\Sony API\SonyAPILib_5.3\EventingExample\bin\Debug\SonyAPILib.pdb
 F:\OSA Files\Sony API\SonyAPILib_5.3\EventingExample\obj\Debug\EventingExample.csprojResolveAssemblyReference.cache
 F:\OSA Files\Sony API\SonyAPILib_5.3\EventingExample\obj\Debug\EventingExample.exe
 F:\OSA Files\Sony API\SonyAPILib_5.3\EventingExample\obj\Debug\EventingExample.pdb
-F:\OSA Files\Sony API\SonyAPILib_5.3\EventingExample\bin\Debug\SonyAPILib.xml

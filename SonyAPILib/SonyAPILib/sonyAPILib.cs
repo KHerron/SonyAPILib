@@ -1258,13 +1258,23 @@ namespace SonyAPILib
             /// </summary>
             /// <param name="dPath">A URI containg the URL to the device's Description XML file.</param>
             /// <returns>A Fully built and populated Sony Device</returns>
-            public void BuildFromDocument(Uri dPath)
+            public bool BuildFromDocument(Uri dPath)
             {
                 this.DocumentUrl = dPath.ToString();
                 _Log.AddMessage("Retrieving Device Description Document from URI:", false);
                 _Log.AddMessage(dPath.ToString(), false);
-                XDocument dDoc = XDocument.Load(dPath.ToString());
-                this.BuildFromDocument(dDoc.Root.Document.ToString(), dPath.ToString());
+                try
+                {
+                    XDocument dDoc = XDocument.Load(dPath.ToString());
+                    this.BuildFromDocument(dDoc.Root.Document.ToString(), dPath.ToString());
+                    return true;
+                }
+                catch
+                {
+                    _Log.AddMessage("There was an Error while Building the Device", false);
+                    _Log.AddMessage("The device may not be powered on, or the Path was incorrect.", false);
+                    return false;
+                }
             }
 
             /// <summary>
@@ -1273,146 +1283,156 @@ namespace SonyAPILib
             /// <param name="Doc">A string containg the Description XML.</param>
             /// <param name="Path">A string containg the Full Path to the device's Description XML file.</param>
             /// <returns>A Fully built and populated Sony Device</returns>
-            public void BuildFromDocument(string Doc, string Path)
+            public bool BuildFromDocument(string Doc, string Path)
             {
                 _Log.AddMessage("Building Device from Document: " + Path, true);
                 this.DocumentUrl = Path;
-                _Log.AddMessage("Document Found", false);
-                Uri d = new Uri(Path);
-                this.IPAddress = d.Host;
-                this.Port = d.Port;
-                this.ServerMacAddress = this.GetServerMac();
-                this.ServerName = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
-                XmlDocument xDoc = new XmlDocument();
-                xDoc.LoadXml(Doc);
-                XmlNode xNode = xDoc.DocumentElement.ChildNodes[1];
-                foreach (XmlNode node in xNode.ChildNodes)
+                try
                 {
-                    if (node.Name == "av:X_UNR_DeviceInfo")
+                    _Log.AddMessage("Document Found", false);
+                    Uri d = new Uri(Path);
+                    this.IPAddress = d.Host;
+                    this.Port = d.Port;
+                    this.ServerMacAddress = this.GetServerMac();
+                    this.ServerName = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
+                    XmlDocument xDoc = new XmlDocument();
+                    xDoc.LoadXml(Doc);
+                    XmlNode xNode = xDoc.DocumentElement.ChildNodes[1];
+                    foreach (XmlNode node in xNode.ChildNodes)
                     {
-                        foreach (XmlNode dserv in node.ChildNodes)
+                        if (node.Name == "av:X_UNR_DeviceInfo")
                         {
-                            if (dserv.Name == "av:X_CERS_ActionList_URL")
+                            foreach (XmlNode dserv in node.ChildNodes)
                             {
-                                _Log.AddMessage("Action List Found.", false);
-                                string alPath = dserv.FirstChild.InnerText;
-                                this.ActionListUrl = alPath;
-                                DataSet acList = new DataSet();
-                                acList.ReadXml(alPath);
-                                DataTable act = new DataTable();
-                                act = acList.Tables[0];
-                                var results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "register" select myRow;
-                                this.Actionlist.RegisterMode = Convert.ToInt16(results.ElementAt(0).ItemArray[1].ToString());
-                                _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
-                                this.Actionlist.RegisterUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getSystemInformation" select myRow;
-                                this.Actionlist.SystemInformationUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getRemoteCommandList" select myRow;
-                                this.Actionlist.RemoteCommandListUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                //this.GetRemoteCommandList();
-                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getStatus" select myRow;
-                                this.Actionlist.StatusUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getText" select myRow;
-                                this.Actionlist.GetTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "sendText" select myRow;
-                                this.Actionlist.SendTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                if (dserv.Name == "av:X_CERS_ActionList_URL")
+                                {
+                                    _Log.AddMessage("Action List Found.", false);
+                                    string alPath = dserv.FirstChild.InnerText;
+                                    this.ActionListUrl = alPath;
+                                    DataSet acList = new DataSet();
+                                    acList.ReadXml(alPath);
+                                    DataTable act = new DataTable();
+                                    act = acList.Tables[0];
+                                    var results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "register" select myRow;
+                                    this.Actionlist.RegisterMode = Convert.ToInt16(results.ElementAt(0).ItemArray[1].ToString());
+                                    _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
+                                    this.Actionlist.RegisterUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                    results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getSystemInformation" select myRow;
+                                    this.Actionlist.SystemInformationUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                    results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getRemoteCommandList" select myRow;
+                                    this.Actionlist.RemoteCommandListUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                    //this.GetRemoteCommandList();
+                                    results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getStatus" select myRow;
+                                    this.Actionlist.StatusUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                    results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getText" select myRow;
+                                    this.Actionlist.GetTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                    results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "sendText" select myRow;
+                                    this.Actionlist.SendTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                }
                             }
                         }
-                    }
 
-                    if (node.Name == "av:X_ScalarWebAPI_DeviceInfo")
-                    {
-                        this.Actionlist.RegisterMode = 3;
-                        _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
-                        this.MacAddress = this.GetDeviceMac(this);
-                    }
-                    if (node.Name == "friendlyName") { this.Name = node.FirstChild.InnerText; }
-                    if (node.Name == "manufacturer") { this.Manufacture = node.FirstChild.InnerText; }
-                    if (node.Name == "modelDescription") { this.ModelDescription = node.FirstChild.InnerText; }
-                    if (node.Name == "modelName") { this.ModelName = node.FirstChild.InnerText; }
-                    if (node.Name == "modelNumber") { this.ModelNumber = node.FirstChild.InnerText; }
-                    if (node.Name == "UDN") { this.Udn = node.FirstChild.InnerText; }
-                    if (node.Name == "deviceType") { this.Type = node.FirstChild.InnerText; }
-                    if (node.Name == "serviceList")
-                    {
-                        foreach (XmlNode cnode in node.ChildNodes)
+                        if (node.Name == "av:X_ScalarWebAPI_DeviceInfo")
                         {
-                            DeviceService dServ = new DeviceService();
-                            foreach (XmlNode dserv in cnode.ChildNodes)
+                            this.Actionlist.RegisterMode = 3;
+                            _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
+                            this.MacAddress = this.GetDeviceMac(this);
+                        }
+                        if (node.Name == "friendlyName") { this.Name = node.FirstChild.InnerText; }
+                        if (node.Name == "manufacturer") { this.Manufacture = node.FirstChild.InnerText; }
+                        if (node.Name == "modelDescription") { this.ModelDescription = node.FirstChild.InnerText; }
+                        if (node.Name == "modelName") { this.ModelName = node.FirstChild.InnerText; }
+                        if (node.Name == "modelNumber") { this.ModelNumber = node.FirstChild.InnerText; }
+                        if (node.Name == "UDN") { this.Udn = node.FirstChild.InnerText; }
+                        if (node.Name == "deviceType") { this.Type = node.FirstChild.InnerText; }
+                        if (node.Name == "serviceList")
+                        {
+                            foreach (XmlNode cnode in node.ChildNodes)
                             {
-                                if (dserv.Name == "serviceType")
+                                DeviceService dServ = new DeviceService();
+                                foreach (XmlNode dserv in cnode.ChildNodes)
                                 {
-                                    
-                                    dServ.Type = dserv.InnerText;
-                                    dServ.ServiceIdentifier = dServ.Type.ChopOffBefore("service:");
-                                }
-                                if (dserv.Name == "serviceId") { dServ.ServiceID = dserv.InnerText; }
-                                if (dserv.Name == "SCPDURL") { dServ.ScpdUrl = this.CheckFullPath(dserv.InnerText); }
-                                if (dserv.Name == "controlURL") { dServ.ControlUrl = this.CheckFullPath(dserv.InnerText); }
-                                if (dserv.Name == "eventSubURL")
-                                {
-                                    if (dserv.InnerText != "")
+                                    if (dserv.Name == "serviceType")
                                     {
-                                        dServ.EventSubUrl = this.CheckFullPath(dserv.InnerText);
+
+                                        dServ.Type = dserv.InnerText;
+                                        dServ.ServiceIdentifier = dServ.Type.ChopOffBefore("service:");
+                                    }
+                                    if (dserv.Name == "serviceId") { dServ.ServiceID = dserv.InnerText; }
+                                    if (dserv.Name == "SCPDURL") { dServ.ScpdUrl = this.CheckFullPath(dserv.InnerText); }
+                                    if (dserv.Name == "controlURL") { dServ.ControlUrl = this.CheckFullPath(dserv.InnerText); }
+                                    if (dserv.Name == "eventSubURL")
+                                    {
+                                        if (dserv.InnerText != "")
+                                        {
+                                            dServ.EventSubUrl = this.CheckFullPath(dserv.InnerText);
+                                        }
                                     }
                                 }
-                            }
-                            if (dServ.ServiceIdentifier == "IRCC:1")
-                            {
-                                _Log.AddMessage("IRCC:1 Service discovered on this device", false);
-                                this.Ircc.ControlUrl = dServ.ControlUrl;
-                                this.Ircc.ScpdUrl = dServ.ScpdUrl;
-                                this.Ircc.EventSubUrl = dServ.EventSubUrl;
-                                this.Ircc.ServiceID = dServ.ServiceID;
-                                this.Ircc.ServiceIdentifier = dServ.ServiceIdentifier;
-                                this.Ircc.Type = dServ.Type;
-                            }
-                            if (dServ.ServiceIdentifier == "AVTransport:1")
-                            {
-                                _Log.AddMessage("AVTransport:1 Service discovered on this device", false);
-                                this.AVTransport.ControlUrl = dServ.ControlUrl;
-                                this.AVTransport.ScpdUrl = dServ.ScpdUrl;
-                                this.AVTransport.EventSubUrl = dServ.EventSubUrl;
-                                this.AVTransport.ServiceID = dServ.ServiceID;
-                                this.AVTransport.ServiceIdentifier = dServ.ServiceIdentifier;
-                                this.AVTransport.Type = dServ.Type;
-                            }
-                            if (dServ.ServiceIdentifier == "RenderingControl:1")
-                            {
-                                _Log.AddMessage("RenderingControl:1 Service discovered on this device", false);
-                                this.RenderingControl.ControlUrl = dServ.ControlUrl;
-                                this.RenderingControl.ScpdUrl = dServ.ScpdUrl;
-                                this.RenderingControl.EventSubUrl = dServ.EventSubUrl;
-                                this.RenderingControl.ServiceID = dServ.ServiceID;
-                                this.RenderingControl.ServiceIdentifier = dServ.ServiceIdentifier;
-                                this.RenderingControl.Type = dServ.Type;
-                            }
-                            if (dServ.ServiceIdentifier == "ConnectionManager:1")
-                            {
-                                _Log.AddMessage("ConnectionManager:1 Service discovered on this device", false);
-                                this.ConnectionManager.ControlUrl = dServ.ControlUrl;
-                                this.ConnectionManager.ScpdUrl = dServ.ScpdUrl;
-                                this.ConnectionManager.EventSubUrl = dServ.EventSubUrl;
-                                this.ConnectionManager.ServiceID = dServ.ServiceID;
-                                this.ConnectionManager.ServiceIdentifier = dServ.ServiceIdentifier;
-                                this.ConnectionManager.Type = dServ.Type;
-                            }
-                            if (dServ.ServiceIdentifier == "Party:1")
-                            {
-                                _Log.AddMessage("Party:1 Service discovered on this device", false);
-                                this.Party.ControlUrl = dServ.ControlUrl;
-                                this.Party.ScpdUrl = dServ.ScpdUrl;
-                                this.Party.EventSubUrl = dServ.EventSubUrl;
-                                this.Party.ServiceID = dServ.ServiceID;
-                                this.Party.ServiceIdentifier = dServ.ServiceIdentifier;
-                                this.Party.Type = dServ.Type;
+                                if (dServ.ServiceIdentifier == "IRCC:1")
+                                {
+                                    _Log.AddMessage("IRCC:1 Service discovered on this device", false);
+                                    this.Ircc.ControlUrl = dServ.ControlUrl;
+                                    this.Ircc.ScpdUrl = dServ.ScpdUrl;
+                                    this.Ircc.EventSubUrl = dServ.EventSubUrl;
+                                    this.Ircc.ServiceID = dServ.ServiceID;
+                                    this.Ircc.ServiceIdentifier = dServ.ServiceIdentifier;
+                                    this.Ircc.Type = dServ.Type;
+                                }
+                                if (dServ.ServiceIdentifier == "AVTransport:1")
+                                {
+                                    _Log.AddMessage("AVTransport:1 Service discovered on this device", false);
+                                    this.AVTransport.ControlUrl = dServ.ControlUrl;
+                                    this.AVTransport.ScpdUrl = dServ.ScpdUrl;
+                                    this.AVTransport.EventSubUrl = dServ.EventSubUrl;
+                                    this.AVTransport.ServiceID = dServ.ServiceID;
+                                    this.AVTransport.ServiceIdentifier = dServ.ServiceIdentifier;
+                                    this.AVTransport.Type = dServ.Type;
+                                }
+                                if (dServ.ServiceIdentifier == "RenderingControl:1")
+                                {
+                                    _Log.AddMessage("RenderingControl:1 Service discovered on this device", false);
+                                    this.RenderingControl.ControlUrl = dServ.ControlUrl;
+                                    this.RenderingControl.ScpdUrl = dServ.ScpdUrl;
+                                    this.RenderingControl.EventSubUrl = dServ.EventSubUrl;
+                                    this.RenderingControl.ServiceID = dServ.ServiceID;
+                                    this.RenderingControl.ServiceIdentifier = dServ.ServiceIdentifier;
+                                    this.RenderingControl.Type = dServ.Type;
+                                }
+                                if (dServ.ServiceIdentifier == "ConnectionManager:1")
+                                {
+                                    _Log.AddMessage("ConnectionManager:1 Service discovered on this device", false);
+                                    this.ConnectionManager.ControlUrl = dServ.ControlUrl;
+                                    this.ConnectionManager.ScpdUrl = dServ.ScpdUrl;
+                                    this.ConnectionManager.EventSubUrl = dServ.EventSubUrl;
+                                    this.ConnectionManager.ServiceID = dServ.ServiceID;
+                                    this.ConnectionManager.ServiceIdentifier = dServ.ServiceIdentifier;
+                                    this.ConnectionManager.Type = dServ.Type;
+                                }
+                                if (dServ.ServiceIdentifier == "Party:1")
+                                {
+                                    _Log.AddMessage("Party:1 Service discovered on this device", false);
+                                    this.Party.ControlUrl = dServ.ControlUrl;
+                                    this.Party.ScpdUrl = dServ.ScpdUrl;
+                                    this.Party.EventSubUrl = dServ.EventSubUrl;
+                                    this.Party.ServiceID = dServ.ServiceID;
+                                    this.Party.ServiceIdentifier = dServ.ServiceIdentifier;
+                                    this.Party.Type = dServ.Type;
+                                }
                             }
                         }
                     }
+                    this.CheckReg();
+                    this.GetRemoteCommandList();
+                    _Log.AddMessage(this.Name + " was built successfully.", true);
+                    return true;
                 }
-                this.CheckReg();
-                this.GetRemoteCommandList();
-                _Log.AddMessage(this.Name + " was built successfully.", true);
+                catch
+                {
+                    _Log.AddMessage("There was an Error while Building the Device", false);
+                    _Log.AddMessage("The device may not be powered on, or the Path was incorrect.", false);
+                    return false;
+                }
             }
 
             #endregion
