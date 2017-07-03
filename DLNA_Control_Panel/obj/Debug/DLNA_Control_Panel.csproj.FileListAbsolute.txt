@@ -27,3 +27,16 @@ F:\OSA Files\Sony API\SonyAPILib_5.3\DLNA_Control_Panel\obj\Debug\DLNA_Control_P
 F:\OSA Files\Sony API\SonyAPILib_5.3\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.csproj.GenerateResource.Cache
 F:\OSA Files\Sony API\SonyAPILib_5.3\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.exe
 F:\OSA Files\Sony API\SonyAPILib_5.3\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\DLNA_Control_Panel.exe.config
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\DLNA_Control_Panel.exe
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\DLNA_Control_Panel.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\SonyAPILib.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\Newtonsoft.Json.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\SonyAPILib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\bin\Debug\SonyAPILib.xml
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.csprojResolveAssemblyReference.cache
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.Form1.resources
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.Properties.Resources.resources
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.csproj.GenerateResource.Cache
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.exe
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNA_Control_Panel\obj\Debug\DLNA_Control_Panel.pdb

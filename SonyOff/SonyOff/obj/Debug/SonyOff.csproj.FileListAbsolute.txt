@@ -28,3 +28,13 @@ F:\OSA Files\Sony API\SonyAPILib_5.3\SonyOff\SonyOff\bin\Debug\SonyAPILib.dll
 F:\OSA Files\Sony API\SonyAPILib_5.3\SonyOff\SonyOff\bin\Debug\Newtonsoft.Json.dll
 F:\OSA Files\Sony API\SonyAPILib_5.3\SonyOff\SonyOff\bin\Debug\SonyAPILib.pdb
 F:\OSA Files\Sony API\SonyAPILib_5.3\SonyOff\SonyOff\bin\Debug\SonyAPILib.xml
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\SonyOff.exe.config
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\SonyOff.exe
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\SonyOff.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\SonyAPILib.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\Newtonsoft.Json.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\SonyAPILib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\bin\Debug\SonyAPILib.xml
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\obj\Debug\SonyOff.csprojResolveAssemblyReference.cache
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\obj\Debug\SonyOff.exe
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyOff\SonyOff\obj\Debug\SonyOff.pdb

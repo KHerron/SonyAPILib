@@ -26,3 +26,12 @@ F:\OSA Files\Sony API\SonyAPILib_5.3\DLNALib\bin\Debug\SonyAPILib.xml
 F:\OSA Files\Sony API\SonyAPILib_5.3\DLNALib\obj\Debug\DLNALib.csprojResolveAssemblyReference.cache
 F:\OSA Files\Sony API\SonyAPILib_5.3\DLNALib\obj\Debug\DLNALib.exe
 F:\OSA Files\Sony API\SonyAPILib_5.3\DLNALib\obj\Debug\DLNALib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\bin\Debug\DLNALib.exe.config
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\bin\Debug\DLNALib.exe
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\bin\Debug\DLNALib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\bin\Debug\SonyAPILib.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\bin\Debug\SonyAPILib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\bin\Debug\SonyAPILib.xml
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\obj\Debug\DLNALib.csprojResolveAssemblyReference.cache
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\obj\Debug\DLNALib.exe
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\DLNALib\obj\Debug\DLNALib.pdb

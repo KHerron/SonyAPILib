@@ -492,5 +492,37 @@ namespace DLNA_Control_Panel
             UpdateDevice();
         }
 
+        private void SaveBut_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog ofd = new SaveFileDialog();
+            ofd.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+            ofd.FilterIndex = 1;
+            ofd.InitialDirectory = Application.StartupPath;
+            ofd.RestoreDirectory = true;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                ShowWait1();
+                //deserialize
+                string fpth = ofd.FileName;
+                mySonyLib.Locator.DeviceSave(fpth,curDev);
+                ofd.Dispose();
+                curDev = mySonyLib.Locator.DeviceLoad(fpth);
+                UpdateLog(LogPath.Text, LogName.Text);
+                UpdateDevice();
+                UpdateDeviceList();
+                SaveBut.Enabled = true;
+                HideWait1();
+            }
+        }
+
+        private void shapeContainer1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

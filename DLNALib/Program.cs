@@ -141,7 +141,7 @@ namespace DLNALib
                         mySonyReg = device.Register();
                         if (device.Registered == false)
                         {
-                            if (device.Actionlist.RegisterMode == 3)
+                            if (device.Actionlist.RegisterMode > 2)
                             {
                                 string ckii;
                                 Console.WriteLine("Enter PIN Code.");

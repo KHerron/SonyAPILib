@@ -39,31 +39,6 @@ namespace SonyAPILib
         public Locate Locator { get { return _Locator; } set { _Locator = value; } }
 
         /// <summary>
-        /// Represents the IRCC1 Service
-        /// </summary>
-        //public IRCC1 Ircc = new IRCC1();
-
-        /// <summary>
-        /// Represents the AVTransport1 Service
-        /// </summary>
-        //public AVTransport1 AVTransport = new AVTransport1();
-
-        /// <summary>
-        /// Represents the ConnectionManager Service
-        /// </summary>
-        //public ConnectionManager1 ConnectionManager = new ConnectionManager1();
-
-        /// <summary>
-        /// Represents the RenderingControl Service
-        /// </summary>
-        //public RenderingControl1 RenderingControl = new RenderingControl1();
-
-        /// <summary>
-        /// Represents the Party Service
-        /// </summary>
-        //public Party1 Party = new Party1();
-
-        /// <summary>
         /// API Logging Object
         /// </summary>
         static APILogging _Log = new APILogging();
@@ -107,7 +82,7 @@ namespace SonyAPILib
             {
                 SonyDevice fdev = new SonyDevice();
                 //if (service == null) { service = "IRCC:1"; }
-                _Log.AddMessage("UPnP is Discovering devices....", true);
+                _Log.AddMessage("Scanning network for compatiable devices....", true);
                 List<string> foundDevices = new List<string>();
                 global::SonyAPILib.SSDP.Start();
                 Thread.Sleep(15000);
@@ -128,14 +103,21 @@ namespace SonyAPILib
             /// <param name="path">The FULL path to the Device XML file</param>
             public APILibrary.SonyDevice DeviceLoad(string path)
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(SonyDevice));
                 APILibrary.SonyDevice sDev = new APILibrary.SonyDevice();
-                TextReader reader = new StreamReader(path);
                 _Log.AddMessage("Loading API Device file: " + path, true);
-                //deserialize
-                sDev = (SonyDevice)deserializer.Deserialize(reader);
-                reader.Close();
-                sDev.CheckReg();
+                try
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(SonyDevice));    
+                    TextReader reader = new StreamReader(path);
+                    sDev = (SonyDevice)deserializer.Deserialize(reader);
+                    _Log.AddMessage("API Device loaded : " + path, true);
+                    reader.Close();
+                    sDev.CheckReg();
+                }
+                catch
+                {
+                    _Log.AddMessage("ERROR: There was an error loading the device file: " + path, true);
+                }
                 return sDev;
             }
 
@@ -150,13 +132,19 @@ namespace SonyAPILib
             public void DeviceSave(string path, SonyDevice dev)
             {
                 _Log.AddMessage("Saving API Device file for: " + dev.Name, true);
-                XmlSerializer serializer = new XmlSerializer(typeof(SonyDevice));
-                FileStream fs = new FileStream(path, FileMode.Create);
-                TextWriter writer = new StreamWriter(fs, new UTF8Encoding());
-                serializer.Serialize(writer, dev);
-                writer.Close();
-                //string newPath1 = path.Substring(0, path.Length - 4);
-                //string newPath2 = newPath1 + "_IRCC.xml";
+                try
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(SonyDevice));
+                    FileStream fs = new FileStream(path, FileMode.Create);
+                    TextWriter writer = new StreamWriter(fs, new UTF8Encoding());
+                    serializer.Serialize(writer, dev);
+                    writer.Close();
+                    _Log.AddMessage("Success: Saved API Device file: " + dev.Name, true);
+                }
+                catch
+                {
+                    _Log.AddMessage("ERROR: There was an error saving API Device file: " + dev.Name, true);
+                }
             }
             #endregion
         }
@@ -317,6 +305,7 @@ namespace SonyAPILib
             /// </remarks>
             public void ProcessEventMessages(EventObject eObj)
             {
+                _Log.AddMessage("Event Notification Received from: " + eObj.DeviceName, true);
                 string Service = eObj.ServiceID.ToString();
                 Service = Service.Substring(0, Service.Length - 2);
                 switch(Service)
@@ -336,6 +325,10 @@ namespace SonyAPILib
                     case "Party":
                         Party.ProcessEventNotifications(this, eObj);
                         break;
+
+                    default:
+                        _Log.AddMessage("Event is from an unknown service" + eObj.ServiceID, true);
+                        break;
                 }
             }
             #endregion
@@ -351,6 +344,7 @@ namespace SonyAPILib
                 string reg = "false";
                 string args1 = "name=" + this.ServerName + "&registrationType=initial&deviceId=TVSideView%3A" + this.ServerMacAddress + " ";
                 string args2 = "name=" + this.ServerName + "&registrationType=new&deviceId=TVSideView%3A" + this.ServerMacAddress + " ";
+                string args3 = "name=" + this.ServerName + "&registrationType=initial&deviceId=TVSideView%3A" + this.ServerMacAddress + "&wolSupport=true" + " ";
                 if (this.Actionlist.RegisterMode == 1)
                 {
                     reg = HttpGet(this.Actionlist.RegisterUrl + "?" + args1);
@@ -363,7 +357,14 @@ namespace SonyAPILib
                 }
                 else if (this.Actionlist.RegisterMode == 3)
                 {
-                    _Log.AddMessage("Register Mode 3 Sony Sevice", false);
+                    reg = HttpGet(this.Actionlist.RegisterUrl + "?" + args3);
+                    _Log.AddMessage("Register Mode: 3 Sony Device", false);
+                    _Log.AddMessage("Must run Method: SendAuth(pincode)", true);
+                    reg = "Pin Code Required";
+                }
+                else if (this.Actionlist.RegisterMode == 4)
+                {
+                    _Log.AddMessage("Register Mode 4 Sony Sevice", false);
                     string hostname = this.ServerName;
                     string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
                     try
@@ -374,7 +375,7 @@ namespace SonyAPILib
                         httpWebRequest.Method = "POST";
                         httpWebRequest.AllowAutoRedirect = true;
                         httpWebRequest.Timeout = 500;
-                        _Log.AddMessage("Sending Generation 3 JSON Registration", false);
+                        _Log.AddMessage("Sending Generation 4 JSON Registration", false);
                         using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                         {
                             streamWriter.Write(jsontosend);
@@ -398,7 +399,7 @@ namespace SonyAPILib
                         catch
                         {
                             _Log.AddMessage("Must run Method: SendAuth(pincode)", true);
-                            reg = "Gen3 Pin Code Required";
+                            reg = "Pin Code Required";
                         }
                     }
                     catch
@@ -412,9 +413,9 @@ namespace SonyAPILib
                     this.Registered = true;
                     return true;
                 }
-                else if (reg == "Gen3 Pin Code Required")
+                else if (reg == "Pin Code Required")
                 {
-                    _Log.AddMessage("Registration not complete for Gen3 device at: " + this.IPAddress, true);
+                    _Log.AddMessage("Registration not complete for Gen 3 or 4 device at: " + this.IPAddress, true);
                     this.Registered = false;
                     return true;
                 }
@@ -436,42 +437,92 @@ namespace SonyAPILib
             public bool SendAuth(string PinCode)
             {
                 bool reg = false;
-                string hostname = this.ServerName;
-                string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
-                try
+                if(this.Actionlist.RegisterMode == 4)
                 {
-                    var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + @"/sony/accessControl");
-                    httpWebRequest2.ContentType = "application/json";
-                    httpWebRequest2.Method = "POST";
-                    httpWebRequest2.AllowAutoRedirect = true;
-                    httpWebRequest2.CookieContainer = AllCookies;
-                    httpWebRequest2.Timeout = 500;
-                    using (var streamWriter = new StreamWriter(httpWebRequest2.GetRequestStream()))
+                    string hostname = this.ServerName;
+                    string jsontosend = "{\"id\":13,\"method\":\"actRegister\",\"version\":\"1.0\",\"params\":[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"nickname\":\"" + hostname + "\"},[{\"clientid\":\"" + hostname + ":34c43339-af3d-40e7-b1b2-743331375368c\",\"value\":\"yes\",\"nickname\":\"" + hostname + "\",\"function\":\"WOL\"}]]}";
+                    try
                     {
-                        streamWriter.Write(jsontosend);
+                        var httpWebRequest2 = (HttpWebRequest)WebRequest.Create(@"http://" + this.IPAddress + @"/sony/accessControl");
+                        httpWebRequest2.ContentType = "application/json";
+                        httpWebRequest2.Method = "POST";
+                        httpWebRequest2.AllowAutoRedirect = true;
+                        httpWebRequest2.CookieContainer = AllCookies;
+                        httpWebRequest2.Timeout = 500;
+                        using (var streamWriter = new StreamWriter(httpWebRequest2.GetRequestStream()))
+                        {
+                            streamWriter.Write(jsontosend);
+                        }
+                        string authInfo = "" + ":" + PinCode;
+                        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                        httpWebRequest2.Headers["Authorization"] = "Basic " + authInfo;
+                        var httpResponse = (HttpWebResponse)httpWebRequest2.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var responseText = streamReader.ReadToEnd();
+                            _Log.AddMessage("Registration response: " + responseText, false);
+                            this.Registered = true;
+                            this.PinCode = PinCode;
+                            reg = true;
+                        }
+                        string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.IPAddress + "/sony/appControl")));
+                        System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
+                        file.WriteLine(answerCookie);
+                        file.Close();
+                        this.Cookie = answerCookie;
                     }
-                    string authInfo = "" + ":" + PinCode;
-                    authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-                    httpWebRequest2.Headers["Authorization"] = "Basic " + authInfo;
-                    var httpResponse = (HttpWebResponse)httpWebRequest2.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    catch
                     {
-                        var responseText = streamReader.ReadToEnd();
-                        _Log.AddMessage("Registration response: " + responseText, false);
-                        this.Registered = true;
-                        this.PinCode = PinCode;
-                        reg = true;
+                        _Log.AddMessage("Registration process Timed Out", false);
+                        this.Registered = false;
                     }
-                    string answerCookie = JsonConvert.SerializeObject(httpWebRequest2.CookieContainer.GetCookies(new Uri("http://" + this.IPAddress + "/sony/appControl")));
-                    System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
-                    file.WriteLine(answerCookie);
-                    file.Close();
-                    this.Cookie = answerCookie;
                 }
-                catch
+                else
                 {
-                    _Log.AddMessage("Registration process Timed Out", false);
-                    this.Registered = false;
+                    if(this.Actionlist.RegisterMode == 3)
+                    {
+                        string args3 = "name=" + this.ServerName + "&registrationType=initial&deviceId=TVSideView%3A" + this.ServerMacAddress + "&wolSupport=true" + " ";
+                        string Url = this.Actionlist.RegisterUrl + "?" + args3;
+                        int getPort = this.Port;
+                        Uri getUri = new Uri(Url);
+                        if (getUri.Port != getPort)
+                        {
+                            getPort = getUri.Port;
+                        }
+                        _Log.AddMessage("Creating HttpWebRequest to URL: " + Url, false);
+                        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(Url);
+                        req.KeepAlive = true;
+                        // Set our default header Info
+                        _Log.AddMessage("Setting Header Information: " + req.Host.ToString(), false);
+                        req.Host = this.IPAddress + ":" + getPort.ToString();
+                        req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
+                        req.Headers.Add("X-CERS-DEVICE-INFO", "Android4.03/TVSideViewForAndroid2.7.1/EVO");
+                        req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.ServerMacAddress);
+                        req.Headers.Add("Accept-Encoding", "gzip");
+                        string authInfo = "" + ":" + PinCode;
+                        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                        req.Headers.Add("Authorization", "Basic " + authInfo);
+                        try
+                        {
+                            _Log.AddMessage("Creating Web Request Response", false);
+                            System.Net.WebResponse resp = req.GetResponse();
+                            _Log.AddMessage("Executing StreamReader", false);
+                            System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+                            string results = sr.ReadToEnd().Trim();
+                            _Log.AddMessage("Registration response: " + results, false);
+                            this.Registered = true;
+                            this.PinCode = PinCode;
+                            reg = true;
+                            sr.Close();
+                            resp.Close();
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            _Log.AddMessage("There was an error during the Web Request or Response! " + e.ToString(), true);
+                            return false;
+                        }
+                    }
                 }
                 return reg;
             }
@@ -491,7 +542,7 @@ namespace SonyAPILib
                     return "";
                 }
                 string cmdList = "";
-                if (this.Actionlist.RegisterMode <= 2)
+                if (this.Actionlist.RegisterMode <= 3)
                 {
                     _Log.AddMessage(this.Name + " is Retrieving Generation:" + this.Actionlist.RegisterMode + " Remote Command List", false);
                     cmdList = HttpGet(this.Actionlist.RemoteCommandListUrl);
@@ -623,7 +674,7 @@ namespace SonyAPILib
                 _Log.AddMessage("Header Host: " + req.Host.ToString(), false);
                 req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
                 _Log.AddMessage("Setting Header User Agent: " + req.UserAgent, false);
-                if (this.Actionlist.RegisterMode == 3)
+                if (this.Actionlist.RegisterMode == 4)
                 {
                     _Log.AddMessage("Processing Auth Cookie", false);
                     req.CookieContainer = new CookieContainer();
@@ -638,7 +689,7 @@ namespace SonyAPILib
                     req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + this.ServerMacAddress);
                 }
                 req.Headers.Add("SOAPAction", "\"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC\"");
-                if (this.Actionlist.RegisterMode != 3)
+                if (this.Actionlist.RegisterMode < 4)
                 {
                     req.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                     req.Headers.Add("Accept-Encoding", "gzip, deflate");
@@ -676,8 +727,8 @@ namespace SonyAPILib
             {
                 bool results = false;
                 
-                // Gen 1 or 2 Devices
-                if (this.Actionlist.RegisterMode <= 2)
+                // Gen 1, 2 or 3 Devices
+                if (this.Actionlist.RegisterMode <= 3)
                 {
                     _Log.AddMessage("Verifing Registration for: " + this.Name, false);
                     // Will NOT return a Status if not Registered
@@ -689,12 +740,12 @@ namespace SonyAPILib
                 }
                 else
                 {
-                    // Generation 3 devices uses a Cookie
+                    // Generation 4 devices uses a Cookie
                     try
                     {
                         // Check and Load cookie. If Found then Registration = True
                         _Log.AddMessage("Verifing Registration for: " + this.Name, false);
-                        _Log.AddMessage("Checking for Generation 3 Cookie", false);
+                        _Log.AddMessage("Checking for Generation 4 Cookie", false);
                         System.IO.StreamReader myFile = new System.IO.StreamReader(@"C:\ProgramData\Sony\" + this.Name + "_cookie.json");
                         string myString = myFile.ReadToEnd();
                         myFile.Close();
@@ -786,7 +837,7 @@ namespace SonyAPILib
             public string CheckStatus()
             {
                 string retstatus = "";
-                if (this.Actionlist.RegisterMode != 3)
+                if (this.Actionlist.RegisterMode < 4)
                 {
                     try
                     {
@@ -854,11 +905,11 @@ namespace SonyAPILib
             /// Gets the Registration Mode from the ActionList.
             /// Or uses Gen 3 if no action list is found.
             /// </summary>
-            /// <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
+            /// <returns>Returns a string wih the Mode (1, 2, 3 or 4)</returns>
             private string GetRegistrationMode()
             {
                 string lAction = "register";
-                string foundVal = "3";
+                string foundVal = "4";
                 _Log.AddMessage("Retriving Device Registration Mode", false);
                 DataSet acList = new DataSet();
                 if (ActionListUrl != "")
@@ -922,7 +973,7 @@ namespace SonyAPILib
             public string SendText(string SendText = "")
             {
                 string response = "";
-                if (this.Actionlist.RegisterMode < 3)
+                if (this.Actionlist.RegisterMode < 4)
                 {
                     _Log.AddMessage("Sending TEXT to device", false);
                     response = HttpGet(this.Actionlist.SendTextUrl + "?text=" + SendText);
@@ -1225,28 +1276,54 @@ namespace SonyAPILib
             /// <returns></returns>
             public string GetDeviceMac(SonyDevice mDev)
             {
-                String macaddress = "";
-                _Log.AddMessage("Retrieving the Mac Address from: " + mDev.Name + " at IP: " + mDev.IPAddress, true);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + mDev.IPAddress + @"/sony/system");
-                httpWebRequest.ContentType = "text/json";
-                httpWebRequest.Method = "POST";
-                SonyCommandList dataSet = new SonyCommandList();
-                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                try
                 {
-                    string json = "{\"id\":19,\"method\":\"getSystemSupportedFunction\",\"version\":\"1.0\",\"params\":[]}\"";
-                    streamWriter.Write(json);
+                    String macaddress = "";
+                    _Log.AddMessage("Retrieving the Mac Address from: " + mDev.Name + " at IP: " + mDev.IPAddress, true);
+                    if (this.Actionlist.RegisterMode == 4)
+                    {
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"http://" + mDev.IPAddress + @"/sony/system");
+                        httpWebRequest.ContentType = "text/json";
+                        httpWebRequest.Method = "POST";
+                        SonyCommandList dataSet = new SonyCommandList();
+                        using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                        {
+                            string json = "{\"id\":19,\"method\":\"getSystemSupportedFunction\",\"version\":\"1.0\",\"params\":[]}\"";
+                            streamWriter.Write(json);
+                        }
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            var responseText = streamReader.ReadToEnd();
+                            dataSet = JsonConvert.DeserializeObject<SonyCommandList>(responseText);
+                        }
+                        string first = dataSet.result[0].ToString();
+                        List<SonyOption> bal = JsonConvert.DeserializeObject<List<SonyOption>>(first);
+                        macaddress = bal.Find(x => x.option.ToLower() == "WOL".ToLower()).value.ToString();
+                        _Log.AddMessage("Devices Mac Address: " + macaddress, true);
+                    }
+                    if (this.Actionlist.RegisterMode == 3)
+                    {
+                        _Log.AddMessage("Looking for System Information at: " + this.Actionlist.SystemInformationUrl, false);
+                        DataSet sysinf = new DataSet();
+                        sysinf.ReadXml(this.Actionlist.SystemInformationUrl);
+                        _Log.AddMessage("System Information file Found.", false);
+                        DataTable sysi = new DataTable();
+                        int sFindex = sysinf.Tables.IndexOf("functionItem");
+                        sysi = sysinf.Tables[sFindex];
+                        var siresults = from DataRow myRow in sysi.Rows where myRow.Field<string>("field") == "MAC" select myRow;
+                        macaddress = siresults.ElementAt(0).ItemArray[1].ToString();
+                        _Log.AddMessage("Devices Mac Address: " + macaddress, true);
+                    }
+                    this.MacAddress = macaddress;
+                    return macaddress;
                 }
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                catch
                 {
-                    var responseText = streamReader.ReadToEnd();
-                    dataSet = JsonConvert.DeserializeObject<SonyCommandList>(responseText);
+                    this.MacAddress = "";
+                    _Log.AddMessage("There was an Error. Unable to retrieve MAC address from " + this.Name, true);
+                    return "";
                 }
-                string first = dataSet.result[0].ToString();
-                List<SonyOption> bal = JsonConvert.DeserializeObject<List<SonyOption>>(first);
-                macaddress = bal.Find(x => x.option.ToLower() == "WOL".ToLower()).value.ToString();
-                _Log.AddMessage("Devices Mac Address: " + macaddress, true);
-                return macaddress;
             }
 
             #endregion
@@ -1282,26 +1359,34 @@ namespace SonyAPILib
             /// </summary>
             /// <param name="Doc">A string containg the Description XML.</param>
             /// <param name="Path">A string containg the Full Path to the device's Description XML file.</param>
-            /// <returns>A Fully built and populated Sony Device</returns>
+            /// <returns>A Fully built and populated Sony Device Object</returns>
             public bool BuildFromDocument(string Doc, string Path)
             {
-                _Log.AddMessage("Building Device from Document: " + Path, true);
+                _Log.AddMessage("Building Device from Document", true);
                 this.DocumentUrl = Path;
                 try
                 {
                     _Log.AddMessage("Document Found", false);
                     Uri d = new Uri(Path);
+                    _Log.AddMessage("Document Path: " + Path, false);
                     this.IPAddress = d.Host;
+                    _Log.AddMessage("Device IP Address: " + this.IPAddress, false);
                     this.Port = d.Port;
+                    _Log.AddMessage("Device Port: " + this.Port, false);
                     this.ServerMacAddress = this.GetServerMac();
+                    _Log.AddMessage("Server Mac: " + this.ServerMacAddress, false);
                     this.ServerName = System.Windows.Forms.SystemInformation.ComputerName + "(SonyAPILib)";
+                    _Log.AddMessage("Server Name: " + this.ServerName, false);
                     XmlDocument xDoc = new XmlDocument();
                     xDoc.LoadXml(Doc);
                     XmlNode xNode = xDoc.DocumentElement.ChildNodes[1];
+                    _Log.AddMessage("Scanning Document....", false);
                     foreach (XmlNode node in xNode.ChildNodes)
                     {
                         if (node.Name == "av:X_UNR_DeviceInfo")
                         {
+                            _Log.AddMessage("Determined device is a Generation 1 or 2.", false);
+                            _Log.AddMessage("Found Node: av:X_UNR_DeviceInfo", false);
                             foreach (XmlNode dserv in node.ChildNodes)
                             {
                                 if (dserv.Name == "av:X_CERS_ActionList_URL")
@@ -1311,6 +1396,7 @@ namespace SonyAPILib
                                     this.ActionListUrl = alPath;
                                     DataSet acList = new DataSet();
                                     acList.ReadXml(alPath);
+                                    _Log.AddMessage("Action List Loaded.", false);
                                     DataTable act = new DataTable();
                                     act = acList.Tables[0];
                                     var results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "register" select myRow;
@@ -1321,7 +1407,6 @@ namespace SonyAPILib
                                     this.Actionlist.SystemInformationUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                                     results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getRemoteCommandList" select myRow;
                                     this.Actionlist.RemoteCommandListUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
-                                    //this.GetRemoteCommandList();
                                     results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getStatus" select myRow;
                                     this.Actionlist.StatusUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
                                     results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getText" select myRow;
@@ -1331,12 +1416,93 @@ namespace SonyAPILib
                                 }
                             }
                         }
-
                         if (node.Name == "av:X_ScalarWebAPI_DeviceInfo")
                         {
-                            this.Actionlist.RegisterMode = 3;
-                            _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
-                            this.MacAddress = this.GetDeviceMac(this);
+                            _Log.AddMessage("Determined device is a Generation 3 or 4.", false);
+                            _Log.AddMessage("Found Node: av:X_ScalarWebAPI_DeviceInfo", false);
+                            string alPath = @"http://" + this.IPAddress + ":50002/actionList";
+                            _Log.AddMessage("Looking for the Action List at: " + alPath, false);
+                            DataSet acList = new DataSet();
+                            try
+                            {
+                                acList.ReadXml(alPath);
+                                DataTable act = new DataTable();
+                                act = acList.Tables[0];
+                                _Log.AddMessage("Action List Found.", false);
+                                var results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "register" select myRow;
+                                this.Actionlist.RegisterMode = Convert.ToInt16(results.ElementAt(0).ItemArray[1].ToString());
+                                _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), false);
+                                this.Actionlist.RegisterUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getSystemInformation" select myRow;
+                                this.Actionlist.SystemInformationUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getRemoteCommandList" select myRow;
+                                this.Actionlist.RemoteCommandListUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getStatus" select myRow;
+                                this.Actionlist.StatusUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "getText" select myRow;
+                                this.Actionlist.GetTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+                                results = from DataRow myRow in act.Rows where myRow.Field<string>("name") == "sendText" select myRow;
+                                this.Actionlist.SendTextUrl = this.CheckFullPath(results.ElementAt(0).ItemArray[2].ToString());
+
+                                // This is a Gen 3 device. Load IRCC.XML file as a service
+                                string iPath = @"http://" + this.IPAddress + ":50001/Ircc.xml";
+                                _Log.AddMessage("Looking for the IRCC Service at: " + iPath, false);
+                                XmlDocument iDoc = new XmlDocument();
+                                iDoc.Load(iPath.ToString());
+                                _Log.AddMessage("Found the IRCC.XML service file.", false);
+                                XmlNode iNode = iDoc.DocumentElement.ChildNodes[1];
+                                foreach (XmlNode snode in iNode.ChildNodes)
+                                {
+                                    if (snode.Name == "serviceList")
+                                    {
+                                        foreach (XmlNode icnode in snode.ChildNodes)
+                                        {
+                                            DeviceService iServ = new DeviceService();
+                                            foreach (XmlNode iserv in icnode.ChildNodes)
+                                            {
+                                                if (iserv.Name == "serviceType")
+                                                {
+                                                    _Log.AddMessage("Retrieving IRCC.XML service Information.", false);
+                                                    iServ.Type = iserv.InnerText;
+                                                    iServ.ServiceIdentifier = iServ.Type.ChopOffBefore("service:");
+                                                }
+                                                if (iserv.Name == "serviceId") { iServ.ServiceID = iserv.InnerText; }
+                                                if (iserv.Name == "SCPDURL") { iServ.ScpdUrl = CheckFullPath("http://" + this.IPAddress + ":" + "50001" + iserv.InnerText); }
+                                                if (iserv.Name == "controlURL") { iServ.ControlUrl = CheckFullPath("http://" + this.IPAddress + ":" + "50001" + iserv.InnerText); }
+                                                if (iserv.Name == "eventSubURL")
+                                                {
+                                                    if (iserv.InnerText != "")
+                                                    {
+                                                        iServ.EventSubUrl = CheckFullPath("http://" + this.IPAddress + ":" + "50001" + iserv.InnerText);
+                                                    }
+                                                    else
+                                                    {
+                                                        iServ.EventSubUrl = "";
+                                                    }
+                                                }
+                                            }
+                                            if (iServ.ServiceIdentifier == "IRCC:1")
+                                            {
+                                                _Log.AddMessage("IRCC:1 Service discovered on this device", false);
+                                                this.Ircc.ControlUrl = iServ.ControlUrl;
+                                                _Log.AddMessage("Setting IRCC Control URL: " + this.Ircc.ControlUrl, false);
+                                                this.Ircc.ScpdUrl = iServ.ScpdUrl;
+                                                this.Ircc.EventSubUrl = iServ.EventSubUrl;
+                                                this.Ircc.ServiceID = iServ.ServiceID;
+                                                this.Ircc.ServiceIdentifier = iServ.ServiceIdentifier;
+                                                this.Ircc.Type = iServ.Type;
+                                                _Log.AddMessage("IRCC service loaded Successfully.", false);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                                this.Actionlist.RegisterMode = 4;
+                                _Log.AddMessage("Gen 3 information not found. Setting to Defualt Mode.", false);
+                                _Log.AddMessage("Device has a registration Mode of: " + this.Actionlist.RegisterMode.ToString(), true);
+                            }
                         }
                         if (node.Name == "friendlyName") { this.Name = node.FirstChild.InnerText; }
                         if (node.Name == "manufacturer") { this.Manufacture = node.FirstChild.InnerText; }
@@ -1347,11 +1513,13 @@ namespace SonyAPILib
                         if (node.Name == "deviceType") { this.Type = node.FirstChild.InnerText; }
                         if (node.Name == "serviceList")
                         {
+                            _Log.AddMessage("Found Node: serviceList", false);
                             foreach (XmlNode cnode in node.ChildNodes)
                             {
                                 DeviceService dServ = new DeviceService();
                                 foreach (XmlNode dserv in cnode.ChildNodes)
                                 {
+                                    _Log.AddMessage("Searching Child Nodes for Service descriptions", false);
                                     if (dserv.Name == "serviceType")
                                     {
 
@@ -1422,6 +1590,10 @@ namespace SonyAPILib
                             }
                         }
                     }
+                    if(this.Actionlist.RegisterMode > 2)
+                    {
+                        this.GetDeviceMac(this);
+                    }
                     this.CheckReg();
                     this.GetRemoteCommandList();
                     _Log.AddMessage(this.Name + " was built successfully.", true);
@@ -1429,8 +1601,8 @@ namespace SonyAPILib
                 }
                 catch
                 {
-                    _Log.AddMessage("There was an Error while Building the Device", false);
-                    _Log.AddMessage("The device may not be powered on, or the Path was incorrect.", false);
+                    _Log.AddMessage("There was an Error while Building the Device", true);
+                    _Log.AddMessage("The device may not be powered on, or the Path was incorrect.", true);
                     return false;
                 }
             }
@@ -1444,7 +1616,7 @@ namespace SonyAPILib
             /// </summary>
             public void WOL()
             {
-                if (this.Actionlist.RegisterMode == 3)
+                if (this.Actionlist.RegisterMode >= 3)
                 {
                     _Log.AddMessage("Sending Wake On Lan command to device", false);
                     Byte[] datagram = new byte[102];
@@ -1463,7 +1635,9 @@ namespace SonyAPILib
                     }
                     if (macDigits.Length != 6)
                     {
-                        throw new ArgumentException("Incorrect MAC address supplied!");
+                        _Log.AddMessage("ERROR: Incorrect MAC address supplied!", true);
+                        //throw new ArgumentException("Incorrect MAC address supplied!");
+                        return;
                     }
                     int start = 6;
                     for (int i = 0; i < 16; i++)
@@ -1584,14 +1758,6 @@ namespace SonyAPILib
                 if (this.Path == null | this.Path == "") { this.Path = @"c:\ProgramData\Sony\"; }
                 Directory.CreateDirectory(this.Path);
                 if (this.Name == null | this.Name == "") { this.Name = @"SonyAPILib_LOG.txt"; }
-                //if(File.Exists(this.Path + this.Name))
-                //{
-                    // File already there!
-                //}
-                //else
-                //{
-                //    File.Create(this.Path + this.Name);
-                //}
                 if (this.Level == null | this.Level == "") { this.Level = "Basic"; }
                 string logPath = this.Path + this.Name;
                 if (Enable == true)
@@ -1892,7 +2058,7 @@ namespace SonyAPILib
 
                 #region Event Handlers
                 /// <summary>
-                /// 
+                /// Method that processes Received Event Notifications
                 /// </summary>
                 /// <param name="EventObj"></param>
                 /// <param name="eDevice"></param>
@@ -3844,7 +4010,7 @@ namespace SonyAPILib
                         _Log.AddMessage("Header Host: " + req.Host.ToString(), false);
                         req.UserAgent = "Dalvik/1.6.0 (Linux; u; Android 4.0.3; EVO Build/IML74K)";
                         _Log.AddMessage("Setting Header User Agent: " + req.UserAgent, false);
-                        if (Parent.Actionlist.RegisterMode == 3)
+                        if (Parent.Actionlist.RegisterMode > 3)
                         {
                             _Log.AddMessage("Processing Auth Cookie", false);
                             req.CookieContainer = new CookieContainer();
@@ -3859,7 +4025,7 @@ namespace SonyAPILib
                             req.Headers.Add("X-CERS-DEVICE-ID", "TVSideView:" + Parent.ServerMacAddress);
                         }
                         req.Headers.Add("SOAPAction", "\"urn:schemas-sony-com:service:IRCC:1#X_SendIRCC\"");
-                        if (Parent.Actionlist.RegisterMode != 3)
+                        if (Parent.Actionlist.RegisterMode < 4)
                         {
                             req.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
                             req.Headers.Add("Accept-Encoding", "gzip, deflate");
@@ -3924,7 +4090,7 @@ namespace SonyAPILib
                 public string GetStatus(SonyDevice Parent)
                 {
                     string retstatus = "";
-                    if (Parent.Actionlist.RegisterMode != 3)
+                    if (Parent.Actionlist.RegisterMode < 4)
                     {
                         if (Parent.Actionlist.StatusUrl != null)
                         {
@@ -4548,33 +4714,72 @@ namespace SonyAPILib
         }
         
         #region Subscribed Event Devices
+        /// <summary>
+        /// Class for the Subscribed Devices
+        /// </summary>
         public class EventDevice
         {
+            /// <summary>
+            /// The Subscribed device object
+            /// </summary>
             public SonyDevice Device { get; set; }
+            /// <summary>
+            /// The Subscribed Service
+            /// </summary>
             public string Service { get; set; }
+            /// <summary>
+            /// The subscription ID
+            /// </summary>
             public string ID { get; set; }
+            /// <summary>
+            /// The subscrition Timeout
+            /// </summary>
             public string Timeout { get; set; }
+            /// <summary>
+            /// The Subscription Event URL
+            /// </summary>
             public string EventUrl { get; set; }
         }
         #endregion
 
         #region EventObject
+        /// <summary>
+        /// Class for the Eventing device Object
+        /// </summary>
         public class EventObject
         {
+            /// <summary>
+            /// The name of the Eventing Device>
+            /// </summary>
             public string DeviceName { get; set; }
+            /// <summary>
+            /// The ServiceID of the Eventing Device>
+            /// </summary>
             public string ServiceID { get; set; }
+            /// <summary>
+            /// The UID of the Eventing Device>
+            /// </summary>
             public string Uid { get; set; }
+            /// <summary>
+            /// The Action of the Eventing Device>
+            /// </summary>
             public string Action { get; set; }
+            /// <summary>
+            /// The Sequence of the Eventing Device
+            /// </summary>
             public string Sequence { get; set; }
+            /// <summary>
+            /// Passed Statevariables from the Eventing Device>
+            /// </summary>
             public List<EventVariable> StateVariables = new List<EventVariable>();
         }
         #endregion
 
         #region EventVeriables
-        [Serializable]
         ///<summary>
         /// Holds the State Variables for each Event Notification
         /// </summary>
+        [Serializable]
         public class EventVariable
         {
             /// <summary>

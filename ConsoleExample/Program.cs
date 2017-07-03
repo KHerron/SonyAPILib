@@ -192,8 +192,8 @@ namespace ConsoleExample
                     // Check if register returned false
                     if (mySonyDevice.Registered == false)
                     {
-                        //Check if Generaton 3. If yes, prompt for pin code
-                        if (mySonyDevice.Actionlist.RegisterMode == 3)
+                        //Check if Generaton 4. If yes, prompt for pin code
+                        if (mySonyDevice.Actionlist.RegisterMode > 2)
                         {
                             string ckii;
                             Console.WriteLine("Enter PIN Code.");

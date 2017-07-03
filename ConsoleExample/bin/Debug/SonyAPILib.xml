@@ -822,7 +822,7 @@
             Gets the Registration Mode from the ActionList.
             Or uses Gen 3 if no action list is found.
             </summary>
-            <returns>Returns a string wih the Mode (1, 2 or 3)</returns>
+            <returns>Returns a string wih the Mode (1, 2, 3 or 4)</returns>
         </member>
         <member name="M:SonyAPILib.APILibrary.SonyDevice.GetCommandString(System.String)">
             <summary>
@@ -935,7 +935,7 @@
             </summary>
             <param name="Doc">A string containg the Description XML.</param>
             <param name="Path">A string containg the Full Path to the device's Description XML file.</param>
-            <returns>A Fully built and populated Sony Device</returns>
+            <returns>A Fully built and populated Sony Device Object</returns>
         </member>
         <member name="M:SonyAPILib.APILibrary.SonyDevice.WOL">
             <summary>
@@ -1165,7 +1165,7 @@
         </member>
         <member name="M:SonyAPILib.APILibrary.RenderingControl1.ProcessEventNotifications(SonyAPILib.APILibrary.SonyDevice,SonyAPILib.APILibrary.EventObject)">
             <summary>
-            
+            Method that processes Received Event Notifications
             </summary>
             <param name="EventObj"></param>
             <param name="eDevice"></param>
@@ -2239,6 +2239,76 @@
             </summary>
             <param name="DeviceName">The Sony device to send the RESUBSCRIBE to.</param>
             <param name="ServiceIdent">The Sony device UPnP/DLNA ServiceIdentifier to RESUBSCRIBE to.</param>
+        </member>
+        <member name="T:SonyAPILib.APILibrary.EventDevice">
+            <summary>
+            Class for the Subscribed Devices
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventDevice.Device">
+            <summary>
+            The Subscribed device object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventDevice.Service">
+            <summary>
+            The Subscribed Service
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventDevice.ID">
+            <summary>
+            The subscription ID
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventDevice.Timeout">
+            <summary>
+            The subscrition Timeout
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventDevice.EventUrl">
+            <summary>
+            The Subscription Event URL
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.APILibrary.EventObject">
+            <summary>
+            Class for the Eventing device Object
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventObject.DeviceName">
+            <summary>
+            The name of the Eventing Device>
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventObject.ServiceID">
+            <summary>
+            The ServiceID of the Eventing Device>
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventObject.Uid">
+            <summary>
+            The UID of the Eventing Device>
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventObject.Action">
+            <summary>
+            The Action of the Eventing Device>
+            </summary>
+        </member>
+        <member name="P:SonyAPILib.APILibrary.EventObject.Sequence">
+            <summary>
+            The Sequence of the Eventing Device
+            </summary>
+        </member>
+        <member name="F:SonyAPILib.APILibrary.EventObject.StateVariables">
+            <summary>
+            Passed Statevariables from the Eventing Device>
+            </summary>
+        </member>
+        <member name="T:SonyAPILib.APILibrary.EventVariable">
+            <summary>
+             Holds the State Variables for each Event Notification
+             </summary>
         </member>
         <member name="P:SonyAPILib.APILibrary.EventVariable.name">
             <summary>

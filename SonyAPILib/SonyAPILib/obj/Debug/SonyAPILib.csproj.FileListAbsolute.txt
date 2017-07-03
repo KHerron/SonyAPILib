@@ -32,3 +32,10 @@ F:\OSA Files\Sony API\SonyAPILib_5.3\SonyAPILib\SonyAPILib\bin\Debug\Newtonsoft.
 F:\OSA Files\Sony API\SonyAPILib_5.3\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.csprojResolveAssemblyReference.cache
 F:\OSA Files\Sony API\SonyAPILib_5.3\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.dll
 F:\OSA Files\Sony API\SonyAPILib_5.3\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.xml
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\bin\Debug\SonyAPILib.pdb
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\bin\Debug\Newtonsoft.Json.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.csprojResolveAssemblyReference.cache
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.dll
+\\Ccsg\f\OSA Files\Sony API\SonyAPILib_5.4\SonyAPILib\SonyAPILib\obj\Debug\SonyAPILib.pdb
