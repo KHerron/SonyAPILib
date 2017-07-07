@@ -36,8 +36,9 @@ Please visit our forum page for more information here https://groups.google.com/
 
 
 ----------------------------------------------------------------------
-LCD TV BRAVIA
+Compatability List
 
+LCD TV BRAVIA  
 2016 model or later:  
 *KDL-W/WD, KLV-W Series (2016 model) are not compatible with Video & TV SideView. (Except for KDL-W800D/W950D)
 *You can not install Video & TV SideView app into your Sony's Android TV™.  
