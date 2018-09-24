@@ -382,6 +382,16 @@ namespace ConsoleExample
                 results = mySonyDevice.SendText(cki);
                 Console.WriteLine("---------------------------------");
                 #endregion
+                
+                //Added by jodriguez142514
+                //Before added code, console application would close and not save any discovered configuration or registration
+                //Now it will save it to a .xml file
+                //I know you are given an option starting on line 102, however this makes it already built in so you can load
+                //the xml file into the forms application
+                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(mySonyDevice.GetType());
+                TextWriter writer = new StreamWriter(mySonyDevice.Name + ".xml");
+                x.Serialize(writer, mySonyDevice);
+                //Added by jodriguez142514
 
                 Console.WriteLine("That's about it for now. Hit enter to Quit.");
                 Console.ReadKey();
