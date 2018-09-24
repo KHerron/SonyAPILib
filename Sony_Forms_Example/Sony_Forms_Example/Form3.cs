@@ -1037,7 +1037,7 @@ namespace Sony_Forms_Example
                 }
                //Added by jrodriguez142514
                //Before the below code was added, the application would register a button click but never register a 
-               //Generation 4 device.  Now it will see open the new Form4 and show a dialog to enter pin.
+               //Generation 4 device.  Now it will open the new Form4 and show a dialog to enter pin.
                //Check if Generaton 4. If yes, prompt for pin code
                 else if (curDev.Actionlist.RegisterMode == 4)
                 {
