@@ -189,7 +189,13 @@ namespace Sony_Forms_Example
             }
             else
             {
-                Load_but.Enabled = false;
+                //Load button is not being enabled and user can't choose to load an xml file they may already have
+                //We comment out this line to let user choose an xml file and load it
+                //Added by jrodriguez142514
+                
+                //Load_but.Enabled = false;
+                
+                //Added by jrodriguez142514
             }
         }
 
