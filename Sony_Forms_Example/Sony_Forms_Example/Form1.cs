@@ -49,6 +49,12 @@ namespace Sony_Forms_Example
         {
             Form mInit = new Devices();
             mInit.ShowDialog();
+            //Added by jrodriguez142514
+            //Hide Form 1 when Form 2 exits and Form 3 is loaded.  Allows user to move the remote on Form 3 around
+            //or minimize the remote.  Form 1 was staying in view and user was  not able to move it since Form 3 was 
+            //the active form
+            this.Hide();
+            //Added by jrodriguez142514
             if (mInit.DialogResult != System.Windows.Forms.DialogResult.Cancel)
             {
                 if (Program.fDev.Count > 0)
